@@ -11,6 +11,11 @@
 
 package rms.views;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+
 /**
  *
  * @author squeekyclean
@@ -52,7 +57,7 @@ public class MainApplicationView extends javax.swing.JFrame {
         btnPurchase = new javax.swing.JButton();
         btnSpoilage = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        jButton15 = new javax.swing.JButton();
+        btnTableOccupancy = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jButton16 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
@@ -235,26 +240,29 @@ public class MainApplicationView extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Inventory", jPanel3);
 
-        jButton15.setText("Table Occupancy");
-        jButton15.setBorderPainted(false);
-        jButton15.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton15MouseClicked(evt);
-            }
-        });
+        btnTableOccupancy.setText("Table Occupancy");
+        btnTableOccupancy.setBorderPainted(false);
+        btnTableOccupancy.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				btnTableOccupancyMouseClicked(event);
+				
+			}
+		}); 
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jButton15)
+                .addComponent(btnTableOccupancy)
                 .addContainerGap(587, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnTableOccupancy, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -418,8 +426,11 @@ public class MainApplicationView extends javax.swing.JFrame {
         inv.setVisible(true);
 }//GEN-LAST:event_btnSpoilageMouseClicked
 
-    private void jButton15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton15MouseClicked
+    private void btnTableOccupancyMouseClicked(ActionEvent evt) {//GEN-FIRST:event_jButton15MouseClicked
         // TODO add your handling code here:
+    	TableOccupancyMonitorView tomv = new TableOccupancyMonitorView();
+    	MainApplicationView.this.mainPanel.add(tomv);
+    	tomv.setVisible(true);
 }//GEN-LAST:event_jButton15MouseClicked
 
     private void jButton16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton16MouseClicked
@@ -449,7 +460,7 @@ public class MainApplicationView extends javax.swing.JFrame {
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
+    private javax.swing.JButton btnTableOccupancy;
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
