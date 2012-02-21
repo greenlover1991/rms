@@ -11,38 +11,50 @@ import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 //implements TableModelListener
 public class TableOccupancyMonitorView extends JInternalFrame {
+	int row, column;
+	JPanel panelOrderSlipView = new JPanel();
+	JPanel panelTables = new JPanel();
+	JPanel[][] panelTable;
+	JScrollPane scrollPaneTables;
+	JButton[][] buttonOrderSlip, buttonTableStatus;
 
 	public TableOccupancyMonitorView() {
 		super("Table Occupancy Monitor", true,// resizable
 				true, // closable
 				true, // maximizable
 				true); // iconifiable
-
 		setSize(500, 500);
 
-		int row, column;
+		initComponents();
+
+		setLayout(new BorderLayout());
+
+		add(scrollPaneTables, BorderLayout.CENTER);
+		add(panelOrderSlipView, BorderLayout.EAST);
+
+		pack();
+		setVisible(true);
+	}
+
+	private void initComponents() {
+
 		row = column = 3;
 
-		JPanel panelOrderSlipView = new JPanel();
 		panelOrderSlipView.setBorder(BorderFactory.createMatteBorder(1, 3, 1,
 				1, Color.gray));
 		panelOrderSlipView.setPreferredSize(new Dimension(300, 0));
 
-		JButton[][] buttonOrderSlip, buttonTableStatus;
 		buttonOrderSlip = new JButton[row][column];
 		buttonTableStatus = new JButton[row][column];
 
-		JPanel[][] panelTable;
 		panelTable = new JPanel[row][column];
 
-		JPanel panelTables = new JPanel();
 		panelTables.setLayout(new GridLayout(row, column, 10, 10));
 
 		for (int i = 0; i < row; i++) {
@@ -66,15 +78,6 @@ public class TableOccupancyMonitorView extends JInternalFrame {
 			}
 		}
 
-		JScrollPane scrollPaneTables = new JScrollPane(panelTables);
-
-//		setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
-		setLayout(new BorderLayout());
-
-		add(scrollPaneTables, BorderLayout.CENTER);
-		add(panelOrderSlipView, BorderLayout.EAST);
-
-		pack();
-		setVisible(true);
+		scrollPaneTables = new JScrollPane(panelTables);
 	}
 }
