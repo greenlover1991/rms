@@ -59,7 +59,7 @@ public class MainApplicationView extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         btnTableOccupancy = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
-        jButton16 = new javax.swing.JButton();
+        btnChefQueue = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jButton17 = new javax.swing.JButton();
         jButton18 = new javax.swing.JButton();
@@ -268,11 +268,11 @@ public class MainApplicationView extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Monitor", jPanel4);
 
-        jButton16.setText("View Queue");
-        jButton16.setBorderPainted(false);
-        jButton16.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnChefQueue.setText("View Queue");
+        btnChefQueue.setBorderPainted(false);
+        btnChefQueue.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton16MouseClicked(evt);
+                btnChefQueueMouseClicked(evt);
             }
         });
 
@@ -282,14 +282,14 @@ public class MainApplicationView extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 707, Short.MAX_VALUE)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jButton16)
+                .addComponent(btnChefQueue)
                 .addContainerGap(620, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 68, Short.MAX_VALUE)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnChefQueue, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -433,8 +433,10 @@ public class MainApplicationView extends javax.swing.JFrame {
     	tomv.setVisible(true);
 }//GEN-LAST:event_jButton15MouseClicked
 
-    private void jButton16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton16MouseClicked
-        // TODO add your handling code here:
+    private void btnChefQueueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton16MouseClicked
+        ChefQueueView cqv = new ChefQueueView();
+    	MainApplicationView.this.mainPanel.add(cqv);
+    	cqv.setVisible(true);
 }//GEN-LAST:event_jButton16MouseClicked
 
     private void jButton17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton17MouseClicked
@@ -461,7 +463,7 @@ public class MainApplicationView extends javax.swing.JFrame {
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton btnTableOccupancy;
-    private javax.swing.JButton jButton16;
+    private javax.swing.JButton btnChefQueue;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
