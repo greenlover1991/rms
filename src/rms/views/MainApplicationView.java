@@ -242,14 +242,11 @@ public class MainApplicationView extends javax.swing.JFrame {
 
         btnTableOccupancy.setText("Table Occupancy");
         btnTableOccupancy.setBorderPainted(false);
-        btnTableOccupancy.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				btnTableOccupancyMouseClicked(event);
-				
-			}
-		}); 
+        btnTableOccupancy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTableOccupancyActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -280,14 +277,12 @@ public class MainApplicationView extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 707, Short.MAX_VALUE)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(btnChefQueue)
                 .addContainerGap(620, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 68, Short.MAX_VALUE)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(btnChefQueue, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -333,7 +328,6 @@ public class MainApplicationView extends javax.swing.JFrame {
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 68, Short.MAX_VALUE)
             .addGap(0, 68, Short.MAX_VALUE)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -381,14 +375,14 @@ public class MainApplicationView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(mainPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -426,13 +420,6 @@ public class MainApplicationView extends javax.swing.JFrame {
         inv.setVisible(true);
 }//GEN-LAST:event_btnSpoilageMouseClicked
 
-    private void btnTableOccupancyMouseClicked(ActionEvent evt) {//GEN-FIRST:event_jButton15MouseClicked
-        // TODO add your handling code here:
-    	TableOccupancyMonitorView tomv = new TableOccupancyMonitorView();
-    	MainApplicationView.this.mainPanel.add(tomv);
-    	tomv.setVisible(true);
-}//GEN-LAST:event_jButton15MouseClicked
-
     private void btnChefQueueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton16MouseClicked
         ChefQueueView cqv = new ChefQueueView();
     	MainApplicationView.this.mainPanel.add(cqv);
@@ -451,19 +438,26 @@ public class MainApplicationView extends javax.swing.JFrame {
         // TODO add your handling code here:
 }//GEN-LAST:event_jButton19MouseClicked
 
+    private void btnTableOccupancyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTableOccupancyActionPerformed
+        // TODO add your handling code here:
+        TableOccupancyMonitorView tom = new TableOccupancyMonitorView();
+    	MainApplicationView.this.mainPanel.add(tom);
+    	tom.setVisible(true);
+    }//GEN-LAST:event_btnTableOccupancyActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnChefQueue;
     private javax.swing.JButton btnInventory;
     private javax.swing.JButton btnPurchase;
     private javax.swing.JButton btnRequisition;
     private javax.swing.JButton btnSpoilage;
+    private javax.swing.JButton btnTableOccupancy;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
-    private javax.swing.JButton btnTableOccupancy;
-    private javax.swing.JButton btnChefQueue;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
