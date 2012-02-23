@@ -1,6 +1,7 @@
 package rms.views.reporting;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.beans.PropertyChangeEvent;
@@ -25,6 +26,7 @@ import org.jbundle.thin.base.screen.jcalendarbutton.JCalendarButton;
  *
  */
 public class SpoilageReportView extends JInternalFrame {
+	int buttonNo = 0;
 	String[] columnNames = { "Ingredient", "Qty" };
 	Object[][] data = { { "Patty", "10" }, { "Cheese", "15" } };
 	DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
@@ -37,7 +39,7 @@ public class SpoilageReportView extends JInternalFrame {
 	DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
 
 	public SpoilageReportView() {
-		super("Daily Time Record Report", true,// resizable
+		super("Spoilage Report", true,// resizable
 				true, // closable
 				true, // maximizable
 				true); // iconifiable
@@ -57,14 +59,34 @@ public class SpoilageReportView extends JInternalFrame {
 		buttonDateTo = new JCalendarButton();
 		textFieldDateFrom = new JTextField(10);
 		textFieldDateTo = new JTextField(10);
-		labelDateFrom = new JLabel("From");
-		labelDateTo = new JLabel("To");
-				
+		labelDateFrom = new JLabel("From:");
+		labelDateTo = new JLabel("To:");
+		
+		textFieldDateFrom.setHorizontalAlignment(JTextField.CENTER);
+		textFieldDateTo.setHorizontalAlignment(JTextField.CENTER);
+
+		buttonDateFrom.setActionCommand("setFromDate");
+		buttonDateTo.setActionCommand("setToDate");
+		
+		panelDateButtons.setMaximumSize(new Dimension(250, 25));
+		panelDateButtons.setMinimumSize(new Dimension(250, 25));
+		panelDateButtons.setPreferredSize(new Dimension(250, 25));
+
+
 		panelDateButtons.add(labelDateFrom);
 		panelDateButtons.add(textFieldDateFrom);
 		panelDateButtons.add(buttonDateFrom);
+		panelDateButtons.add(labelDateTo);
+		panelDateButtons.add(textFieldDateTo);
+		panelDateButtons.add(buttonDateTo);
 
 		textFieldDateFrom.addFocusListener(new FocusAdapter() {
+			public void focusLost(FocusEvent evt) {
+				dateFocusLost(evt);
+			}
+		});
+
+		textFieldDateTo.addFocusListener(new FocusAdapter() {
 			public void focusLost(FocusEvent evt) {
 				dateFocusLost(evt);
 			}
@@ -74,6 +96,15 @@ public class SpoilageReportView extends JInternalFrame {
 
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
+				buttonNo = 0;
+				dateOnlyPopupChanged(evt);
+			}
+		});
+
+		buttonDateTo.addPropertyChangeListener(new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				buttonNo = 1;
 				dateOnlyPopupChanged(evt);
 			}
 		});
@@ -83,9 +114,6 @@ public class SpoilageReportView extends JInternalFrame {
 		DTR = new JTable(data, columnNames);
 		TableColumn column = null;
 		column = DTR.getColumnModel().getColumn(0);
-		column.setPreferredWidth(150);
-		column.setMinWidth(150);
-		column.setMaxWidth(150);
 		column.setCellRenderer(dtcr);
 		column = DTR.getColumnModel().getColumn(1);
 		column.setPreferredWidth(100);
@@ -122,7 +150,13 @@ public class SpoilageReportView extends JInternalFrame {
 		String dateString = "";
 		if (date != null)
 			dateString = dateFormat.format(date);
-		textFieldDateFrom.setText(dateString);
-		buttonDateFrom.setTargetDate(date);
+		if (buttonNo == 0) {
+			textFieldDateFrom.setText(dateString);
+			buttonDateFrom.setTargetDate(date);
+		} else {
+			textFieldDateTo.setText(dateString);
+			buttonDateTo.setTargetDate(date);
+		}
 	}
+
 }
