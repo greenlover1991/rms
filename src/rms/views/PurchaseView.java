@@ -20,6 +20,7 @@ public class PurchaseView extends javax.swing.JInternalFrame {
     /** Creates new form PurchaseView */
     public PurchaseView() {
         initComponents();
+
     }
 
     /** This method is called from within the constructor to
