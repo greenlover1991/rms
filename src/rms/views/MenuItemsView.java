@@ -106,7 +106,7 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
          model.addRow(new Object[] { "", "" });
     }//GEN-LAST:event_jButton1ActionPerformed
 
