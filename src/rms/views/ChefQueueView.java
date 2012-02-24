@@ -16,6 +16,8 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import rms.models.ChefQueueModel;
+
 public class ChefQueueView extends JInternalFrame {
 	String[] columnNames = { "Status", "Particular", "Service" };
 	Object[][] data = { { "Pending", "Lasagna", "Dine In" },
@@ -27,6 +29,7 @@ public class ChefQueueView extends JInternalFrame {
 	JButton buttonReady = new JButton("Ready");
 	JButton buttonConfig = new JButton("Config");
 	JPanel panelButtons = new JPanel();
+	ChefQueueModel model = new ChefQueueModel();
 
 	public ChefQueueView() {
 		super("Chef Queue", true,// resizable
@@ -48,7 +51,7 @@ public class ChefQueueView extends JInternalFrame {
 
 		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
 
-		chefQueue = new JTable(data, columnNames);
+		chefQueue = new JTable(model);
 		TableColumn column = null;
 		column = chefQueue.getColumnModel().getColumn(0);
 		column.setPreferredWidth(100);
