@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.1" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
@@ -141,15 +141,15 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jButton5" alignment="0" pref="204" max="32767" attributes="0"/>
-                      <Component id="jButton7" alignment="0" pref="204" max="32767" attributes="1"/>
-                      <Component id="jButton9" alignment="0" pref="204" max="32767" attributes="0"/>
-                      <Component id="jButton6" alignment="1" pref="204" max="32767" attributes="0"/>
-                      <Component id="jButton10" alignment="0" pref="204" max="32767" attributes="0"/>
-                      <Component id="jButton8" alignment="0" pref="204" max="32767" attributes="0"/>
-                      <Component id="jButton12" alignment="0" pref="204" max="32767" attributes="1"/>
-                      <Component id="jButton14" alignment="0" pref="204" max="32767" attributes="0"/>
-                      <Component id="jButton13" alignment="0" pref="204" max="32767" attributes="0"/>
+                      <Component id="jButton5" alignment="0" pref="211" max="32767" attributes="0"/>
+                      <Component id="jButton7" alignment="0" pref="211" max="32767" attributes="1"/>
+                      <Component id="jButton9" alignment="0" pref="211" max="32767" attributes="0"/>
+                      <Component id="jButton6" alignment="1" pref="211" max="32767" attributes="0"/>
+                      <Component id="jButton10" alignment="0" pref="211" max="32767" attributes="0"/>
+                      <Component id="jButton8" alignment="0" pref="211" max="32767" attributes="0"/>
+                      <Component id="jButton12" alignment="0" pref="211" max="32767" attributes="1"/>
+                      <Component id="jButton14" alignment="0" pref="211" max="32767" attributes="0"/>
+                      <Component id="jButton13" alignment="0" pref="211" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -172,7 +172,7 @@
                           <Component id="jButton14" min="-2" pref="54" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jButton13" min="-2" pref="54" max="-2" attributes="0"/>
-                          <EmptySpace pref="72" max="32767" attributes="0"/>
+                          <EmptySpace pref="98" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -183,6 +183,7 @@
                     <Property name="text" type="java.lang.String" value="Ingredient"/>
                   </Properties>
                   <Events>
+                    <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton5MousePressed"/>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
                   </Events>
                 </Component>
@@ -195,11 +196,17 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Menu Item"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton7MouseClicked"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton8">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Price List"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton8MouseClicked"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton9">
                   <Properties>
@@ -210,11 +217,18 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Supplier"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton10MouseClicked"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton12">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Employee"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton12MouseClicked"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton12ActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton13">
                   <Properties>
@@ -240,14 +254,14 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jButton11" alignment="0" pref="204" max="32767" attributes="0"/>
+                      <Component id="jButton11" alignment="0" pref="211" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jButton11" min="-2" pref="67" max="-2" attributes="0"/>
-                          <EmptySpace pref="539" max="32767" attributes="0"/>
+                          <EmptySpace pref="565" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -275,10 +289,10 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnInventory" alignment="0" pref="204" max="32767" attributes="0"/>
-                      <Component id="btnRequisition" alignment="0" pref="204" max="32767" attributes="0"/>
-                      <Component id="btnPurchase" alignment="0" pref="204" max="32767" attributes="0"/>
-                      <Component id="btnSpoilage" alignment="0" pref="204" max="32767" attributes="0"/>
+                      <Component id="btnInventory" alignment="0" pref="211" max="32767" attributes="0"/>
+                      <Component id="btnRequisition" alignment="0" pref="211" max="32767" attributes="0"/>
+                      <Component id="btnPurchase" alignment="0" pref="211" max="32767" attributes="0"/>
+                      <Component id="btnSpoilage" alignment="0" pref="211" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -291,7 +305,7 @@
                           <Component id="btnPurchase" min="-2" pref="66" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnSpoilage" min="-2" pref="66" max="-2" attributes="0"/>
-                          <EmptySpace pref="322" max="32767" attributes="0"/>
+                          <EmptySpace pref="348" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -343,14 +357,14 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnTableOccupancy" alignment="0" pref="204" max="32767" attributes="0"/>
+                      <Component id="btnTableOccupancy" alignment="0" pref="211" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="btnTableOccupancy" min="-2" pref="68" max="-2" attributes="0"/>
-                          <EmptySpace pref="538" max="32767" attributes="0"/>
+                          <EmptySpace pref="564" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -378,14 +392,14 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnChefQueue" alignment="0" pref="204" max="32767" attributes="0"/>
+                      <Component id="btnChefQueue" alignment="0" pref="211" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="btnChefQueue" min="-2" pref="68" max="-2" attributes="0"/>
-                          <EmptySpace pref="538" max="32767" attributes="0"/>
+                          <EmptySpace pref="564" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -413,9 +427,9 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jButton19" alignment="0" pref="204" max="32767" attributes="0"/>
-                      <Component id="jButton18" alignment="0" pref="204" max="32767" attributes="0"/>
-                      <Component id="jButton17" alignment="0" pref="204" max="32767" attributes="0"/>
+                      <Component id="jButton19" alignment="0" pref="211" max="32767" attributes="0"/>
+                      <Component id="jButton18" alignment="0" pref="211" max="32767" attributes="0"/>
+                      <Component id="jButton17" alignment="0" pref="211" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -426,7 +440,7 @@
                           <Component id="jButton18" min="-2" pref="68" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jButton19" min="-2" pref="68" max="-2" attributes="0"/>
-                          <EmptySpace pref="390" max="32767" attributes="0"/>
+                          <EmptySpace pref="416" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
