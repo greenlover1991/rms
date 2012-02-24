@@ -13,9 +13,6 @@ package rms.views;
 
 import java.awt.Toolkit;
 
-import rms.views.reporting.DTRReportView;
-import rms.views.reporting.SalesReportView;
-import rms.views.reporting.SpoilageReportView;
 
 /**
  *
@@ -39,27 +36,27 @@ public class LoginView extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtLogin = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JPasswordField();
         btnLogin = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnSettings = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Start the day");
         setName("frmLogin"); // NOI18N
         setResizable(false);
 
-        jLabel1.setFont(new java.awt.Font("DejaVu Sans", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("DejaVu Sans", 0, 24));
         jLabel1.setText("Password:");
 
-        jLabel2.setFont(new java.awt.Font("DejaVu Sans", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("DejaVu Sans", 0, 24));
         jLabel2.setText("Login:");
 
-        jTextField1.setFont(new java.awt.Font("DejaVu Sans", 0, 24)); // NOI18N
+        txtLogin.setFont(new java.awt.Font("DejaVu Sans", 0, 24));
 
-        jPasswordField1.setFont(new java.awt.Font("DejaVu Sans", 0, 24)); // NOI18N
+        txtPassword.setFont(new java.awt.Font("DejaVu Sans", 0, 24));
 
-        btnLogin.setFont(new java.awt.Font("DejaVu Sans", 0, 24)); // NOI18N
+        btnLogin.setFont(new java.awt.Font("DejaVu Sans", 0, 24));
         btnLogin.setText("Login");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -67,7 +64,12 @@ public class LoginView extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Settings");
+        btnSettings.setText("Settings");
+        btnSettings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSettingsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -77,7 +79,7 @@ public class LoginView extends javax.swing.JFrame {
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(btnSettings)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
                         .addComponent(btnLogin))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -86,8 +88,8 @@ public class LoginView extends javax.swing.JFrame {
                             .addComponent(jLabel2))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                            .addComponent(jPasswordField1, 0, 0, Short.MAX_VALUE))))
+                            .addComponent(txtLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                            .addComponent(txtPassword, 0, 0, Short.MAX_VALUE))))
                 .addGap(60, 60, 60))
         );
         layout.setVerticalGroup(
@@ -96,15 +98,15 @@ public class LoginView extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogin)
-                    .addComponent(jButton2))
+                    .addComponent(btnSettings))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
@@ -119,14 +121,20 @@ public class LoginView extends javax.swing.JFrame {
         main.setVisible(true);
     }//GEN-LAST:event_btnLoginActionPerformed
 
+    private void btnSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSettingsActionPerformed
+        // TODO add your handling code here:
+        SettingsView settings = new SettingsView();
+        settings.setVisible(true);
+    }//GEN-LAST:event_btnSettingsActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnSettings;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtLogin;
+    private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
 	
 //	//for testing isolated internal frames.

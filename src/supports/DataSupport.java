@@ -19,9 +19,9 @@ import java.util.logging.Logger;
  */
 public class DataSupport {
     private static final String dbName = "rms";
-    public static String userName = "root";
-    public static String password = "SCtheapuh";
-    public static String hostAddress = "127.0.0.1";
+    public static String userName;
+    public static String password;
+    public static String hostAddress;
     private static String portAddress = "3306";
 
     private static final int DEFAULT_ISOLATION_LEVEL = Connection.TRANSACTION_READ_COMMITTED;
@@ -34,6 +34,7 @@ public class DataSupport {
      * Will do all the transaction commiting and closing of connection.
      * Connections are opened everytime you instantiate.
      * Connections are closed everytime you execute.
+     * @throws if it cannot connect.
      */
     public DataSupport() throws SQLException{
         conn = DriverManager.getConnection("jdbc:mysql://"+hostAddress+":"+portAddress+"/"+dbName, userName, password);
@@ -95,6 +96,9 @@ public class DataSupport {
         return result;
     }
 
+    public Connection getConnection(){
+        return this.conn;
+    }
 
 
 

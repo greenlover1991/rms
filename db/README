@@ -3,3 +3,4 @@ FOR MYSQL SERVER SETTINGS
 STEPS:
 1.) Pls. change the binding IP from 127.0.0.1 into 0.0.0.0 to receive db requests from other hosts.
 2.) Update the users db where user is '127.0.0.1' into '%'.
+3.) To check connection, click the Settings button in the Login screen. Click Test Connection after saving your settings.
