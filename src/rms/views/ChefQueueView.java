@@ -52,6 +52,10 @@ public class ChefQueueView extends JInternalFrame {
 		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
 
 		chefQueue = new JTable(model);
+		
+		//table listener
+		chefQueue.getModel().addTableModelListener(model);
+		
 		TableColumn column = null;
 		column = chefQueue.getColumnModel().getColumn(0);
 		column.setPreferredWidth(100);

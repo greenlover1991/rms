@@ -1,12 +1,14 @@
 package rms.models;
 
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
 /*
  * @author Yu
  *
  */
-public class ChefQueueModel extends AbstractTableModel{
+public class ChefQueueModel extends AbstractTableModel implements TableModelListener{
 	String[] columnNames = { "Status", "Particular", "Service" };
 	Object[][] data = { { "Pending", "Lasagna", "Dine In" },
 			{ "Processing", "Meat Balls", "Take Out" } };
@@ -39,6 +41,12 @@ public class ChefQueueModel extends AbstractTableModel{
 	public void setValueAt(Object value, int row, int column) {
 		data[row][column] = value;
 		fireTableCellUpdated(row, column);
+	}
+
+	@Override
+	public void tableChanged(TableModelEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
