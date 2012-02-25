@@ -11,7 +11,6 @@
 
 package rms.views;
 
-import javax.swing.JButton;
 
 import rms.views.reporting.DTRReportView;
 import rms.views.reporting.InventoryReportView;
@@ -36,495 +35,436 @@ public class MainApplicationView extends javax.swing.JFrame {
 	 */
 	@SuppressWarnings("unchecked")
 	// <editor-fold defaultstate="collapsed"
-	// desc="Generated Code">//GEN-BEGIN:initComponents
-	private void initComponents() {
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
-		mainPanel = new javax.swing.JDesktopPane();
-		tabPanel = new javax.swing.JPanel();
-		jTabbedPane1 = new javax.swing.JTabbedPane();
-		jPanel1 = new javax.swing.JPanel();
-		jButton5 = new javax.swing.JButton();
-		jButton6 = new javax.swing.JButton();
-		jButton7 = new javax.swing.JButton();
-		jButton8 = new javax.swing.JButton();
-		jButton9 = new javax.swing.JButton();
-		jButton10 = new javax.swing.JButton();
-		jButton12 = new javax.swing.JButton();
-		jButton13 = new javax.swing.JButton();
-		jButton14 = new javax.swing.JButton();
-		jPanel2 = new javax.swing.JPanel();
-		jButton11 = new javax.swing.JButton();
-		jPanel3 = new javax.swing.JPanel();
-		btnInventory = new javax.swing.JButton();
-		btnRequisition = new javax.swing.JButton();
-		btnPurchase = new javax.swing.JButton();
-		btnSpoilage = new javax.swing.JButton();
-		jPanel4 = new javax.swing.JPanel();
-		btnTableOccupancy = new javax.swing.JButton();
-		jPanel5 = new javax.swing.JPanel();
-		btnChefQueue = new javax.swing.JButton();
-		jPanel6 = new javax.swing.JPanel();
-		JButton btnDTRReport = new JButton();
-		btnSpoilageReport = new javax.swing.JButton();
-		btnSalesReport = new javax.swing.JButton();
-		btnInventoryReport = new javax.swing.JButton();
-		jMenuBar1 = new javax.swing.JMenuBar();
-		jMenu1 = new javax.swing.JMenu();
-		jMenuItem1 = new javax.swing.JMenuItem();
-		jSeparator1 = new javax.swing.JPopupMenu.Separator();
-		jMenuItem2 = new javax.swing.JMenuItem();
-		jMenu2 = new javax.swing.JMenu();
-		jMenuItem3 = new javax.swing.JMenuItem();
+        mainPanel = new javax.swing.JDesktopPane();
+        tabPanel = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        pnlManagement = new javax.swing.JPanel();
+        btnIngredient = new javax.swing.JButton();
+        btnMenuCategory = new javax.swing.JButton();
+        btnMenuItem = new javax.swing.JButton();
+        btnPriceList = new javax.swing.JButton();
+        btnTable = new javax.swing.JButton();
+        btnSupplier = new javax.swing.JButton();
+        btnEmployee = new javax.swing.JButton();
+        btnRoles = new javax.swing.JButton();
+        pnlOrdering = new javax.swing.JPanel();
+        btnOrderSlip = new javax.swing.JButton();
+        pnlInventory = new javax.swing.JPanel();
+        btnInventory = new javax.swing.JButton();
+        btnRequisition = new javax.swing.JButton();
+        btnPurchase = new javax.swing.JButton();
+        btnSpoilage = new javax.swing.JButton();
+        pnlTableOccupancy = new javax.swing.JPanel();
+        btnTableOccupancy = new javax.swing.JButton();
+        pnlChefQueue = new javax.swing.JPanel();
+        btnChefQueue = new javax.swing.JButton();
+        pnlReports = new javax.swing.JPanel();
+        btnGeneralReport = new javax.swing.JButton();
+        btnSalesReport = new javax.swing.JButton();
+        btnInventoryReport = new javax.swing.JButton();
+        btnDTRReport = new javax.swing.JButton();
+        btnSpoilageReport = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		setTitle("RMS");
-		setAlwaysOnTop(true);
-		setName("frmMainApplication"); // NOI18N
-		setResizable(false);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("RMS");
+        setAlwaysOnTop(true);
+        setName("frmMainApplication"); // NOI18N
+        setResizable(false);
 
-		mainPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        mainPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-		tabPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        tabPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-		jTabbedPane1.setFont(new java.awt.Font("DejaVu Sans", 0, 15)); // NOI18N
+        jTabbedPane1.setFont(new java.awt.Font("DejaVu Sans", 0, 15));
 
-		jButton5.setText("Ingredient");
-		jButton5.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton5ActionPerformed(evt);
-			}
-		});
+        btnIngredient.setText("Ingredient");
+        btnIngredient.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnIngredientMousePressed(evt);
+            }
+        });
 
-		jButton6.setText("Menu Category");
+        btnMenuCategory.setText("Menu Category");
 
-		jButton7.setText("Menu Item");
+        btnMenuItem.setText("Menu Item");
+        btnMenuItem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMenuItemMouseClicked(evt);
+            }
+        });
 
-		jButton8.setText("Price List");
+        btnPriceList.setText("Price List");
+        btnPriceList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPriceListMouseClicked(evt);
+            }
+        });
 
-		jButton9.setText("Table");
+        btnTable.setText("Table");
 
-		jButton10.setText("Supplier");
+        btnSupplier.setText("Supplier");
+        btnSupplier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSupplierMouseClicked(evt);
+            }
+        });
 
-		jButton12.setText("Employee");
+        btnEmployee.setText("Employee");
+        btnEmployee.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEmployeeMouseClicked(evt);
+            }
+        });
+        btnEmployee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEmployeeActionPerformed(evt);
+            }
+        });
 
-		jButton13.setText("Rights");
+        btnRoles.setText("Roles");
 
-		jButton14.setText("Roles");
+        javax.swing.GroupLayout pnlManagementLayout = new javax.swing.GroupLayout(pnlManagement);
+        pnlManagement.setLayout(pnlManagementLayout);
+        pnlManagementLayout.setHorizontalGroup(
+            pnlManagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnIngredient, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+            .addComponent(btnMenuItem, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+            .addComponent(btnTable, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+            .addComponent(btnMenuCategory, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+            .addComponent(btnSupplier, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+            .addComponent(btnPriceList, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+            .addComponent(btnEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+            .addComponent(btnRoles, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+        );
+        pnlManagementLayout.setVerticalGroup(
+            pnlManagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlManagementLayout.createSequentialGroup()
+                .addComponent(btnIngredient, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnMenuCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnMenuItem, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnTable, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnPriceList, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRoles, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(132, Short.MAX_VALUE))
+        );
 
-		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(
-				jPanel1);
-		jPanel1.setLayout(jPanel1Layout);
-		jPanel1Layout.setHorizontalGroup(jPanel1Layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE,
-						204, Short.MAX_VALUE)
-				.addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE,
-						204, Short.MAX_VALUE)
-				.addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE,
-						204, Short.MAX_VALUE)
-				.addComponent(jButton6,
-						javax.swing.GroupLayout.Alignment.TRAILING,
-						javax.swing.GroupLayout.DEFAULT_SIZE, 204,
-						Short.MAX_VALUE)
-				.addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE,
-						204, Short.MAX_VALUE)
-				.addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE,
-						204, Short.MAX_VALUE)
-				.addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE,
-						204, Short.MAX_VALUE)
-				.addComponent(jButton14, javax.swing.GroupLayout.DEFAULT_SIZE,
-						204, Short.MAX_VALUE)
-				.addComponent(jButton13, javax.swing.GroupLayout.DEFAULT_SIZE,
-						204, Short.MAX_VALUE));
-		jPanel1Layout
-				.setVerticalGroup(jPanel1Layout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(
-								jPanel1Layout
-										.createSequentialGroup()
-										.addComponent(
-												jButton5,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												54,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jButton6,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												54,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jButton7,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												54,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jButton9,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												54,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jButton10,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												54,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jButton8,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												54,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jButton12,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												54,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jButton14,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												54,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jButton13,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												54,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(72, Short.MAX_VALUE)));
+        jTabbedPane1.addTab("Management", pnlManagement);
 
-		jTabbedPane1.addTab("Management", jPanel1);
+        btnOrderSlip.setText("Order Slip");
 
-		jButton11.setText("Order Slip");
-		jButton11.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				jButton11MouseClicked(evt);
-			}
-		});
+        javax.swing.GroupLayout pnlOrderingLayout = new javax.swing.GroupLayout(pnlOrdering);
+        pnlOrdering.setLayout(pnlOrderingLayout);
+        pnlOrderingLayout.setHorizontalGroup(
+            pnlOrderingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnOrderSlip, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+        );
+        pnlOrderingLayout.setVerticalGroup(
+            pnlOrderingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlOrderingLayout.createSequentialGroup()
+                .addComponent(btnOrderSlip, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(539, Short.MAX_VALUE))
+        );
 
-		javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(
-				jPanel2);
-		jPanel2.setLayout(jPanel2Layout);
-		jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-				jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, 204,
-				Short.MAX_VALUE));
-		jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				jPanel2Layout
-						.createSequentialGroup()
-						.addComponent(jButton11,
-								javax.swing.GroupLayout.PREFERRED_SIZE, 67,
-								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(539, Short.MAX_VALUE)));
+        jTabbedPane1.addTab("Ordering", pnlOrdering);
 
-		jTabbedPane1.addTab("Ordering", jPanel2);
+        btnInventory.setText("Inventory");
+        btnInventory.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnInventoryMouseClicked(evt);
+            }
+        });
 
-		btnInventory.setText("Inventory");
-		btnInventory.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				btnInventoryMouseClicked(evt);
-			}
-		});
+        btnRequisition.setText("Requisition");
+        btnRequisition.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRequisitionMouseClicked(evt);
+            }
+        });
 
-		btnRequisition.setText("Requisition");
-		btnRequisition.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				btnRequisitionMouseClicked(evt);
-			}
-		});
+        btnPurchase.setText("Purchase");
+        btnPurchase.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPurchaseMouseClicked(evt);
+            }
+        });
 
-		btnPurchase.setText("Purchase");
-		btnPurchase.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				btnPurchaseMouseClicked(evt);
-			}
-		});
+        btnSpoilage.setText("Spoilage");
+        btnSpoilage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSpoilageMouseClicked(evt);
+            }
+        });
 
-		btnSpoilage.setText("Spoilage");
-		btnSpoilage.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				btnSpoilageMouseClicked(evt);
-			}
-		});
+        javax.swing.GroupLayout pnlInventoryLayout = new javax.swing.GroupLayout(pnlInventory);
+        pnlInventory.setLayout(pnlInventoryLayout);
+        pnlInventoryLayout.setHorizontalGroup(
+            pnlInventoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnInventory, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+            .addComponent(btnRequisition, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+            .addComponent(btnPurchase, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+            .addComponent(btnSpoilage, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+        );
+        pnlInventoryLayout.setVerticalGroup(
+            pnlInventoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlInventoryLayout.createSequentialGroup()
+                .addComponent(btnInventory, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRequisition, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnPurchase, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSpoilage, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(322, Short.MAX_VALUE))
+        );
 
-		javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(
-				jPanel3);
-		jPanel3.setLayout(jPanel3Layout);
-		jPanel3Layout.setHorizontalGroup(jPanel3Layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addComponent(btnInventory,
-						javax.swing.GroupLayout.DEFAULT_SIZE, 204,
-						Short.MAX_VALUE)
-				.addComponent(btnRequisition,
-						javax.swing.GroupLayout.DEFAULT_SIZE, 204,
-						Short.MAX_VALUE)
-				.addComponent(btnPurchase,
-						javax.swing.GroupLayout.DEFAULT_SIZE, 204,
-						Short.MAX_VALUE)
-				.addComponent(btnSpoilage,
-						javax.swing.GroupLayout.DEFAULT_SIZE, 204,
-						Short.MAX_VALUE));
-		jPanel3Layout
-				.setVerticalGroup(jPanel3Layout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(
-								jPanel3Layout
-										.createSequentialGroup()
-										.addComponent(
-												btnInventory,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												68,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												btnRequisition,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												66,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												btnPurchase,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												66,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												btnSpoilage,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												66,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(322, Short.MAX_VALUE)));
+        jTabbedPane1.addTab("Inventory", pnlInventory);
 
-		jTabbedPane1.addTab("Inventory", jPanel3);
+        btnTableOccupancy.setText("Table Occupancy");
+        btnTableOccupancy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTableOccupancyActionPerformed(evt);
+            }
+        });
 
-		btnTableOccupancy.setText("Table Occupancy");
-		btnTableOccupancy
-				.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(java.awt.event.ActionEvent evt) {
-						btnTableOccupancyActionPerformed(evt);
-					}
-				});
+        javax.swing.GroupLayout pnlTableOccupancyLayout = new javax.swing.GroupLayout(pnlTableOccupancy);
+        pnlTableOccupancy.setLayout(pnlTableOccupancyLayout);
+        pnlTableOccupancyLayout.setHorizontalGroup(
+            pnlTableOccupancyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnTableOccupancy, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+        );
+        pnlTableOccupancyLayout.setVerticalGroup(
+            pnlTableOccupancyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlTableOccupancyLayout.createSequentialGroup()
+                .addComponent(btnTableOccupancy, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(538, Short.MAX_VALUE))
+        );
 
-		javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(
-				jPanel4);
-		jPanel4.setLayout(jPanel4Layout);
-		jPanel4Layout.setHorizontalGroup(jPanel4Layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-				btnTableOccupancy, javax.swing.GroupLayout.DEFAULT_SIZE, 204,
-				Short.MAX_VALUE));
-		jPanel4Layout.setVerticalGroup(jPanel4Layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				jPanel4Layout
-						.createSequentialGroup()
-						.addComponent(btnTableOccupancy,
-								javax.swing.GroupLayout.PREFERRED_SIZE, 68,
-								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(538, Short.MAX_VALUE)));
+        jTabbedPane1.addTab("Monitor", pnlTableOccupancy);
 
-		jTabbedPane1.addTab("Monitor", jPanel4);
+        btnChefQueue.setText("View Queue");
+        btnChefQueue.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnChefQueueMouseClicked(evt);
+            }
+        });
 
-		btnChefQueue.setText("View Queue");
-		btnChefQueue.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				btnChefQueueMouseClicked(evt);
-			}
-		});
+        javax.swing.GroupLayout pnlChefQueueLayout = new javax.swing.GroupLayout(pnlChefQueue);
+        pnlChefQueue.setLayout(pnlChefQueueLayout);
+        pnlChefQueueLayout.setHorizontalGroup(
+            pnlChefQueueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnChefQueue, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+        );
+        pnlChefQueueLayout.setVerticalGroup(
+            pnlChefQueueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlChefQueueLayout.createSequentialGroup()
+                .addComponent(btnChefQueue, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(538, Short.MAX_VALUE))
+        );
 
-		javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(
-				jPanel5);
-		jPanel5.setLayout(jPanel5Layout);
-		jPanel5Layout.setHorizontalGroup(jPanel5Layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-				btnChefQueue, javax.swing.GroupLayout.DEFAULT_SIZE, 204,
-				Short.MAX_VALUE));
-		jPanel5Layout.setVerticalGroup(jPanel5Layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				jPanel5Layout
-						.createSequentialGroup()
-						.addComponent(btnChefQueue,
-								javax.swing.GroupLayout.PREFERRED_SIZE, 68,
-								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(538, Short.MAX_VALUE)));
+        jTabbedPane1.addTab("Chef's Queue", pnlChefQueue);
 
-		jTabbedPane1.addTab("Chef's Queue", jPanel5);
+        btnGeneralReport.setText("General Report Viewer");
 
-		btnDTRReport.setText("DTR Report");
-		btnDTRReport.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				btnDTRReportMouseClicked(evt);
-			}
-		});
+        btnSalesReport.setText("Sales Report");
+        btnSalesReport.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSalesReportMouseClicked(evt);
+            }
+        });
 
-		btnSpoilageReport.setText("Spoilage Report");
-		btnSpoilageReport.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				btnSpoilageReportMouseClicked(evt);
-			}
-		});
+        btnInventoryReport.setText("Inventory Report");
+        btnInventoryReport.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnInventoryReportMouseClicked(evt);
+            }
+        });
 
-		btnSalesReport.setText("Sales Report");
-		btnSalesReport.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				btnSalesReportMouseClicked(evt);
-			}
-		});
+        btnDTRReport.setText("DTR Report");
+        btnDTRReport.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDTRReportMouseClicked(evt);
+            }
+        });
 
-		btnInventoryReport.setText("Inventory Report");
-		btnInventoryReport.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				btnInventoryReportMouseClicked(evt);
-			}
-		});
+        btnSpoilageReport.setText("Spoilage Report");
+        btnSpoilageReport.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSpoilageReportMouseClicked(evt);
+            }
+        });
 
-		javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(
-				jPanel6);
-		jPanel6.setLayout(jPanel6Layout);
-		jPanel6Layout.setHorizontalGroup(jPanel6Layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addComponent(btnInventoryReport,
-						javax.swing.GroupLayout.DEFAULT_SIZE, 204,
-						Short.MAX_VALUE)
-				.addComponent(btnSalesReport,
-						javax.swing.GroupLayout.DEFAULT_SIZE, 204,
-						Short.MAX_VALUE)
-				.addComponent(btnSpoilageReport,
-						javax.swing.GroupLayout.DEFAULT_SIZE, 204,
-						Short.MAX_VALUE)
-				.addComponent(btnDTRReport,
-						javax.swing.GroupLayout.DEFAULT_SIZE, 204,
-						Short.MAX_VALUE));
-		jPanel6Layout
-				.setVerticalGroup(jPanel6Layout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(
-								jPanel6Layout
-										.createSequentialGroup()
-										.addComponent(
-												btnDTRReport,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												68,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												btnSpoilageReport,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												68,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												btnSalesReport,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												68,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												btnInventoryReport,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												68,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(390, Short.MAX_VALUE)));
+        javax.swing.GroupLayout pnlReportsLayout = new javax.swing.GroupLayout(pnlReports);
+        pnlReports.setLayout(pnlReportsLayout);
+        pnlReportsLayout.setHorizontalGroup(
+            pnlReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnInventoryReport, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+            .addComponent(btnSalesReport, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+            .addComponent(btnGeneralReport, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+            .addComponent(btnDTRReport, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+            .addComponent(btnSpoilageReport, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+        );
+        pnlReportsLayout.setVerticalGroup(
+            pnlReportsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlReportsLayout.createSequentialGroup()
+                .addComponent(btnGeneralReport, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSalesReport, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnInventoryReport, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDTRReport, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSpoilageReport, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(242, Short.MAX_VALUE))
+        );
 
-		jTabbedPane1.addTab("Reports", jPanel6);
+        jTabbedPane1.addTab("Reports", pnlReports);
 
-		javax.swing.GroupLayout tabPanelLayout = new javax.swing.GroupLayout(
-				tabPanel);
-		tabPanel.setLayout(tabPanelLayout);
-		tabPanelLayout.setHorizontalGroup(tabPanelLayout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-				jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 216,
-				Short.MAX_VALUE));
-		tabPanelLayout.setVerticalGroup(tabPanelLayout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-				jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 710,
-				Short.MAX_VALUE));
+        javax.swing.GroupLayout tabPanelLayout = new javax.swing.GroupLayout(tabPanel);
+        tabPanel.setLayout(tabPanelLayout);
+        tabPanelLayout.setHorizontalGroup(
+            tabPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+        );
+        tabPanelLayout.setVerticalGroup(
+            tabPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE)
+        );
 
-		jMenu1.setText("File");
+        jMenu1.setText("File");
 
-		jMenuItem1.setText("Change Building");
-		jMenu1.add(jMenuItem1);
-		jMenu1.add(jSeparator1);
+        jMenuItem1.setText("Change Building");
+        jMenu1.add(jMenuItem1);
+        jMenu1.add(jSeparator1);
 
-		jMenuItem2.setText("Exit");
-		jMenu1.add(jMenuItem2);
+        jMenuItem2.setText("Exit");
+        jMenu1.add(jMenuItem2);
 
-		jMenuBar1.add(jMenu1);
+        jMenuBar1.add(jMenu1);
 
-		jMenu2.setText("Help");
+        jMenu2.setText("Help");
 
-		jMenuItem3.setText("About");
-		jMenu2.add(jMenuItem3);
+        jMenuItem3.setText("About");
+        jMenu2.add(jMenuItem3);
 
-		jMenuBar1.add(jMenu2);
+        jMenuBar1.add(jMenu2);
 
-		setJMenuBar(jMenuBar1);
+        setJMenuBar(jMenuBar1);
 
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(
-				getContentPane());
-		getContentPane().setLayout(layout);
-		layout.setHorizontalGroup(layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(tabPanel,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(mainPanel,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										522, Short.MAX_VALUE).addContainerGap()));
-		layout.setVerticalGroup(layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(
-						javax.swing.GroupLayout.Alignment.TRAILING,
-						layout.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.TRAILING)
-												.addComponent(
-														tabPanel,
-														javax.swing.GroupLayout.Alignment.LEADING,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														Short.MAX_VALUE)
-												.addComponent(
-														mainPanel,
-														javax.swing.GroupLayout.Alignment.LEADING,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														714, Short.MAX_VALUE))
-								.addContainerGap()));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tabPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(tabPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(mainPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 714, Short.MAX_VALUE))
+                .addContainerGap())
+        );
 
-		pack();
-	}// </editor-fold>//GEN-END:initComponents
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
 
-	private void jButton11MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton11MouseClicked
-		// TODO add your handling code here:
-	}// GEN-LAST:event_jButton11MouseClicked
+        private void btnIngredientMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIngredientMousePressed
+            // TODO add your handling code here:
+            IngredientView inv = new IngredientView();
+            MainApplicationView.this.mainPanel.add(inv);
+            inv.setVisible(true);
+        }//GEN-LAST:event_btnIngredientMousePressed
+
+        private void btnMenuItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuItemMouseClicked
+            // TODO add your handling code here:
+            MenuItemsView inv = new MenuItemsView();
+		MainApplicationView.this.mainPanel.add(inv);
+		inv.setVisible(true);
+        }//GEN-LAST:event_btnMenuItemMouseClicked
+
+        private void btnSupplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSupplierMouseClicked
+            // TODO add your handling code here:
+            SupplierView inv = new SupplierView();
+            MainApplicationView.this.mainPanel.add(inv); 
+            inv.setVisible(true);
+
+            SupplierView2 inv2 = new SupplierView2();
+            MainApplicationView.this.mainPanel.add(inv2);
+            inv2.setVisible(true);
+        }//GEN-LAST:event_btnSupplierMouseClicked
+
+        private void btnPriceListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPriceListMouseClicked
+            // TODO add your handling code here:
+            MenuPriceListView inv = new MenuPriceListView();
+            MainApplicationView.this.mainPanel.add(inv);
+            inv.setVisible(true);
+        }//GEN-LAST:event_btnPriceListMouseClicked
+
+        private void btnEmployeeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEmployeeMouseClicked
+            // TODO add your handling code here:
+            
+        }//GEN-LAST:event_btnEmployeeMouseClicked
+
+        private void btnEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmployeeActionPerformed
+            // TODO add your handling code here:
+            EmployeeView2 inv2 = new EmployeeView2();
+            MainApplicationView.this.mainPanel.add(inv2);
+            inv2.setVisible(true);
+
+            EmployeeView inv = new EmployeeView();
+            MainApplicationView.this.mainPanel.add(inv);
+            inv.setVisible(true);
+        }//GEN-LAST:event_btnEmployeeActionPerformed
+
+        private void btnSalesReportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalesReportMouseClicked
+            // TODO add your handling code here:
+            SalesReportView srv = new SalesReportView();
+            MainApplicationView.this.mainPanel.add(srv);
+            srv.setVisible(true);
+            srv.toFront();
+        }//GEN-LAST:event_btnSalesReportMouseClicked
+
+        private void btnDTRReportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDTRReportMouseClicked
+            // TODO add your handling code here:
+            DTRReportView drv = new DTRReportView();
+            MainApplicationView.this.mainPanel.add(drv);
+            drv.setVisible(true);
+            drv.toFront();
+        }//GEN-LAST:event_btnDTRReportMouseClicked
+
+        private void btnSpoilageReportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSpoilageReportMouseClicked
+            // TODO add your handling code here:
+            SpoilageReportView srv = new SpoilageReportView();
+            MainApplicationView.this.mainPanel.add(srv);
+            srv.setVisible(true);
+            srv.toFront();
+        }//GEN-LAST:event_btnSpoilageReportMouseClicked
 
 	private void btnInventoryMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnInventoryMouseClicked
 		// TODO add your handling code here:
@@ -561,27 +501,6 @@ public class MainApplicationView extends javax.swing.JFrame {
 		cqv.toFront();
 	}// GEN-LAST:event_jButton16MouseClicked
 
-	private void btnDTRReportMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton17MouseClicked
-		DTRReportView drv = new DTRReportView();
-		MainApplicationView.this.mainPanel.add(drv);
-		drv.setVisible(true);
-		drv.toFront();
-	}// GEN-LAST:event_jButton17MouseClicked
-
-	private void btnSpoilageReportMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton17MouseClicked
-		SpoilageReportView srv = new SpoilageReportView();
-		MainApplicationView.this.mainPanel.add(srv);
-		srv.setVisible(true);
-		srv.toFront();
-	}// GEN-LAST:event_jButton17MouseClicked
-
-	private void btnSalesReportMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton18MouseClicked
-		SalesReportView srv = new SalesReportView();
-		MainApplicationView.this.mainPanel.add(srv);
-		srv.setVisible(true);
-		srv.toFront();
-	}// GEN-LAST:event_jButton18MouseClicked
-
 	private void btnInventoryReportMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton19MouseClicked
 		InventoryReportView irv = new InventoryReportView();
 		MainApplicationView.this.mainPanel.add(irv);
@@ -597,46 +516,44 @@ public class MainApplicationView extends javax.swing.JFrame {
 		tom.toFront();
 	}// GEN-LAST:event_btnTableOccupancyActionPerformed
 
-	private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton5ActionPerformed
-		// TODO add your handling code here:
-	}// GEN-LAST:event_jButton5ActionPerformed
 
-	// Variables declaration - do not modify//GEN-BEGIN:variables
-	private javax.swing.JButton btnChefQueue;
-	private javax.swing.JButton btnInventory;
-	private javax.swing.JButton btnPurchase;
-	private javax.swing.JButton btnRequisition;
-	private javax.swing.JButton btnSpoilage;
-	private javax.swing.JButton btnTableOccupancy;
-	private javax.swing.JButton jButton10;
-	private javax.swing.JButton jButton11;
-	private javax.swing.JButton jButton12;
-	private javax.swing.JButton jButton13;
-	private javax.swing.JButton jButton14;
-	private javax.swing.JButton btnSpoilageReport;
-	private javax.swing.JButton btnSalesReport;
-	private javax.swing.JButton btnInventoryReport;
-	private javax.swing.JButton jButton5;
-	private javax.swing.JButton jButton6;
-	private javax.swing.JButton jButton7;
-	private javax.swing.JButton jButton8;
-	private javax.swing.JButton jButton9;
-	private javax.swing.JMenu jMenu1;
-	private javax.swing.JMenu jMenu2;
-	private javax.swing.JMenuBar jMenuBar1;
-	private javax.swing.JMenuItem jMenuItem1;
-	private javax.swing.JMenuItem jMenuItem2;
-	private javax.swing.JMenuItem jMenuItem3;
-	private javax.swing.JPanel jPanel1;
-	private javax.swing.JPanel jPanel2;
-	private javax.swing.JPanel jPanel3;
-	private javax.swing.JPanel jPanel4;
-	private javax.swing.JPanel jPanel5;
-	private javax.swing.JPanel jPanel6;
-	private javax.swing.JPopupMenu.Separator jSeparator1;
-	private javax.swing.JTabbedPane jTabbedPane1;
-	private javax.swing.JDesktopPane mainPanel;
-	private javax.swing.JPanel tabPanel;
-	// End of variables declaration//GEN-END:variables
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnChefQueue;
+    private javax.swing.JButton btnDTRReport;
+    private javax.swing.JButton btnEmployee;
+    private javax.swing.JButton btnGeneralReport;
+    private javax.swing.JButton btnIngredient;
+    private javax.swing.JButton btnInventory;
+    private javax.swing.JButton btnInventoryReport;
+    private javax.swing.JButton btnMenuCategory;
+    private javax.swing.JButton btnMenuItem;
+    private javax.swing.JButton btnOrderSlip;
+    private javax.swing.JButton btnPriceList;
+    private javax.swing.JButton btnPurchase;
+    private javax.swing.JButton btnRequisition;
+    private javax.swing.JButton btnRoles;
+    private javax.swing.JButton btnSalesReport;
+    private javax.swing.JButton btnSpoilage;
+    private javax.swing.JButton btnSpoilageReport;
+    private javax.swing.JButton btnSupplier;
+    private javax.swing.JButton btnTable;
+    private javax.swing.JButton btnTableOccupancy;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JDesktopPane mainPanel;
+    private javax.swing.JPanel pnlChefQueue;
+    private javax.swing.JPanel pnlInventory;
+    private javax.swing.JPanel pnlManagement;
+    private javax.swing.JPanel pnlOrdering;
+    private javax.swing.JPanel pnlReports;
+    private javax.swing.JPanel pnlTableOccupancy;
+    private javax.swing.JPanel tabPanel;
+    // End of variables declaration//GEN-END:variables
 
 }
