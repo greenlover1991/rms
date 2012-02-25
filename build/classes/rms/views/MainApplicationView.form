@@ -129,7 +129,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
           <SubComponents>
-            <Container class="javax.swing.JPanel" name="jPanel1">
+            <Container class="javax.swing.JPanel" name="pnlManagement">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="Management">
@@ -141,94 +141,99 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jButton5" alignment="0" pref="204" max="32767" attributes="0"/>
-                      <Component id="jButton7" alignment="0" pref="204" max="32767" attributes="1"/>
-                      <Component id="jButton9" alignment="0" pref="204" max="32767" attributes="0"/>
-                      <Component id="jButton6" alignment="1" pref="204" max="32767" attributes="0"/>
-                      <Component id="jButton10" alignment="0" pref="204" max="32767" attributes="0"/>
-                      <Component id="jButton8" alignment="0" pref="204" max="32767" attributes="0"/>
-                      <Component id="jButton12" alignment="0" pref="204" max="32767" attributes="1"/>
-                      <Component id="jButton14" alignment="0" pref="204" max="32767" attributes="0"/>
-                      <Component id="jButton13" alignment="0" pref="204" max="32767" attributes="0"/>
+                      <Component id="btnIngredient" alignment="0" pref="204" max="32767" attributes="0"/>
+                      <Component id="btnMenuItem" alignment="0" pref="204" max="32767" attributes="1"/>
+                      <Component id="btnTable" alignment="0" pref="204" max="32767" attributes="0"/>
+                      <Component id="btnMenuCategory" alignment="1" pref="204" max="32767" attributes="0"/>
+                      <Component id="btnSupplier" alignment="0" pref="204" max="32767" attributes="0"/>
+                      <Component id="btnPriceList" alignment="0" pref="204" max="32767" attributes="0"/>
+                      <Component id="btnEmployee" alignment="0" pref="204" max="32767" attributes="1"/>
+                      <Component id="btnRoles" alignment="0" pref="204" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jButton5" min="-2" pref="54" max="-2" attributes="0"/>
+                          <Component id="btnIngredient" min="-2" pref="54" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton6" min="-2" pref="54" max="-2" attributes="0"/>
+                          <Component id="btnMenuCategory" min="-2" pref="54" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton7" min="-2" pref="54" max="-2" attributes="0"/>
+                          <Component id="btnMenuItem" min="-2" pref="54" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton9" min="-2" pref="54" max="-2" attributes="0"/>
+                          <Component id="btnTable" min="-2" pref="54" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton10" min="-2" pref="54" max="-2" attributes="0"/>
+                          <Component id="btnSupplier" min="-2" pref="54" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton8" min="-2" pref="54" max="-2" attributes="0"/>
+                          <Component id="btnPriceList" min="-2" pref="54" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton12" min="-2" pref="54" max="-2" attributes="0"/>
+                          <Component id="btnEmployee" min="-2" pref="54" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton14" min="-2" pref="54" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton13" min="-2" pref="54" max="-2" attributes="0"/>
-                          <EmptySpace pref="72" max="32767" attributes="0"/>
+                          <Component id="btnRoles" min="-2" pref="54" max="-2" attributes="0"/>
+                          <EmptySpace pref="132" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JButton" name="jButton5">
+                <Component class="javax.swing.JButton" name="btnIngredient">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Ingredient"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+                    <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnIngredientMousePressed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton6">
+                <Component class="javax.swing.JButton" name="btnMenuCategory">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Menu Category"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton7">
+                <Component class="javax.swing.JButton" name="btnMenuItem">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Menu Item"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnMenuItemMouseClicked"/>
+                  </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton8">
+                <Component class="javax.swing.JButton" name="btnPriceList">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Price List"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnPriceListMouseClicked"/>
+                  </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton9">
+                <Component class="javax.swing.JButton" name="btnTable">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Table"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton10">
+                <Component class="javax.swing.JButton" name="btnSupplier">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Supplier"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnSupplierMouseClicked"/>
+                  </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton12">
+                <Component class="javax.swing.JButton" name="btnEmployee">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Employee"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnEmployeeMouseClicked"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEmployeeActionPerformed"/>
+                  </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton13">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Rights"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JButton" name="jButton14">
+                <Component class="javax.swing.JButton" name="btnRoles">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Roles"/>
                   </Properties>
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel2">
+            <Container class="javax.swing.JPanel" name="pnlOrdering">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="Ordering">
@@ -240,30 +245,27 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jButton11" alignment="0" pref="204" max="32767" attributes="0"/>
+                      <Component id="btnOrderSlip" alignment="0" pref="204" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jButton11" min="-2" pref="67" max="-2" attributes="0"/>
+                          <Component id="btnOrderSlip" min="-2" pref="67" max="-2" attributes="0"/>
                           <EmptySpace pref="539" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JButton" name="jButton11">
+                <Component class="javax.swing.JButton" name="btnOrderSlip">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Order Slip"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton11MouseClicked"/>
-                  </Events>
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel3">
+            <Container class="javax.swing.JPanel" name="pnlInventory">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="Inventory">
@@ -331,7 +333,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel4">
+            <Container class="javax.swing.JPanel" name="pnlTableOccupancy">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="Monitor">
@@ -366,7 +368,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel5">
+            <Container class="javax.swing.JPanel" name="pnlChefQueue">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="Chef&apos;s Queue">
@@ -401,7 +403,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel6">
+            <Container class="javax.swing.JPanel" name="pnlReports">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="Reports">
@@ -413,47 +415,66 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jButton19" alignment="0" pref="204" max="32767" attributes="0"/>
-                      <Component id="jButton18" alignment="0" pref="204" max="32767" attributes="0"/>
-                      <Component id="jButton17" alignment="0" pref="204" max="32767" attributes="0"/>
+                      <Component id="btnInventoryReport" alignment="0" pref="204" max="32767" attributes="0"/>
+                      <Component id="btnSalesReport" alignment="0" pref="204" max="32767" attributes="0"/>
+                      <Component id="btnGeneralReport" alignment="0" pref="204" max="32767" attributes="0"/>
+                      <Component id="btnDTRReport" alignment="0" pref="204" max="32767" attributes="0"/>
+                      <Component id="btnSpoilageReport" alignment="0" pref="204" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jButton17" min="-2" pref="68" max="-2" attributes="0"/>
+                          <Component id="btnGeneralReport" min="-2" pref="68" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton18" min="-2" pref="68" max="-2" attributes="0"/>
+                          <Component id="btnSalesReport" min="-2" pref="68" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton19" min="-2" pref="68" max="-2" attributes="0"/>
-                          <EmptySpace pref="390" max="32767" attributes="0"/>
+                          <Component id="btnInventoryReport" min="-2" pref="68" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btnDTRReport" min="-2" pref="68" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btnSpoilageReport" min="-2" pref="68" max="-2" attributes="0"/>
+                          <EmptySpace pref="242" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JButton" name="jButton17">
+                <Component class="javax.swing.JButton" name="btnGeneralReport">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="General Report Viewer"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton17MouseClicked"/>
-                  </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton18">
+                <Component class="javax.swing.JButton" name="btnSalesReport">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Sales Report"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton18MouseClicked"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnSalesReportMouseClicked"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton19">
+                <Component class="javax.swing.JButton" name="btnInventoryReport">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Inventory Report"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton19MouseClicked"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnInventoryReportMouseClicked"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="btnDTRReport">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="DTR Report"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnDTRReportMouseClicked"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="btnSpoilageReport">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Spoilage Report"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnSpoilageReportMouseClicked"/>
                   </Events>
                 </Component>
               </SubComponents>

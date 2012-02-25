@@ -21,14 +21,13 @@ import javax.swing.table.TableColumn;
 
 import org.jbundle.thin.base.screen.jcalendarbutton.JCalendarButton;
 
+import rms.models.SpoilageReportModel;
+
 /*
  * @author Yu
  *
  */
 public class SpoilageReportView extends JInternalFrame {
-	int buttonNo = 0;
-	String[] columnNames = { "Ingredient", "Qty" };
-	Object[][] data = { { "Patty", "10" }, { "Cheese", "15" } };
 	DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
 	JTable DTR;
 	JPanel panelDateButtons = new JPanel();
@@ -37,6 +36,9 @@ public class SpoilageReportView extends JInternalFrame {
 	JTextField textFieldDateFrom, textFieldDateTo;
 	JLabel labelDateFrom, labelDateTo;
 	DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
+	SpoilageReportModel model = new SpoilageReportModel();
+	int buttonNo = 0;
+
 
 	public SpoilageReportView() {
 		super("Spoilage Report", true,// resizable
@@ -111,7 +113,7 @@ public class SpoilageReportView extends JInternalFrame {
 
 		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
 
-		DTR = new JTable(data, columnNames);
+		DTR = new JTable(model);
 		TableColumn column = null;
 		column = DTR.getColumnModel().getColumn(0);
 		column.setCellRenderer(dtcr);

@@ -9,16 +9,17 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import rms.models.DTRReportModel;
+
 /*
  * @author Yu
  *
  */
 public class DTRReportView extends JInternalFrame {
-	String[] columnNames = { "In", "Out", "Rate/Hr", "Total/Day" };
-	Object[][] data = { {"9:00:00","7:00:00", "50", "500" }, {"5:00:00","9:00:00", "40", "160" } };
 	DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
 	JTable DTR;
 	JScrollPane scrollPaneDTR;
+	DTRReportModel model = new DTRReportModel();
 
 	public DTRReportView() {
 		super("Daily Time Record Report", true,// resizable
@@ -39,7 +40,7 @@ public class DTRReportView extends JInternalFrame {
 
 		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
 
-		DTR = new JTable(data, columnNames);
+		DTR = new JTable(model);
 		TableColumn column = null;
 		column = DTR.getColumnModel().getColumn(0);
 		column.setPreferredWidth(150);

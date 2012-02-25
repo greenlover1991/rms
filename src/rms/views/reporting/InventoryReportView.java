@@ -21,15 +21,13 @@ import javax.swing.table.TableColumn;
 
 import org.jbundle.thin.base.screen.jcalendarbutton.JCalendarButton;
 
+import rms.models.InventoryReportModel;
+
 /*
  * @author Yu
  *
  */
 public class InventoryReportView extends JInternalFrame {
-	String[] columnNames = { "Ingredients", "Initial", "In", "Out",
-			"End"};
-	Object[][] data = { { "Sesame Seeds", "99", "10", "20", "89" },
-			{ "Pasta", "199", "20", "10", "189" } };
 	DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
 	JTable DTR;
 	JPanel panelDateButtons = new JPanel();
@@ -38,6 +36,7 @@ public class InventoryReportView extends JInternalFrame {
 	JTextField textFieldDateFrom, textFieldDateTo;
 	JLabel labelDateFrom, labelDateTo;
 	DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
+	InventoryReportModel model = new InventoryReportModel();
 	int buttonNum = 0;
 
 	public InventoryReportView() {
@@ -112,7 +111,7 @@ public class InventoryReportView extends JInternalFrame {
 
 		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
 
-		DTR = new JTable(data, columnNames);
+		DTR = new JTable(model);
 		TableColumn column = null;
 		column = DTR.getColumnModel().getColumn(0);
 		column.setMinWidth(150);
