@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import rms.models.BaseTableModel;
 
 /**
  * DB support for mysql only
@@ -99,6 +100,10 @@ public class DataSupport {
     public Connection getConnection(){
         return this.conn;
     }
+
+    // convert result to basetablemodel instead
+
+
 
 
 

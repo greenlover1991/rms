@@ -12,6 +12,11 @@
 package rms.views;
 
 import java.awt.Toolkit;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import supports.DataSupport;
 
 
 /**
@@ -114,16 +119,27 @@ public class LoginView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
-        MainApplicationView main = new MainApplicationView();
-        Toolkit tk = Toolkit.getDefaultToolkit();
-        main.setSize(tk.getScreenSize().width, tk.getScreenSize().height);
-        main.setVisible(true);
+        try {
+            // TODO add your handling code here:
+            MainApplicationView main = new MainApplicationView();
+            Toolkit tk = Toolkit.getDefaultToolkit();
+            DataSupport dh = new DataSupport();
+            ResultSet rs = dh.executeQuery("SELECT * FROM employees");
+            rs.next();
+            System.out.println(rs.getString("login"));
+
+            main.setSize(tk.getScreenSize().width, tk.getScreenSize().height);
+            main.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSettingsActionPerformed
         // TODO add your handling code here:
-        SettingsView settings = new SettingsView();
+        SettingsView settings = new SettingsView(this, true);
         settings.setVisible(true);
     }//GEN-LAST:event_btnSettingsActionPerformed
 

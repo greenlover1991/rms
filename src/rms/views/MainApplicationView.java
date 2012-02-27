@@ -12,6 +12,19 @@
 package rms.views;
 
 
+import rms.views.monitoring.TableOccupancyMonitorView;
+import rms.views.monitoring.ChefQueueView;
+import rms.views.inventory.InventoryView;
+import rms.views.inventory.PurchaseView;
+import rms.views.inventory.SpoilageView;
+import rms.views.inventory.RequisitionView;
+import rms.views.management.SupplierView;
+import rms.views.management.SupplierView2;
+import rms.views.management.EmployeeView2;
+import rms.views.management.IngredientView;
+import rms.views.management.MenuPriceListView;
+import rms.views.management.MenuItemsView;
+import rms.views.management.EmployeeView;
 import rms.views.reporting.DTRReportView;
 import rms.views.reporting.InventoryReportView;
 import rms.views.reporting.SalesReportView;
