@@ -108,6 +108,11 @@ public class MainApplicationView extends javax.swing.JFrame {
         });
 
         btnMenuCategory.setText("Menu Category");
+        btnMenuCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMenuCategoryActionPerformed(evt);
+            }
+        });
 
         btnMenuItem.setText("Menu Item");
         btnMenuItem.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -124,6 +129,11 @@ public class MainApplicationView extends javax.swing.JFrame {
         });
 
         btnTable.setText("Table");
+        btnTable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTableActionPerformed(evt);
+            }
+        });
 
         btnSupplier.setText("Supplier");
         btnSupplier.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -145,6 +155,11 @@ public class MainApplicationView extends javax.swing.JFrame {
         });
 
         btnRoles.setText("Roles");
+        btnRoles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRolesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlManagementLayout = new javax.swing.GroupLayout(pnlManagement);
         pnlManagement.setLayout(pnlManagementLayout);
@@ -478,6 +493,27 @@ public class MainApplicationView extends javax.swing.JFrame {
             srv.setVisible(true);
             srv.toFront();
         }//GEN-LAST:event_btnSpoilageReportMouseClicked
+
+        private void btnMenuCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuCategoryActionPerformed
+            // TODO add your handling code here:
+            MenuCategoryView mcv = new MenuCategoryView();
+            MainApplicationView.this.mainPanel.add(mcv);
+            mcv.setVisible(true);
+        }//GEN-LAST:event_btnMenuCategoryActionPerformed
+
+        private void btnTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTableActionPerformed
+            // TODO add your handling code here:
+            TableView tv = new TableView();
+            MainApplicationView.this.mainPanel.add(tv);
+            tv.setVisible(true);
+        }//GEN-LAST:event_btnTableActionPerformed
+
+        private void btnRolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRolesActionPerformed
+            // TODO add your handling code here:
+            RoleView rv = new RoleView();
+            MainApplicationView.this.mainPanel.add(rv);
+            rv.setVisible(true);
+        }//GEN-LAST:event_btnRolesActionPerformed
 
 	private void btnInventoryMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnInventoryMouseClicked
 		// TODO add your handling code here:

@@ -119,21 +119,12 @@ public class LoginView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        try {
-            // TODO add your handling code here:
-            MainApplicationView main = new MainApplicationView();
-            Toolkit tk = Toolkit.getDefaultToolkit();
-            DataSupport dh = new DataSupport();
-            ResultSet rs = dh.executeQuery("SELECT * FROM employees");
-            rs.next();
-            System.out.println(rs.getString("login"));
-
-            main.setSize(tk.getScreenSize().width, tk.getScreenSize().height);
-            main.setVisible(true);
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        // TODO add your handling code here:
+        MainApplicationView main = new MainApplicationView();
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        main.setSize(tk.getScreenSize().width, tk.getScreenSize().height);
+        main.setVisible(true);
+       
 
     }//GEN-LAST:event_btnLoginActionPerformed
 

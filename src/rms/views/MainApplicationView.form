@@ -187,6 +187,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Menu Category"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMenuCategoryActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnMenuItem">
                   <Properties>
@@ -208,6 +211,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Table"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTableActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSupplier">
                   <Properties>
@@ -230,6 +236,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Roles"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRolesActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
