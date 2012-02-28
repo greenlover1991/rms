@@ -6,6 +6,7 @@
 package rms;
 
 import rms.views.LoginView;
+import supports.DataSupport;
 
 /**
  *
@@ -17,6 +18,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        DataSupport.loadSettings();
         new LoginView().setVisible(true);
     }
 

@@ -14,23 +14,24 @@ import javax.swing.table.AbstractTableModel;
  * @author squeekyclean
  */
 public class BaseTableModel extends AbstractTableModel {
-    public String tableName;
     public List<String> columnNames;
-    public List<String> primaryColumns;
+    public List<String> columnAliases;
+    //public List<String> primaryColumns;
     public List<DataRow> rows;
 
-    public BaseTableModel(String tableName){
-        this.tableName = tableName;
+    public BaseTableModel(){
         this.columnNames = new ArrayList<String>();
-        this.primaryColumns = new ArrayList<String>();
+        this.columnAliases = new ArrayList<String>();
+        this.rows = new ArrayList<DataRow>(); 
+
     }
 
-    public BaseTableModel(String tableName, List<String> columnNames, List<String> primaryColumns){
-        this.tableName = tableName;
+    public BaseTableModel(List<String> columnNames, List<String> columnAliases){
         this.columnNames = columnNames;
-        this.primaryColumns = primaryColumns;
+        this.columnAliases = columnAliases;
+        this.rows = new ArrayList<DataRow>();
     }
-    
+
     public int getRowCount() {
         return rows.size();
     }
@@ -52,4 +53,17 @@ public class BaseTableModel extends AbstractTableModel {
         rows.get(rowIndex).set(aValue, columnIndex);
         fireTableCellUpdated(rowIndex, columnIndex);
     }
+
+    @Override
+    public String getColumnName(int column) {
+        return columnAliases.get(column);
+    }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        return getValueAt(0, columnIndex).getClass();
+    }
+
+
+
 }

@@ -17,9 +17,16 @@ package rms.views.inventory;
  */
 public class RequisitionView extends javax.swing.JInternalFrame {
 
+    private static RequisitionView INSTANCE;
     /** Creates new form RequisitionView */
-    public RequisitionView() {
+    private RequisitionView() {
         initComponents();
+    }
+
+    public static RequisitionView getInstance(){
+        if(INSTANCE == null)
+            INSTANCE = new RequisitionView();
+        return INSTANCE;
     }
 
     /** This method is called from within the constructor to

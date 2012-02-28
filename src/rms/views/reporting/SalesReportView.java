@@ -40,7 +40,8 @@ public class SalesReportView extends JInternalFrame {
 	DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
 	int buttonNum = 0;
 
-	public SalesReportView() {
+        private static SalesReportView INSTANCE;
+	private SalesReportView() {
 		super("Sales Report", true,// resizable
 				true, // closable
 				true, // maximizable
@@ -56,7 +57,7 @@ public class SalesReportView extends JInternalFrame {
 		setVisible(true);
 	}
 
-	public void initComponents() {
+	private void initComponents() {
 		buttonDateFrom = new JCalendarButton();
 		buttonDateTo = new JCalendarButton();
 		textFieldDateFrom = new JTextField(10);
@@ -184,6 +185,12 @@ public class SalesReportView extends JInternalFrame {
 			buttonDateTo.setTargetDate(date);
 		}
 	}
+
+        public static SalesReportView getInstance(){
+            if(INSTANCE == null)
+                INSTANCE = new SalesReportView();
+            return INSTANCE;
+        }
 	
 //	for (int i = 0, rows = model.getRowCount(); i < rows; i++)  
 //	{  

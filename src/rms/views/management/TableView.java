@@ -9,7 +9,7 @@
  * Created on Feb 25, 2012, 8:06:06 PM
  */
 
-package rms.views;
+package rms.views.management;
 
 /**
  *
@@ -17,9 +17,16 @@ package rms.views;
  */
 public class TableView extends javax.swing.JInternalFrame {
 
+    private static TableView INSTANCE;
     /** Creates new form MasterFilesUI */
-    public TableView() {
+    private TableView() {
         initComponents();
+    }
+
+    public static TableView getInstance(){
+        if(INSTANCE == null)
+            INSTANCE = new TableView();
+        return INSTANCE;
     }
 
     /** This method is called from within the constructor to

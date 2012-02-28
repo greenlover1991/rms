@@ -54,6 +54,7 @@ public class SettingsView extends javax.swing.JDialog {
         txtUserName = new javax.swing.JTextField();
         btnSave = new javax.swing.JButton();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Settings");
         setModal(true);
         setResizable(false);
@@ -83,23 +84,23 @@ public class SettingsView extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnSave, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(63, 63, 63)
-                        .addComponent(txtHost, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(25, 25, 25)
-                        .addComponent(txtUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(27, 27, 27)
-                        .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)))
+                        .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                            .addComponent(txtHost, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(11, 11, 11)
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtHost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -131,7 +132,7 @@ public class SettingsView extends javax.swing.JDialog {
             dh = new DataSupport();
             title = ProjectConstants.MSG_SUCCESS_CONNECTION_DB + "\n" + ProjectConstants.MSG_SUCCESS_CONFIG_FILE_SAVE;
             dh.getConnection().close();
-            writeSettings();
+            DataSupport.writeSettings();
             JOptionPane.showMessageDialog(this, title, ProjectConstants.MSG_SUCCESS_CONFIG_FILE_SAVE, JOptionPane.INFORMATION_MESSAGE);
         }
         catch(SQLException e){
@@ -139,42 +140,13 @@ public class SettingsView extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, e.toString(), title, JOptionPane.ERROR_MESSAGE);
         }
         
-        
     }//GEN-LAST:event_btnSaveActionPerformed
 
 
     private void loadSettings(){
-        try {
-            Scanner scanner = new Scanner(new FileInputStream(ProjectConstants.DB_CONFIG_FILE_PATH));
-            DataSupport.hostAddress = scanner.nextLine();
-            DataSupport.userName = scanner.nextLine();
-            DataSupport.password = scanner.nextLine();
-            txtHost.setText(DataSupport.hostAddress);
-            txtUserName.setText(DataSupport.userName);
-            txtPassword.setText(DataSupport.password);
-            scanner.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(SettingsView.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, ex.toString(), ProjectConstants.MSG_ERROR_CONFIG_FILE, JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void writeSettings(){
-        FileWriter writer;
-        try {
-            writer = new FileWriter(ProjectConstants.DB_CONFIG_FILE_PATH);
-            writer.write(DataSupport.hostAddress);
-            writer.write("\n");
-            writer.write(DataSupport.userName);
-            writer.write("\n");
-            writer.write(DataSupport.password);
-            writer.write("\n");
-            writer.close();
-        } catch (IOException ex) {
-            Logger.getLogger(SettingsView.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, ex.toString(), ProjectConstants.MSG_ERROR_CONFIG_FILE, JOptionPane.ERROR_MESSAGE);
-        }
-        
+        txtHost.setText(DataSupport.hostAddress);
+        txtUserName.setText(DataSupport.userName);
+        txtPassword.setText(DataSupport.password);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

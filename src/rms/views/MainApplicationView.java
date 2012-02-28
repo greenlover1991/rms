@@ -12,6 +12,15 @@
 package rms.views;
 
 
+import java.beans.PropertyVetoException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JInternalFrame;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
 import rms.views.monitoring.TableOccupancyMonitorView;
 import rms.views.monitoring.ChefQueueView;
 import rms.views.inventory.InventoryView;
@@ -19,12 +28,13 @@ import rms.views.inventory.PurchaseView;
 import rms.views.inventory.SpoilageView;
 import rms.views.inventory.RequisitionView;
 import rms.views.management.SupplierView;
-import rms.views.management.SupplierView2;
-import rms.views.management.EmployeeView2;
 import rms.views.management.IngredientView;
-import rms.views.management.MenuPriceListView;
 import rms.views.management.MenuItemsView;
 import rms.views.management.EmployeeView;
+import rms.views.management.MenuCategoryView;
+import rms.views.management.RoleView;
+import rms.views.management.SupplierPriceListView;
+import rms.views.management.TableView;
 import rms.views.reporting.DTRReportView;
 import rms.views.reporting.InventoryReportView;
 import rms.views.reporting.SalesReportView;
@@ -35,10 +45,52 @@ import rms.views.reporting.SpoilageReportView;
  * @author squeekyclean
  */
 public class MainApplicationView extends javax.swing.JFrame {
+        private List<JInternalFrame> listOfOpenedFrames;
+
+        private InternalFrameListener internalFrameListener;
+
+        // management
+        private EmployeeView employee;
+        private IngredientView ingredient;
+        private MenuCategoryView menuCategory;
+        private MenuItemsView menuItem;
+        private SupplierView supplier;
+        private SupplierPriceListView supplierPriceList;
+        private RoleView role;
+        private TableView table;
+
+        // inventory
+        private InventoryView inventory;
+        private PurchaseView purchase;
+        private RequisitionView requisition;
+        private SpoilageView spoilage;
+
+        // table occupancy
+        private ChefQueueView chef;
+        private TableOccupancyMonitorView tom;
+
+        // reports
+        private DTRReportView reportDtr;
+        private InventoryReportView reportInventory;
+        private SalesReportView reportSales;
+        private SpoilageReportView reportSpoilage;
+
+
 
 	/** Creates new form MainApplicationView */
 	public MainApplicationView() {
 		initComponents();
+                listOfOpenedFrames = new ArrayList<JInternalFrame>();
+                internalFrameListener = new InternalFrameAdapter() {
+
+                    @Override
+                    public void internalFrameClosing(InternalFrameEvent e) {
+                        JInternalFrame frame = e.getInternalFrame();
+                        listOfOpenedFrames.remove(frame);
+                        //frame.dispose();
+                    }
+
+                };
 	}
 
 	/**
@@ -424,34 +476,26 @@ public class MainApplicationView extends javax.swing.JFrame {
 
         private void btnIngredientMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIngredientMousePressed
             // TODO add your handling code here:
-            IngredientView inv = new IngredientView();
-            MainApplicationView.this.mainPanel.add(inv);
-            inv.setVisible(true);
+            ingredient = IngredientView.getInstance();
+            addToMainMDI(ingredient);
         }//GEN-LAST:event_btnIngredientMousePressed
 
         private void btnMenuItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuItemMouseClicked
             // TODO add your handling code here:
-            MenuItemsView inv = new MenuItemsView();
-		MainApplicationView.this.mainPanel.add(inv);
-		inv.setVisible(true);
+            menuItem = MenuItemsView.getInstance();
+            addToMainMDI(menuItem);
         }//GEN-LAST:event_btnMenuItemMouseClicked
 
         private void btnSupplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSupplierMouseClicked
             // TODO add your handling code here:
-            SupplierView inv = new SupplierView();
-            MainApplicationView.this.mainPanel.add(inv); 
-            inv.setVisible(true);
-
-            SupplierView2 inv2 = new SupplierView2();
-            MainApplicationView.this.mainPanel.add(inv2);
-            inv2.setVisible(true);
+            supplier = SupplierView.getInstance();
+            addToMainMDI(supplier);
         }//GEN-LAST:event_btnSupplierMouseClicked
 
         private void btnPriceListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPriceListMouseClicked
             // TODO add your handling code here:
-            MenuPriceListView inv = new MenuPriceListView();
-            MainApplicationView.this.mainPanel.add(inv);
-            inv.setVisible(true);
+            supplierPriceList = SupplierPriceListView.getInstance();
+            addToMainMDI(supplierPriceList);
         }//GEN-LAST:event_btnPriceListMouseClicked
 
         private void btnEmployeeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEmployeeMouseClicked
@@ -461,110 +505,100 @@ public class MainApplicationView extends javax.swing.JFrame {
 
         private void btnEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmployeeActionPerformed
             // TODO add your handling code here:
-            EmployeeView2 inv2 = new EmployeeView2();
-            MainApplicationView.this.mainPanel.add(inv2);
-            inv2.setVisible(true);
-
-            EmployeeView inv = new EmployeeView();
-            MainApplicationView.this.mainPanel.add(inv);
-            inv.setVisible(true);
+            employee = EmployeeView.getInstance();
+            addToMainMDI(employee);
         }//GEN-LAST:event_btnEmployeeActionPerformed
 
         private void btnSalesReportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalesReportMouseClicked
             // TODO add your handling code here:
-            SalesReportView srv = new SalesReportView();
-            MainApplicationView.this.mainPanel.add(srv);
-            srv.setVisible(true);
-            srv.toFront();
+            reportSales = SalesReportView.getInstance();
+            addToMainMDI(reportSales);
         }//GEN-LAST:event_btnSalesReportMouseClicked
 
         private void btnDTRReportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDTRReportMouseClicked
             // TODO add your handling code here:
-            DTRReportView drv = new DTRReportView();
-            MainApplicationView.this.mainPanel.add(drv);
-            drv.setVisible(true);
-            drv.toFront();
+            reportDtr = DTRReportView.getInstance();
+            addToMainMDI(reportDtr);
         }//GEN-LAST:event_btnDTRReportMouseClicked
 
         private void btnSpoilageReportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSpoilageReportMouseClicked
             // TODO add your handling code here:
-            SpoilageReportView srv = new SpoilageReportView();
-            MainApplicationView.this.mainPanel.add(srv);
-            srv.setVisible(true);
-            srv.toFront();
+            reportSpoilage = SpoilageReportView.getInstance();
+            addToMainMDI(reportSpoilage);
         }//GEN-LAST:event_btnSpoilageReportMouseClicked
 
         private void btnMenuCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuCategoryActionPerformed
             // TODO add your handling code here:
-            MenuCategoryView mcv = new MenuCategoryView();
-            MainApplicationView.this.mainPanel.add(mcv);
-            mcv.setVisible(true);
+            menuCategory = MenuCategoryView.getInstance();
+            addToMainMDI(menuCategory);
         }//GEN-LAST:event_btnMenuCategoryActionPerformed
 
         private void btnTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTableActionPerformed
             // TODO add your handling code here:
-            TableView tv = new TableView();
-            MainApplicationView.this.mainPanel.add(tv);
-            tv.setVisible(true);
+            table = TableView.getInstance();
+            addToMainMDI(table);
         }//GEN-LAST:event_btnTableActionPerformed
 
         private void btnRolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRolesActionPerformed
             // TODO add your handling code here:
-            RoleView rv = new RoleView();
-            MainApplicationView.this.mainPanel.add(rv);
-            rv.setVisible(true);
+            role = RoleView.getInstance();
+            addToMainMDI(role);
         }//GEN-LAST:event_btnRolesActionPerformed
 
 	private void btnInventoryMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnInventoryMouseClicked
-		// TODO add your handling code here:
-		InventoryView inv = new InventoryView();
-		MainApplicationView.this.mainPanel.add(inv);
-		inv.setVisible(true);
+            // TODO add your handling code here:
+            inventory = InventoryView.getInstance();
+            addToMainMDI(inventory);
 	}// GEN-LAST:event_btnInventoryMouseClicked
 
 	private void btnRequisitionMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnRequisitionMouseClicked
-		// TODO add your handling code here:
-		RequisitionView inv = new RequisitionView();
-		MainApplicationView.this.mainPanel.add(inv);
-		inv.setVisible(true);
+            // TODO add your handling code here:
+            requisition = RequisitionView.getInstance();
+            addToMainMDI(requisition);
 	}// GEN-LAST:event_btnRequisitionMouseClicked
 
 	private void btnPurchaseMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnPurchaseMouseClicked
-		// TODO add your handling code here:
-		PurchaseView inv = new PurchaseView();
-		MainApplicationView.this.mainPanel.add(inv);
-		inv.setVisible(true);
+            // TODO add your handling code here:
+            purchase = PurchaseView.getInstance();
+            addToMainMDI(purchase);
 	}// GEN-LAST:event_btnPurchaseMouseClicked
 
 	private void btnSpoilageMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnSpoilageMouseClicked
-		// TODO add your handling code here:
-		SpoilageView inv = new SpoilageView();
-		MainApplicationView.this.mainPanel.add(inv);
-		inv.setVisible(true);
+            // TODO add your handling code here:
+            spoilage = SpoilageView.getInstance();
+            addToMainMDI(spoilage);
 	}// GEN-LAST:event_btnSpoilageMouseClicked
 
 	private void btnChefQueueMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton16MouseClicked
-		ChefQueueView cqv = new ChefQueueView();
-		MainApplicationView.this.mainPanel.add(cqv);
-		cqv.setVisible(true);
-		cqv.toFront();
+            chef = ChefQueueView.getInstance();
+            addToMainMDI(chef);
 	}// GEN-LAST:event_jButton16MouseClicked
 
 	private void btnInventoryReportMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jButton19MouseClicked
-		InventoryReportView irv = new InventoryReportView();
-		MainApplicationView.this.mainPanel.add(irv);
-		irv.setVisible(true);
-		irv.toFront();
+            reportInventory = InventoryReportView.getInstance();
+            addToMainMDI(reportInventory);
 	}// GEN-LAST:event_jButton19MouseClicked
 
 	private void btnTableOccupancyActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnTableOccupancyActionPerformed
-		// TODO add your handling code here:
-		TableOccupancyMonitorView tom = new TableOccupancyMonitorView();
-		MainApplicationView.this.mainPanel.add(tom);
-		tom.setVisible(true);
-		tom.toFront();
+            // TODO add your handling code here:
+            tom = TableOccupancyMonitorView.getInstance();
+            addToMainMDI(tom);
 	}// GEN-LAST:event_btnTableOccupancyActionPerformed
 
+        private void addToMainMDI(JInternalFrame view){
+            if(!listOfOpenedFrames.contains(view)){
+                view.addInternalFrameListener(internalFrameListener);
+                listOfOpenedFrames.add(view);
+                MainApplicationView.this.mainPanel.add(view);
+                view.setVisible(true);
+            }
+            view.toFront();
+            try {
+                view.setSelected(true);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(MainApplicationView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChefQueue;
@@ -604,5 +638,7 @@ public class MainApplicationView extends javax.swing.JFrame {
     private javax.swing.JPanel pnlTableOccupancy;
     private javax.swing.JPanel tabPanel;
     // End of variables declaration//GEN-END:variables
+
+
 
 }

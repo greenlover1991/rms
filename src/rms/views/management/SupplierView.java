@@ -19,9 +19,16 @@ import javax.swing.table.DefaultTableModel;
  */
 public class SupplierView extends javax.swing.JInternalFrame {
 
+    private static SupplierView INSTANCE;
     /** Creates new form InventoryView */
-    public SupplierView() {
+    private SupplierView() {
         initComponents();
+    }
+
+    public static SupplierView getInstance(){
+        if(INSTANCE == null)
+            INSTANCE = new SupplierView();
+        return INSTANCE;
     }
 
     /** This method is called from within the constructor to

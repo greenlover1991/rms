@@ -28,7 +28,9 @@ public class ChefQueueView extends JInternalFrame {
 	JButton buttonConfig = new JButton("Config");
 	JPanel panelButtons = new JPanel();
 
-	public ChefQueueView() {
+        private static ChefQueueView INSTANCE;
+
+	private ChefQueueView() {
 		super("Chef Queue", true,// resizable
 				true, // closable
 				true, // maximizable
@@ -44,7 +46,7 @@ public class ChefQueueView extends JInternalFrame {
 		setVisible(true);
 	}
 
-	public void initComponents() {
+	private void initComponents() {
 
 		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -74,5 +76,11 @@ public class ChefQueueView extends JInternalFrame {
 		panelButtons.add(buttonConfig);
 
 	}
+
+        public static ChefQueueView getInstance(){
+            if(INSTANCE == null)
+                INSTANCE = new ChefQueueView();
+            return INSTANCE;
+        }
 
 }

@@ -11,7 +11,6 @@
 
 package rms.views.management;
 
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -21,9 +20,16 @@ import javax.swing.table.DefaultTableModel;
  */
 public class EmployeeView extends javax.swing.JInternalFrame {
 
+    private static EmployeeView INSTANCE;
     /** Creates new form InventoryView */
-    public EmployeeView() {
+    private EmployeeView() {
         initComponents();
+    }
+
+    public static EmployeeView getInstance(){
+        if(INSTANCE == null)
+            INSTANCE = new EmployeeView();
+        return INSTANCE;
     }
 
     /** This method is called from within the constructor to

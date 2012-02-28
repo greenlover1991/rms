@@ -12,11 +12,9 @@
 package rms.views;
 
 import java.awt.Toolkit;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import supports.DataSupport;
+import java.util.HashMap;
+import java.util.Map;
+import rms.models.management.IngredientDBTable;
 
 
 /**
@@ -124,8 +122,6 @@ public class LoginView extends javax.swing.JFrame {
         Toolkit tk = Toolkit.getDefaultToolkit();
         main.setSize(tk.getScreenSize().width, tk.getScreenSize().height);
         main.setVisible(true);
-       
-
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSettingsActionPerformed

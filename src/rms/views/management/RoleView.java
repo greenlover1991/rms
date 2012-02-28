@@ -9,7 +9,7 @@
  * Created on Feb 25, 2012, 8:06:06 PM
  */
 
-package rms.views;
+package rms.views.management;
 
 /**
  *
@@ -17,9 +17,16 @@ package rms.views;
  */
 public class RoleView extends javax.swing.JInternalFrame {
 
+    private static RoleView INSTANCE;
     /** Creates new form MasterFilesUI */
-    public RoleView() {
+    private RoleView() {
         initComponents();
+    }
+
+    public static RoleView getInstance(){
+        if(INSTANCE == null)
+            INSTANCE = new RoleView();
+        return INSTANCE;
     }
 
     /** This method is called from within the constructor to
@@ -156,7 +163,7 @@ public class RoleView extends javax.swing.JInternalFrame {
                 .addGroup(bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(searchfield, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(bodypanelLayout.createSequentialGroup()
-                        .addComponent(searchbutton, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                        .addComponent(searchbutton, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
                         .addGap(10, 10, 10)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)

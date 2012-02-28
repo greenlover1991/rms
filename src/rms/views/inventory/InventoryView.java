@@ -17,9 +17,16 @@ package rms.views.inventory;
  */
 public class InventoryView extends javax.swing.JInternalFrame {
 
+    private static InventoryView INSTANCE;
     /** Creates new form InventoryView */
-    public InventoryView() {
+    private InventoryView() {
         initComponents();
+    }
+
+    public static InventoryView getInstance(){
+        if(INSTANCE == null)
+            INSTANCE = new InventoryView();
+        return INSTANCE;
     }
 
     /** This method is called from within the constructor to

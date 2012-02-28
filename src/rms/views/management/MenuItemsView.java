@@ -19,9 +19,16 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MenuItemsView extends javax.swing.JInternalFrame {
 
+    private static MenuItemsView INSTANCE;
     /** Creates new form InventoryView */
-    public MenuItemsView() {
+    private MenuItemsView() {
         initComponents();
+    }
+
+    public static MenuItemsView getInstance(){
+        if(INSTANCE == null)
+            INSTANCE = new MenuItemsView();
+        return INSTANCE;
     }
 
     /** This method is called from within the constructor to

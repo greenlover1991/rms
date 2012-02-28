@@ -17,12 +17,17 @@ package rms.views.inventory;
  */
 public class PurchaseView extends javax.swing.JInternalFrame {
 
+    private static PurchaseView INSTANCE;
     /** Creates new form PurchaseView */
-    public PurchaseView() {
+    private PurchaseView() {
         initComponents();
-
     }
 
+    public static PurchaseView getInstance(){
+        if(INSTANCE == null)
+            INSTANCE = new PurchaseView();
+        return INSTANCE;
+    }
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is

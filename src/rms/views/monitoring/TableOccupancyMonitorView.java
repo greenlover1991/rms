@@ -24,7 +24,8 @@ public class TableOccupancyMonitorView extends JInternalFrame {
 	JScrollPane scrollPaneTables;
 	JButton[][] buttonOrderSlip, buttonTableStatus;
 
-	public TableOccupancyMonitorView() {
+        private static TableOccupancyMonitorView INSTANCE;
+	private TableOccupancyMonitorView() {
 		super("Table Occupancy Monitor", true,// resizable
 				true, // closable
 				true, // maximizable
@@ -80,4 +81,10 @@ public class TableOccupancyMonitorView extends JInternalFrame {
 
 		scrollPaneTables = new JScrollPane(panelTables);
 	}
+
+        public static TableOccupancyMonitorView getInstance(){
+            if(INSTANCE == null)
+                INSTANCE = new TableOccupancyMonitorView();
+            return INSTANCE;
+        }
 }

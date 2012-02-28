@@ -9,7 +9,7 @@
  * Created on Feb 25, 2012, 8:06:06 PM
  */
 
-package rms.views;
+package rms.views.management;
 
 /**
  *
@@ -17,11 +17,17 @@ package rms.views;
  */
 public class MenuCategoryView extends javax.swing.JInternalFrame {
 
+    private static MenuCategoryView INSTANCE;
     /** Creates new form MasterFilesUI */
-    public MenuCategoryView() {
+    private MenuCategoryView() {
         initComponents();
     }
 
+    public static MenuCategoryView getInstance(){
+        if(INSTANCE == null)
+            INSTANCE = new MenuCategoryView();
+        return INSTANCE;
+    }
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is

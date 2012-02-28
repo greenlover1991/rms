@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author squeekyclean
  */
-class DataRow {
+public class DataRow {
     private List<String> columnNames;
     private HashMap<String, Object> objects;
 
@@ -23,11 +23,11 @@ class DataRow {
             objects.put(columnNames.get(i), values.get(i));
         }
     }
-    
+
     public Object get(int index){
         return get(columnNames.get(index));
     }
-    
+
     public Object get(String column){
         return objects.get(column);
     }

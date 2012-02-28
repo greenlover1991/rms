@@ -17,11 +17,17 @@ package rms.views.inventory;
  */
 public class SpoilageView extends javax.swing.JInternalFrame {
 
+    private static SpoilageView INSTANCE;
     /** Creates new form SpoilageView */
-    public SpoilageView() {
+    private SpoilageView() {
         initComponents();
     }
 
+    public static SpoilageView getInstance(){
+        if(INSTANCE == null)
+            INSTANCE = new SpoilageView();
+        return INSTANCE;
+    }
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
