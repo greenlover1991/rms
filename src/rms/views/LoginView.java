@@ -12,9 +12,6 @@
 package rms.views;
 
 import java.awt.Toolkit;
-import java.util.HashMap;
-import java.util.Map;
-import rms.models.management.IngredientDBTable;
 
 
 /**

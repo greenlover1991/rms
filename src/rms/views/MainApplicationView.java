@@ -27,6 +27,7 @@ import rms.views.inventory.InventoryView;
 import rms.views.inventory.PurchaseView;
 import rms.views.inventory.SpoilageView;
 import rms.views.inventory.RequisitionView;
+import rms.views.management.BranchView;
 import rms.views.management.SupplierView;
 import rms.views.management.IngredientView;
 import rms.views.management.MenuItemsView;
@@ -58,6 +59,7 @@ public class MainApplicationView extends javax.swing.JFrame {
         private SupplierPriceListView supplierPriceList;
         private RoleView role;
         private TableView table;
+        private BranchView branch;
 
         // inventory
         private InventoryView inventory;
@@ -115,6 +117,7 @@ public class MainApplicationView extends javax.swing.JFrame {
         btnSupplier = new javax.swing.JButton();
         btnEmployee = new javax.swing.JButton();
         btnRoles = new javax.swing.JButton();
+        btnBranch = new javax.swing.JButton();
         pnlOrdering = new javax.swing.JPanel();
         btnOrderSlip = new javax.swing.JButton();
         pnlInventory = new javax.swing.JPanel();
@@ -213,6 +216,13 @@ public class MainApplicationView extends javax.swing.JFrame {
             }
         });
 
+        btnBranch.setText("Branches");
+        btnBranch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBranchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlManagementLayout = new javax.swing.GroupLayout(pnlManagement);
         pnlManagement.setLayout(pnlManagementLayout);
         pnlManagementLayout.setHorizontalGroup(
@@ -225,6 +235,7 @@ public class MainApplicationView extends javax.swing.JFrame {
             .addComponent(btnPriceList, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
             .addComponent(btnEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
             .addComponent(btnRoles, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+            .addComponent(btnBranch, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
         );
         pnlManagementLayout.setVerticalGroup(
             pnlManagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,7 +255,9 @@ public class MainApplicationView extends javax.swing.JFrame {
                 .addComponent(btnEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRoles, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(132, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Management", pnlManagement);
@@ -545,6 +558,12 @@ public class MainApplicationView extends javax.swing.JFrame {
             addToMainMDI(role);
         }//GEN-LAST:event_btnRolesActionPerformed
 
+        private void btnBranchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBranchActionPerformed
+            // TODO add your handling code here:
+            branch = BranchView.getInstance();
+            addToMainMDI(branch);
+        }//GEN-LAST:event_btnBranchActionPerformed
+
 	private void btnInventoryMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnInventoryMouseClicked
             // TODO add your handling code here:
             inventory = InventoryView.getInstance();
@@ -601,6 +620,7 @@ public class MainApplicationView extends javax.swing.JFrame {
         }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBranch;
     private javax.swing.JButton btnChefQueue;
     private javax.swing.JButton btnDTRReport;
     private javax.swing.JButton btnEmployee;

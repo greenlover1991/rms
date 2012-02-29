@@ -8,6 +8,7 @@ package rms.models;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -18,12 +19,12 @@ public class BaseTableModel extends AbstractTableModel {
     public List<String> columnAliases;
     //public List<String> primaryColumns;
     public List<DataRow> rows;
+    public TableColumn cols;
 
     public BaseTableModel(){
         this.columnNames = new ArrayList<String>();
         this.columnAliases = new ArrayList<String>();
         this.rows = new ArrayList<DataRow>(); 
-
     }
 
     public BaseTableModel(List<String> columnNames, List<String> columnAliases){
@@ -47,7 +48,7 @@ public class BaseTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, String columnName) {
         return rows.get(rowIndex).get(columnName);
     }
-
+    
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         rows.get(rowIndex).set(aValue, columnIndex);
@@ -63,6 +64,15 @@ public class BaseTableModel extends AbstractTableModel {
     public Class<?> getColumnClass(int columnIndex) {
         return getValueAt(0, columnIndex).getClass();
     }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return true;
+    }
+
+
+
+
 
 
 

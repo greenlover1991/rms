@@ -7,6 +7,7 @@ package rms.models;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -39,5 +40,17 @@ public class DataRow {
     public void set(Object value, String column){
         objects.put(column, value);
     }
+
+    public Map<String, Object> getRow(){
+        return objects;
+    }
+
+    public Map<String, String> getRowAsStrings(){
+        Map<String, String> result = new HashMap<String, String>();
+        for(String key : objects.keySet())
+            result.put(key, objects.get(key).toString());
+        return result;
+    }
+
 
 }

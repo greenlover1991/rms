@@ -22,8 +22,18 @@ public class IngredientDBTable extends DBTable{
     public static final String QUANTITY = "quantity";
     public static final String STATUS = "status";
 
+    public static final String ALIAS_ID = "ID";
+    public static final String ALIAS_NAME = "Ingredient";
+    public static final String ALIAS_DESCRIPTION = "Description";
+    public static final String ALIAS_UNIT_OF_MEASURE = "Unit";
+    public static final String ALIAS_MINIMUM_QUANTITY = "Minimum Quantity";
+    public static final String ALIAS_QUANTITY = "Quantity";
+    public static final String ALIAS_STATUS = "Status";
+
     private static final String[] columns = {ID, NAME, DESCRIPTION, UNIT_OF_MEASURE, MINIMUM_QUANTITY, QUANTITY, STATUS};
-    private static final String[] primary_columns = {ID};
+    private static final String[] columnsAliases = {ALIAS_ID, ALIAS_NAME, ALIAS_DESCRIPTION, ALIAS_UNIT_OF_MEASURE, ALIAS_MINIMUM_QUANTITY, ALIAS_QUANTITY, ALIAS_STATUS};
+    private static final String[] primaryColumns = {ID};
+    private static final String[] uniqueColumns = {ID};
 
     private static IngredientDBTable INSTANCE;
     private IngredientDBTable(){}
@@ -34,19 +44,29 @@ public class IngredientDBTable extends DBTable{
     }
 
     @Override
-    protected String getTableName() {
+    public String getTableName() {
         return TABLE_NAME;
     }
 
 
     @Override
-    protected  String[] getColumns() {
+    public String[] getColumns() {
         return columns;
     }
 
     @Override
-    protected  String[] getPrimaryColumns() {
-        return primary_columns;
+    public String[] getPrimaryColumns() {
+        return primaryColumns;
+    }
+
+    @Override
+    protected String[] getUniqueColumns() {
+        return uniqueColumns;
+    }
+
+    @Override
+    protected String[] getColumnsDefaultAliases() {
+        return columnsAliases;
     }
 
 
