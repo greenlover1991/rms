@@ -6,8 +6,20 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyVetoException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -39,21 +51,92 @@ public class SalesReportView extends JInternalFrame {
 	SalesReportModel model = new SalesReportModel();
 	int buttonNum = 0;
 
+	JFXPanel panelChart = new JFXPanel();
+
 	public SalesReportView() {
 		super("Sales Report", true,// resizable
 				true, // closable
 				true, // maximizable
 				true); // iconifiable
-		setSize(500, 500);
 
 		initComponents();
 
 		add(scrollPaneDTR, BorderLayout.CENTER);
 		add(panelDateButtons, BorderLayout.PAGE_START);
+		add(panelChart, BorderLayout.EAST);
 
-		pack();
+		setSize(new Dimension(1280, 400));
 		setVisible(true);
+
+//		Platform.runLater(new Runnable() {
+//
+//			@Override
+//			public void run() {
+//				initFX(panelChart);
+//
+//			}
+//		});
 	}
+
+//	private void initFX(JFXPanel fxPanel) {
+//		// invoked on JavaFX thread.
+//		Scene scene = createScene();
+//		fxPanel.setScene(scene);
+//	}
+//
+//	public static Scene createScene() {
+//
+//		GregorianCalendar today = new GregorianCalendar();
+//		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+//		// defining the axes.
+//		CategoryAxis xAxis = new CategoryAxis();
+//		NumberAxis yAxis = new NumberAxis();
+//		xAxis.setLabel("Day");
+//		// creating the chart.
+//		final LineChart<String, Number> lineChart = new LineChart<String, Number>(
+//				xAxis, yAxis);
+//		// disable highlight of each data item to show trends.
+//		lineChart.setCreateSymbols(false);
+//		lineChart.setTitle("Sales Monitoring, Last 7 Days");
+//		// defining a series
+//		XYChart.Series series = new XYChart.Series();
+//		series.setName("Doña Juanita");
+//		// populating the series with data
+//		today.add(Calendar.DATE, -6);
+//
+//		series.getData().add(
+//				new XYChart.Data("" + dateFormat.format(today.getTime()), 36));
+//		today.add(Calendar.DATE, 1);
+//
+//		series.getData().add(
+//				new XYChart.Data("" + dateFormat.format(today.getTime()), 22));
+//		today.add(Calendar.DATE, 1);
+//
+//		series.getData().add(
+//				new XYChart.Data("" + dateFormat.format(today.getTime()), 45));
+//		today.add(Calendar.DATE, 1);
+//
+//		series.getData().add(
+//				new XYChart.Data("" + dateFormat.format(today.getTime()), 43));
+//		today.add(Calendar.DATE, 1);
+//
+//		series.getData().add(
+//				new XYChart.Data("" + dateFormat.format(today.getTime()), 17));
+//		today.add(Calendar.DATE, 1);
+//
+//		series.getData().add(
+//				new XYChart.Data("" + dateFormat.format(today.getTime()), 29));
+//		today.add(Calendar.DATE, 1);
+//
+//		series.getData().add(
+//				new XYChart.Data("" + dateFormat.format(today.getTime()), 25));
+//
+//		Scene scene = new Scene(lineChart, 600, 400);
+//		lineChart.getData().add(series);
+//		scene.getStylesheets().add(""); // css
+//
+//		return scene;
+//	}
 
 	public void initComponents() {
 		buttonDateFrom = new JCalendarButton();
@@ -118,32 +201,32 @@ public class SalesReportView extends JInternalFrame {
 		DTR = new JTable(model);
 		TableColumn column = null;
 		column = DTR.getColumnModel().getColumn(0);
-		column.setMinWidth(150);
+		column.setMinWidth(135);
 		column.setCellRenderer(dtcr);
 		column = DTR.getColumnModel().getColumn(1);
-		column.setPreferredWidth(100);
-		column.setMinWidth(100);
-		column.setMaxWidth(100);
+		column.setPreferredWidth(85);
+		column.setMinWidth(85);
+		column.setMaxWidth(85);
 		column.setCellRenderer(dtcr);
 		column = DTR.getColumnModel().getColumn(2);
-		column.setPreferredWidth(65);
-		column.setMinWidth(65);
-		column.setMaxWidth(65);
+		column.setPreferredWidth(55);
+		column.setMinWidth(55);
+		column.setMaxWidth(55);
 		column.setCellRenderer(dtcr);
 		column = DTR.getColumnModel().getColumn(3);
-		column.setPreferredWidth(150);
-		column.setMinWidth(150);
-		column.setMaxWidth(150);
+		column.setPreferredWidth(135);
+		column.setMinWidth(135);
+		column.setMaxWidth(135);
 		column.setCellRenderer(dtcr);
 		column = DTR.getColumnModel().getColumn(4);
-		column.setPreferredWidth(150);
-		column.setMinWidth(150);
-		column.setMaxWidth(150);
+		column.setPreferredWidth(135);
+		column.setMinWidth(135);
+		column.setMaxWidth(135);
 		column.setCellRenderer(dtcr);
 		column = DTR.getColumnModel().getColumn(5);
-		column.setPreferredWidth(150);
-		column.setMinWidth(150);
-		column.setMaxWidth(150);
+		column.setPreferredWidth(135);
+		column.setMinWidth(135);
+		column.setMaxWidth(135);
 		column.setCellRenderer(dtcr);
 
 		scrollPaneDTR = new JScrollPane(DTR);
