@@ -21,9 +21,13 @@ import javax.swing.table.TableColumn;
 
 import org.jbundle.thin.base.screen.jcalendarbutton.JCalendarButton;
 
+<<<<<<< HEAD
 import rms.models.InventoryReportModel;
 
 /*
+=======
+/*  
+>>>>>>> upstream/master
  * @author Yu
  *
  */
@@ -39,7 +43,8 @@ public class InventoryReportView extends JInternalFrame {
 	InventoryReportModel model = new InventoryReportModel();
 	int buttonNum = 0;
 
-	public InventoryReportView() {
+        private static InventoryReportView INSTANCE;
+	private InventoryReportView() {
 		super("Inventory Report", true,// resizable
 				true, // closable
 				true, // maximizable
@@ -55,7 +60,7 @@ public class InventoryReportView extends JInternalFrame {
 		setVisible(true);
 	}
 
-	public void initComponents() {
+	private void initComponents() {
 		buttonDateFrom = new JCalendarButton();
 		buttonDateTo = new JCalendarButton();
 		textFieldDateFrom = new JTextField(10);
@@ -174,4 +179,10 @@ public class InventoryReportView extends JInternalFrame {
 			buttonDateTo.setTargetDate(date);
 		}
 	}
+
+        public static InventoryReportView getInstance(){
+            if(INSTANCE == null)
+                INSTANCE = new InventoryReportView();
+            return INSTANCE;
+        }
 }

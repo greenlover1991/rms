@@ -6,7 +6,7 @@
 /*
  * SettingsView.java
  *
- * Created on 02 25, 12, 12:06:37 AM
+ * Created on Feb 27, 2012, 9:24:35 PM
  */
 
 package rms.views;
@@ -20,13 +20,12 @@ import supports.DataSupport;
  *
  * @author squeekyclean
  */
-public class SettingsView extends javax.swing.JFrame {
-    private String host;
-    private String userName;
-    private String password;
+public class SettingsView extends javax.swing.JDialog {
 
+    
     /** Creates new form SettingsView */
-    public SettingsView() {
+    public SettingsView(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
         loadSettings();
     }
@@ -40,41 +39,34 @@ public class SettingsView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnSave = new javax.swing.JButton();
-        btnTestConnection = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         txtHost = new javax.swing.JTextField();
-        txtUserName = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
+        txtUserName = new javax.swing.JTextField();
+        btnSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Settings");
+        setModal(true);
         setResizable(false);
 
-        btnSave.setText("Save");
+        jLabel3.setFont(new java.awt.Font("DejaVu Sans", 0, 15));
+        jLabel3.setText("Password:");
+
+        jLabel2.setFont(new java.awt.Font("DejaVu Sans", 0, 15));
+        jLabel2.setText("Username:");
+
+        jLabel1.setFont(new java.awt.Font("DejaVu Sans", 0, 15));
+        jLabel1.setText("Host:");
+
+        btnSave.setText("Test and Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveActionPerformed(evt);
             }
         });
-
-        btnTestConnection.setText("Test Connection");
-        btnTestConnection.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTestConnectionActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setFont(new java.awt.Font("DejaVu Sans", 0, 15)); // NOI18N
-        jLabel1.setText("Host:");
-
-        jLabel2.setFont(new java.awt.Font("DejaVu Sans", 0, 15)); // NOI18N
-        jLabel2.setText("Username:");
-
-        jLabel3.setFont(new java.awt.Font("DejaVu Sans", 0, 15)); // NOI18N
-        jLabel3.setText("Password:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -83,87 +75,75 @@ public class SettingsView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtUserName)
-                    .addComponent(txtPassword)
-                    .addComponent(txtHost, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnSave, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnTestConnection)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSave)))
+                        .addComponent(jLabel3)
+                        .addGap(27, 27, 27)
+                        .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                            .addComponent(txtHost, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtHost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(txtHost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSave)
-                    .addComponent(btnTestConnection))
+                    .addComponent(jLabel3)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(btnSave)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnTestConnectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestConnectionActionPerformed
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
+
+        DataSupport.hostAddress = txtHost.getText();
+        DataSupport.userName = txtUserName.getText();
+        DataSupport.password = new String(txtPassword.getPassword());
         DataSupport dh;
         String title = "";
         try{
             dh = new DataSupport();
-            title = ProjectConstants.MSG_SUCCESS_CONNECTION_DB;
+            title = ProjectConstants.MSG_SUCCESS_CONNECTION_DB + "\n" + ProjectConstants.MSG_SUCCESS_CONFIG_FILE_SAVE;
             dh.getConnection().close();
-            JOptionPane.showMessageDialog(this, title, title, JOptionPane.INFORMATION_MESSAGE);
+            DataSupport.writeSettings();
+            JOptionPane.showMessageDialog(this, title, ProjectConstants.MSG_SUCCESS_CONFIG_FILE_SAVE, JOptionPane.INFORMATION_MESSAGE);
         }
         catch(SQLException e){
             title = ProjectConstants.MSG_ERROR_CONNECTION_DB;
             JOptionPane.showMessageDialog(this, e.toString(), title, JOptionPane.ERROR_MESSAGE);
         }
         
-    }//GEN-LAST:event_btnTestConnectionActionPerformed
-
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
-        DataSupport.hostAddress = new String(txtHost.getText());
-        DataSupport.userName = new String(txtUserName.getText());
-        DataSupport.password = new String(txtPassword.getPassword());
-        writeToFile();
     }//GEN-LAST:event_btnSaveActionPerformed
 
+
     private void loadSettings(){
-        // TODO load settings
-        readFromFile();
-    }
-
-    private void writeToFile(){
-        // TODO write to file
-    }
-
-    private void readFromFile(){
-        // TODO read from file
+        txtHost.setText(DataSupport.hostAddress);
+        txtUserName.setText(DataSupport.userName);
+        txtPassword.setText(DataSupport.password);
     }
     
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
-    private javax.swing.JButton btnTestConnection;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

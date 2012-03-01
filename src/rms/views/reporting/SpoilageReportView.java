@@ -40,7 +40,8 @@ public class SpoilageReportView extends JInternalFrame {
 	int buttonNo = 0;
 
 
-	public SpoilageReportView() {
+        private static SpoilageReportView INSTANCE;
+	private SpoilageReportView() {
 		super("Spoilage Report", true,// resizable
 				true, // closable
 				true, // maximizable
@@ -56,7 +57,7 @@ public class SpoilageReportView extends JInternalFrame {
 		setVisible(true);
 	}
 
-	public void initComponents() {
+	private void initComponents() {
 		buttonDateFrom = new JCalendarButton();
 		buttonDateTo = new JCalendarButton();
 		textFieldDateFrom = new JTextField(10);
@@ -160,5 +161,11 @@ public class SpoilageReportView extends JInternalFrame {
 			buttonDateTo.setTargetDate(date);
 		}
 	}
+
+        public static SpoilageReportView getInstance(){
+            if(INSTANCE == null)
+                INSTANCE = new SpoilageReportView();
+            return INSTANCE;
+        }
 
 }

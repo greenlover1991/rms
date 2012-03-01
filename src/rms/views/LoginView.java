@@ -123,7 +123,7 @@ public class LoginView extends javax.swing.JFrame {
 
     private void btnSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSettingsActionPerformed
         // TODO add your handling code here:
-        SettingsView settings = new SettingsView();
+        SettingsView settings = new SettingsView(this, true);
         settings.setVisible(true);
     }//GEN-LAST:event_btnSettingsActionPerformed
 

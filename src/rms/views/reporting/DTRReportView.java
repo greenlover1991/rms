@@ -21,7 +21,8 @@ public class DTRReportView extends JInternalFrame {
 	JScrollPane scrollPaneDTR;
 	DTRReportModel model = new DTRReportModel();
 
-	public DTRReportView() {
+        private static DTRReportView INSTANCE;
+	private DTRReportView() {
 		super("Daily Time Record Report", true,// resizable
 				true, // closable
 				true, // maximizable
@@ -36,7 +37,7 @@ public class DTRReportView extends JInternalFrame {
 		setVisible(true);
 	}
 
-	public void initComponents() {
+	private void initComponents() {
 
 		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -66,4 +67,10 @@ public class DTRReportView extends JInternalFrame {
 		scrollPaneDTR = new JScrollPane(DTR);
 
 	}
+
+        public static DTRReportView getInstance(){
+            if(INSTANCE == null)
+                INSTANCE = new DTRReportView();
+            return INSTANCE;
+        }
 }

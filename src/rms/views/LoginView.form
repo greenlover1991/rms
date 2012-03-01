@@ -30,7 +30,7 @@
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="btnSettings" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="137" max="32767" attributes="0"/>
+                      <EmptySpace pref="165" max="32767" attributes="0"/>
                       <Component id="btnLogin" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -40,7 +40,7 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtLogin" pref="141" max="32767" attributes="0"/>
+                          <Component id="txtLogin" pref="169" max="32767" attributes="0"/>
                           <Component id="txtPassword" alignment="0" min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
