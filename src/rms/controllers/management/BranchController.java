@@ -6,6 +6,8 @@
 package rms.controllers.management;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -42,15 +44,24 @@ public class BranchController {
         return model;
     }
 
-    public boolean save(BaseTableModel toBeSavedModel){
+    public boolean save(){
         boolean result = false;
-        StringBuffer sql = new StringBuffer();
+        List<String> sqls = new ArrayList<String>();
         BranchDBTable db = BranchDBTable.getInstance();
 
-        for(DataRow row : toBeSavedModel.rows){
-            sql.append(db.generateCreateUpdateSql(row.getRowAsStrings()));
+        for(DataRow row : model.rows){
+            sqls.add(db.generateCreateUpdateSql(row.getRowAsStrings()));
         }
 
+        DataSupport dh;
+
+        try {
+            dh = new DataSupport();
+            dh.executeBatchUpdate(sqls);
+        } catch (SQLException ex) {
+            Logger.getLogger(BranchController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         return result;
     }
 
