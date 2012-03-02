@@ -11,6 +11,7 @@
 
 package rms.views.management;
 
+import extras.IntegerCellEditor;
 import rms.controllers.management.BranchController;
 
 /**
@@ -26,6 +27,7 @@ public class BranchView extends javax.swing.JInternalFrame {
     private BranchView() {
         initComponents();
         controller = new BranchController(this);
+        tabledata.setDefaultEditor(Integer.class, new IntegerCellEditor(true,1, Integer.MAX_VALUE));
         refreshData();
     }
 
@@ -247,7 +249,8 @@ public class BranchView extends javax.swing.JInternalFrame {
 
     public void refreshData(){
         tabledata.setModel(controller.refresh());
-        tabledata.removeColumn(tabledata.getColumn("ID"));
+        //tabledata.removeColumn(tabledata.getColumn("ID"));
+        
     }
 
     public void saveData(){
