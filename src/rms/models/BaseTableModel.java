@@ -17,19 +17,21 @@ import javax.swing.table.TableColumn;
 public class BaseTableModel extends AbstractTableModel {
     public List<String> columnNames;
     public List<String> columnAliases;
+    public List<Class> columnClasses;
     //public List<String> primaryColumns;
     public List<DataRow> rows;
-    public TableColumn cols;
 
     public BaseTableModel(){
         this.columnNames = new ArrayList<String>();
         this.columnAliases = new ArrayList<String>();
+        this.columnClasses = new ArrayList<Class>();
         this.rows = new ArrayList<DataRow>(); 
     }
 
-    public BaseTableModel(List<String> columnNames, List<String> columnAliases){
+    public BaseTableModel(List<String> columnNames, List<String> columnAliases, List<Class> columnClasses){
         this.columnNames = columnNames;
         this.columnAliases = columnAliases;
+        this.columnClasses = columnClasses;
         this.rows = new ArrayList<DataRow>();
     }
 
@@ -62,7 +64,7 @@ public class BaseTableModel extends AbstractTableModel {
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        return getValueAt(0, columnIndex).getClass();
+        return columnClasses.get(columnIndex);
     }
 
     @Override

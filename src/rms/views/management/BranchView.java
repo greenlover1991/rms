@@ -11,8 +11,8 @@
 
 package rms.views.management;
 
+import extras.IntegerCellEditor;
 import rms.controllers.management.BranchController;
-import rms.models.BaseTableModel;
 
 /**
  *
@@ -27,6 +27,7 @@ public class BranchView extends javax.swing.JInternalFrame {
     private BranchView() {
         initComponents();
         controller = new BranchController(this);
+        tabledata.setDefaultEditor(Integer.class, new IntegerCellEditor(true,1, Integer.MAX_VALUE));
         refreshData();
     }
 
@@ -66,7 +67,7 @@ public class BranchView extends javax.swing.JInternalFrame {
 
         toppanel.setBackground(new java.awt.Color(204, 204, 204));
 
-        title.setFont(new java.awt.Font("Century Gothic", 0, 36)); // NOI18N
+        title.setFont(new java.awt.Font("Century Gothic", 0, 36));
         title.setForeground(new java.awt.Color(51, 51, 51));
         title.setText("Branch");
 
@@ -114,7 +115,7 @@ public class BranchView extends javax.swing.JInternalFrame {
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jScrollPane1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jScrollPane1.setFont(new java.awt.Font("Century Gothic", 0, 12));
 
         tabledata.setAutoCreateRowSorter(true);
         tabledata.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -199,7 +200,7 @@ public class BranchView extends javax.swing.JInternalFrame {
                 .addGroup(bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(searchfield, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(bodypanelLayout.createSequentialGroup()
-                        .addComponent(searchbutton, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+                        .addComponent(searchbutton, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                         .addGap(10, 10, 10)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -242,17 +243,19 @@ public class BranchView extends javax.swing.JInternalFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-        saveData();
+        if(tabledata.editCellAt(0, 0))
+            saveData();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     public void refreshData(){
         tabledata.setModel(controller.refresh());
-        tabledata.removeColumn(tabledata.getColumn("ID"));
+        //tabledata.removeColumn(tabledata.getColumn("ID"));
+        
     }
 
     public void saveData(){
         // model is still the same with model. UI is really separate with model
-        controller.save((BaseTableModel)tabledata.getModel());
+        controller.save();
         refreshData();
     }
 

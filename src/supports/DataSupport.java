@@ -192,14 +192,16 @@ public class DataSupport {
         
             List<String> columnNames = new ArrayList<String>();
             List<String> columnAliases = new ArrayList<String>();
+            List<Class> columnClasses = new ArrayList<Class>();
             
 
             for(int i=1; i<=columns ; i++){
                 columnNames.add(rsmd.getColumnName(i));
                 columnAliases.add(rsmd.getColumnLabel(i));
+                columnClasses.add(Class.forName(rsmd.getColumnClassName(i)));
             }
 
-            result = new BaseTableModel(columnNames, columnAliases);
+            result = new BaseTableModel(columnNames, columnAliases, columnClasses);
             while(rs.next()){
                 List<Object> values = new ArrayList<Object>();
                 for(int i=1;i<=columns;i++)
@@ -209,6 +211,8 @@ public class DataSupport {
             }
 
         } catch (SQLException ex) {
+            Logger.getLogger(DataSupport.class.getName()).log(Level.SEVERE, null, ex);
+        } catch(ClassNotFoundException ex){
             Logger.getLogger(DataSupport.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
