@@ -34,6 +34,9 @@ public class IngredientDBTable extends DBTable{
     private static final String[] columnsAliases = {ALIAS_ID, ALIAS_NAME, ALIAS_DESCRIPTION, ALIAS_UNIT_OF_MEASURE, ALIAS_MINIMUM_QUANTITY, ALIAS_QUANTITY, ALIAS_STATUS};
     private static final String[] primaryColumns = {ID};
     private static final String[] uniqueColumns = {ID};
+    private static final String[] invisibleColumns = {ID, STATUS};
+    private static final String[] uneditableColumns = {ID, STATUS};
+    private static final String[] nonNullableColumns = {ID, NAME, STATUS};
 
     private static IngredientDBTable INSTANCE;
     private IngredientDBTable(){}
@@ -68,6 +71,23 @@ public class IngredientDBTable extends DBTable{
     protected String[] getColumnsDefaultAliases() {
         return columnsAliases;
     }
+
+    @Override
+    protected String[] getInvisibleColumns() {
+        return invisibleColumns;
+    }
+
+    @Override
+    protected String[] getNonNullableColumns() {
+        return nonNullableColumns;
+    }
+
+    @Override
+    protected String[] getUneditableColumns() {
+        return uneditableColumns;
+    }
+
+
 
 
 }

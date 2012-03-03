@@ -22,6 +22,9 @@ public abstract class DBTable {
     protected abstract String[] getColumnsDefaultAliases();
     protected abstract String[] getPrimaryColumns();
     protected abstract String[] getUniqueColumns();
+    protected abstract String[] getUneditableColumns();
+    protected abstract String[] getInvisibleColumns();
+    protected abstract String[] getNonNullableColumns();
 
 
     /**
