@@ -21,13 +21,9 @@ import javax.swing.table.TableColumn;
 
 import org.jbundle.thin.base.screen.jcalendarbutton.JCalendarButton;
 
-<<<<<<< HEAD
 import rms.models.InventoryReportModel;
 
-/*
-=======
 /*  
->>>>>>> upstream/master
  * @author Yu
  *
  */
