@@ -4,7 +4,7 @@
  */
 
 /*
- * RoleView.java
+ * TableView.java
  *
  * Created on Feb 25, 2012, 8:06:06 PM
  */
@@ -60,11 +60,11 @@ public class RoleView extends javax.swing.JInternalFrame {
         jPanel1.setBackground(new java.awt.Color(34, 34, 34));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
 
-        masterFileLabel.setFont(new java.awt.Font("Tahoma", 1, 20));
+        masterFileLabel.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         masterFileLabel.setForeground(new java.awt.Color(255, 255, 255));
         masterFileLabel.setText("ROLE");
 
-        addButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        addButton.setFont(new java.awt.Font("Tahoma", 1, 12));
         addButton.setForeground(new java.awt.Color(153, 153, 153));
         addButton.setText("Add");
         addButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -72,18 +72,13 @@ public class RoleView extends javax.swing.JInternalFrame {
         addButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         addButton.setFocusPainted(false);
         addButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
-<<<<<<< HEAD
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addButtonActionPerformed(evt);
             }
         });
 
-        deleteButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-=======
-
         deleteButton.setFont(new java.awt.Font("Tahoma", 1, 12));
->>>>>>> 191bd65eff296fa949984d28c16e9cffcfb64b7f
         deleteButton.setForeground(new java.awt.Color(153, 153, 153));
         deleteButton.setText("Delete");
         deleteButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -91,15 +86,9 @@ public class RoleView extends javax.swing.JInternalFrame {
         deleteButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         deleteButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
 
-<<<<<<< HEAD
-        loadButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        loadButton.setForeground(new java.awt.Color(153, 153, 153));
-        loadButton.setText("Refresh");
-=======
         loadButton.setFont(new java.awt.Font("Tahoma", 1, 12));
         loadButton.setForeground(new java.awt.Color(153, 153, 153));
-        loadButton.setText("Load");
->>>>>>> 191bd65eff296fa949984d28c16e9cffcfb64b7f
+        loadButton.setText("Refresh");
         loadButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         loadButton.setContentAreaFilled(false);
         loadButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -119,21 +108,13 @@ public class RoleView extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(masterFileLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-<<<<<<< HEAD
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
-=======
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
->>>>>>> 191bd65eff296fa949984d28c16e9cffcfb64b7f
+                .addComponent(masterFileLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-<<<<<<< HEAD
                 .addComponent(loadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-=======
-                .addComponent(loadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
->>>>>>> 191bd65eff296fa949984d28c16e9cffcfb64b7f
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -154,7 +135,6 @@ public class RoleView extends javax.swing.JInternalFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-<<<<<<< HEAD
 
         searchField.setFont(new java.awt.Font("Tahoma", 2, 12));
         searchField.setForeground(new java.awt.Color(102, 102, 102));
@@ -187,38 +167,6 @@ public class RoleView extends javax.swing.JInternalFrame {
                 {null, null},
                 {null, null},
                 {null, null}
-=======
-
-        searchField.setFont(new java.awt.Font("Tahoma", 2, 12));
-        searchField.setForeground(new java.awt.Color(102, 102, 102));
-        searchField.setText("Search...");
-        searchField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
->>>>>>> 191bd65eff296fa949984d28c16e9cffcfb64b7f
             },
             new String [] {
                 "Name", "Description"
@@ -271,7 +219,7 @@ public class RoleView extends javax.swing.JInternalFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
