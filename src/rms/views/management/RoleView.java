@@ -11,6 +11,8 @@
 
 package rms.views.management;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Mark Taveros
@@ -70,8 +72,18 @@ public class RoleView extends javax.swing.JInternalFrame {
         addButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         addButton.setFocusPainted(false);
         addButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
+<<<<<<< HEAD
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
+
+        deleteButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+=======
 
         deleteButton.setFont(new java.awt.Font("Tahoma", 1, 12));
+>>>>>>> 191bd65eff296fa949984d28c16e9cffcfb64b7f
         deleteButton.setForeground(new java.awt.Color(153, 153, 153));
         deleteButton.setText("Delete");
         deleteButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -79,9 +91,15 @@ public class RoleView extends javax.swing.JInternalFrame {
         deleteButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         deleteButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
 
+<<<<<<< HEAD
+        loadButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        loadButton.setForeground(new java.awt.Color(153, 153, 153));
+        loadButton.setText("Refresh");
+=======
         loadButton.setFont(new java.awt.Font("Tahoma", 1, 12));
         loadButton.setForeground(new java.awt.Color(153, 153, 153));
         loadButton.setText("Load");
+>>>>>>> 191bd65eff296fa949984d28c16e9cffcfb64b7f
         loadButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         loadButton.setContentAreaFilled(false);
         loadButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -102,12 +120,20 @@ public class RoleView extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(masterFileLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+<<<<<<< HEAD
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
+=======
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+>>>>>>> 191bd65eff296fa949984d28c16e9cffcfb64b7f
                 .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+<<<<<<< HEAD
+                .addComponent(loadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+=======
                 .addComponent(loadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+>>>>>>> 191bd65eff296fa949984d28c16e9cffcfb64b7f
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -128,6 +154,40 @@ public class RoleView extends javax.swing.JInternalFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+<<<<<<< HEAD
+
+        searchField.setFont(new java.awt.Font("Tahoma", 2, 12));
+        searchField.setForeground(new java.awt.Color(102, 102, 102));
+        searchField.setText("Search...");
+        searchField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+=======
 
         searchField.setFont(new java.awt.Font("Tahoma", 2, 12));
         searchField.setForeground(new java.awt.Color(102, 102, 102));
@@ -158,13 +218,14 @@ public class RoleView extends javax.swing.JInternalFrame {
                 {null, null, null},
                 {null, null, null},
                 {null, null, null}
+>>>>>>> 191bd65eff296fa949984d28c16e9cffcfb64b7f
             },
             new String [] {
-                "Name", "Description", "Status"
+                "Name", "Description"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -215,6 +276,11 @@ public class RoleView extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+         model.addRow(new Object[] { "", "" });
+    }//GEN-LAST:event_addButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -11,6 +11,8 @@
 
 package rms.views.management;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Mark Taveros
@@ -28,6 +30,7 @@ public class MenuCategoryView extends javax.swing.JInternalFrame {
             INSTANCE = new MenuCategoryView();
         return INSTANCE;
     }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -37,172 +40,208 @@ public class MenuCategoryView extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        toppanel = new javax.swing.JPanel();
-        title = new javax.swing.JLabel();
-        add = new javax.swing.JButton();
-        bodypanel = new javax.swing.JPanel();
-        searchfield = new javax.swing.JTextField();
-        searchbutton = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        masterFileLabel = new javax.swing.JLabel();
+        addButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        loadButton = new javax.swing.JButton();
+        saveButton = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        searchField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabledata = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(221, 221, 221));
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconifiable(true);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        toppanel.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setBackground(new java.awt.Color(34, 34, 34));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
 
-        title.setFont(new java.awt.Font("Century Gothic", 0, 36));
-        title.setForeground(new java.awt.Color(51, 51, 51));
-        title.setText("Menu Category");
+        masterFileLabel.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        masterFileLabel.setForeground(new java.awt.Color(255, 255, 255));
+        masterFileLabel.setText("MENU CATEGORY");
 
-        add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/resources/Add-256.png"))); // NOI18N
-        add.setBorder(null);
-        add.setBorderPainted(false);
-        add.setContentAreaFilled(false);
-        add.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        add.setFocusPainted(false);
-        add.setMaximumSize(new java.awt.Dimension(105, 81));
-        add.setMinimumSize(new java.awt.Dimension(105, 81));
-        add.setPreferredSize(new java.awt.Dimension(73, 23));
+        addButton.setFont(new java.awt.Font("Tahoma", 1, 12));
+        addButton.setForeground(new java.awt.Color(153, 153, 153));
+        addButton.setText("Add");
+        addButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        addButton.setContentAreaFilled(false);
+        addButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addButton.setFocusPainted(false);
+        addButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout toppanelLayout = new javax.swing.GroupLayout(toppanel);
-        toppanel.setLayout(toppanelLayout);
-        toppanelLayout.setHorizontalGroup(
-            toppanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, toppanelLayout.createSequentialGroup()
+        deleteButton.setFont(new java.awt.Font("Tahoma", 1, 12));
+        deleteButton.setForeground(new java.awt.Color(153, 153, 153));
+        deleteButton.setText("Delete");
+        deleteButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        deleteButton.setContentAreaFilled(false);
+        deleteButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deleteButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
+
+        loadButton.setFont(new java.awt.Font("Tahoma", 1, 12));
+        loadButton.setForeground(new java.awt.Color(153, 153, 153));
+        loadButton.setText("Refresh");
+        loadButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        loadButton.setContentAreaFilled(false);
+        loadButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        loadButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
+
+        saveButton.setFont(new java.awt.Font("Tahoma", 1, 12));
+        saveButton.setForeground(new java.awt.Color(153, 153, 153));
+        saveButton.setText("Save");
+        saveButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        saveButton.setContentAreaFilled(false);
+        saveButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        saveButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(masterFileLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(loadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                    .addComponent(loadButton, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                    .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                    .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE))
+                .addGap(57, 57, 57))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(masterFileLabel)
                 .addContainerGap())
         );
-        toppanelLayout.setVerticalGroup(
-            toppanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(toppanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(toppanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(title, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
-                    .addComponent(add, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, Short.MAX_VALUE))
-                .addContainerGap())
-        );
 
-        bodypanel.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
-        searchfield.setFont(new java.awt.Font("Century Gothic", 2, 12));
-        searchfield.setText("Search");
+        searchField.setFont(new java.awt.Font("Tahoma", 2, 12));
+        searchField.setForeground(new java.awt.Color(102, 102, 102));
+        searchField.setText("Search...");
+        searchField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
 
-        searchbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/resources/Search_256.png"))); // NOI18N
-        searchbutton.setBorderPainted(false);
-        searchbutton.setContentAreaFilled(false);
-        searchbutton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        searchbutton.setFocusPainted(false);
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jScrollPane1.setFont(new java.awt.Font("Century Gothic", 0, 12));
-
-        tabledata.setAutoCreateRowSorter(true);
-        tabledata.setFont(new java.awt.Font("Century Gothic", 0, 12));
-        tabledata.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Name", "Description", "Status"
+                "Name", "Description"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        tabledata.setColumnSelectionAllowed(true);
-        jScrollPane1.setViewportView(tabledata);
-        tabledata.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        jScrollPane1.setViewportView(jTable1);
 
-        javax.swing.GroupLayout bodypanelLayout = new javax.swing.GroupLayout(bodypanel);
-        bodypanel.setLayout(bodypanelLayout);
-        bodypanelLayout.setHorizontalGroup(
-            bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(bodypanelLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, bodypanelLayout.createSequentialGroup()
-                        .addComponent(searchfield, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(22, Short.MAX_VALUE))
-        );
-        bodypanelLayout.setVerticalGroup(
-            bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(bodypanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(searchfield, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(bodypanelLayout.createSequentialGroup()
-                        .addComponent(searchbutton, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
-                        .addGap(10, 10, 10)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(searchField, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(84, 84, 84))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(bodypanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(toppanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(toppanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(bodypanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+         model.addRow(new Object[] { "", "" });
+    }//GEN-LAST:event_addButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton add;
-    private javax.swing.JPanel bodypanel;
+    private javax.swing.JButton addButton;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton searchbutton;
-    private javax.swing.JTextField searchfield;
-    private javax.swing.JTable tabledata;
-    private javax.swing.JLabel title;
-    private javax.swing.JPanel toppanel;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JButton loadButton;
+    private javax.swing.JLabel masterFileLabel;
+    private javax.swing.JButton saveButton;
+    private javax.swing.JTextField searchField;
     // End of variables declaration//GEN-END:variables
 
 }
