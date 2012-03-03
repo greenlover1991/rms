@@ -1,4 +1,4 @@
-package rms.models;
+package rms.models.reporting;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -8,11 +8,11 @@ import javax.swing.table.AbstractTableModel;
  * @author Yu
  *
  */
-public class DTRReportModel extends AbstractTableModel implements
+public class InventoryReportModel extends AbstractTableModel implements
 		TableModelListener {
-	String[] columnNames = { "In", "Out", "Rate/Hr", "Total/Day" };
-	Object[][] data = { { "9:00:00", "7:00:00", "50", "500" },
-			{ "5:00:00", "9:00:00", "40", "160" } };
+	String[] columnNames = { "Ingredients", "Initial", "In", "Out", "End" };
+	Object[][] data = { { "Sesame Seeds", "99", "10", "20", "89" },
+			{ "Pasta", "199", "20", "10", "189" } };
 
 	@Override
 	public int getColumnCount() {

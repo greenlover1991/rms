@@ -5,6 +5,8 @@ package rms.views.monitoring;
  *
  */
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.JButton;
@@ -14,9 +16,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import rms.models.ChefQueueModel;
+import rms.models.monitoring.ChefQueueModel;
 
 public class ChefQueueView extends JInternalFrame {
 	String[] columnNames = { "Status", "Particular", "Service" };
@@ -31,7 +34,7 @@ public class ChefQueueView extends JInternalFrame {
 	JPanel panelButtons = new JPanel();
 	ChefQueueModel model = new ChefQueueModel();
 
-        private static ChefQueueView INSTANCE;
+	private static ChefQueueView INSTANCE;
 
 	private ChefQueueView() {
 		super("Chef Queue", true,// resizable
@@ -53,11 +56,24 @@ public class ChefQueueView extends JInternalFrame {
 
 		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
 
-		chefQueue = new JTable(model);
-		
-		//table listener
+		chefQueue = new JTable(model) {
+			public Component prepareRenderer(TableCellRenderer renderer,
+					int Index_row, int Index_col) {
+				Component comp = super.prepareRenderer(renderer, Index_row,
+						Index_col);
+				// even index, selected or not selected
+				if (Index_row % 2 == 0 && !isCellSelected(Index_row, Index_col)) {
+					comp.setBackground(Color.GREEN);
+				} else {
+					comp.setBackground(Color.WHITE);
+				}
+				return comp;
+			}
+		};
+
+		// table listener
 		chefQueue.getModel().addTableModelListener(model);
-		
+
 		TableColumn column = null;
 		column = chefQueue.getColumnModel().getColumn(0);
 		column.setPreferredWidth(100);
@@ -84,10 +100,10 @@ public class ChefQueueView extends JInternalFrame {
 
 	}
 
-        public static ChefQueueView getInstance(){
-            if(INSTANCE == null)
-                INSTANCE = new ChefQueueView();
-            return INSTANCE;
-        }
+	public static ChefQueueView getInstance() {
+		if (INSTANCE == null)
+			INSTANCE = new ChefQueueView();
+		return INSTANCE;
+	}
 
 }

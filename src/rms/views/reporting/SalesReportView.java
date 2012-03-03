@@ -1,7 +1,10 @@
 package rms.views.reporting;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.beans.PropertyChangeEvent;
@@ -29,11 +32,12 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import org.jbundle.thin.base.screen.jcalendarbutton.JCalendarButton;
 
-import rms.models.SalesReportModel;
+import rms.models.reporting.SalesReportModel;
 
 /*
  * @author Yu
@@ -67,7 +71,8 @@ public class SalesReportView extends JInternalFrame {
 		add(panelDateButtons, BorderLayout.PAGE_START);
 		add(panelChart, BorderLayout.EAST);
 
-		setSize(new Dimension(1280, 400));
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		setSize((int) (screenSize.width * .85), (int) (screenSize.height * .9));
 		setVisible(true);
 
 		// Platform.runLater(new Runnable() {
@@ -169,6 +174,8 @@ public class SalesReportView extends JInternalFrame {
 		panelDateButtons.add(labelDateTo);
 		panelDateButtons.add(textFieldDateTo);
 		panelDateButtons.add(buttonDateTo);
+		panelDateButtons.add(labelTotalSales);
+		panelDateButtons.add(textTotalSales);
 
 		textFieldDateFrom.addFocusListener(new FocusAdapter() {
 			public void focusLost(FocusEvent evt) {
@@ -201,7 +208,20 @@ public class SalesReportView extends JInternalFrame {
 
 		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
 
-		DTR = new JTable(model);
+		DTR = new JTable(model){
+			public Component prepareRenderer(TableCellRenderer renderer,
+					int Index_row, int Index_col) {
+				Component comp = super.prepareRenderer(renderer, Index_row,
+						Index_col);
+				// even index, selected or not selected
+				if (Index_row % 2 == 0 && !isCellSelected(Index_row, Index_col)) {
+					comp.setBackground(Color.GREEN);
+				} else {
+					comp.setBackground(Color.WHITE);
+				}
+				return comp;
+			}
+		};
 		TableColumn column = null;
 		column = DTR.getColumnModel().getColumn(0);
 		column.setMinWidth(135);

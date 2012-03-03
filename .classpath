@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="E:/Downloads/jcalendarbutton-1.4.5.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/Oracle/JavaFX 2.0 SDK/rt/lib/jfxrt.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Yu/Desktop/mysql-connector-java-5.1.18/mysql-connector-java-5.1.18-bin.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
