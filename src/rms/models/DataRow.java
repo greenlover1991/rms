@@ -17,6 +17,10 @@ public class DataRow {
     private List<String> columnNames;
     private HashMap<String, Object> objects;
 
+    public DataRow(List<String> columnNames, HashMap<String, Object> objects){
+        this.columnNames = columnNames;
+        this.objects = objects;
+    }
     public DataRow(List<String> columnNames, List<Object> values){
         this.columnNames = columnNames;
         objects = new HashMap<String, Object>();
@@ -47,8 +51,13 @@ public class DataRow {
 
     public Map<String, String> getRowAsStrings(){
         Map<String, String> result = new HashMap<String, String>();
-        for(String key : objects.keySet())
-            result.put(key, objects.get(key).toString());
+        for(String key : objects.keySet()){
+            Object value = objects.get(key);
+            if(value == null)
+                result.put(key, "");
+            else
+                result.put(key, objects.get(key).toString());
+        }
         return result;
     }
 

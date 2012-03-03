@@ -71,6 +71,30 @@ public class BaseTableModel extends AbstractTableModel {
         return true;
     }
 
+    @Override
+    public int findColumn(String columnName) {
+        return columnNames.indexOf(columnName);
+    }
+
+
+
+    public DataRow getLastRow(){
+        if(!rows.isEmpty())
+            return rows.get(rows.size()-1);
+        return null;
+    }
+
+    public void addRow(DataRow row){
+        rows.add(row);
+        this.fireTableDataChanged();
+    }
+
+    public void removeRow(int row){
+        rows.remove(row);
+        this.fireTableDataChanged();
+    }
+
+
 
 
 

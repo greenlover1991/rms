@@ -7,6 +7,7 @@ package rms.models;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -76,7 +77,6 @@ public abstract class DBTable {
         for (int i = 0; i < insertColumns.length; i++)
         {
             CharSequence delims = ".".subSequence(0, 1) ;
-
             String cleaned = (insertColumns[i].contains(delims) ? (insertColumns[i].split(delims.toString()))[1] : insertColumns[i]);
             result.append((i == insertColumns.length - 1) ? cleaned + ") " : cleaned + ",");
         }
@@ -85,7 +85,14 @@ public abstract class DBTable {
 
         for (int i = 0; i < insertColumns.length; i++)
         {
-            result.append((i == insertColumns.length - 1) ? "'" + insertList.get(insertColumns[i]).replace("'", "''") + "')" : "'" + insertList.get(insertColumns[i]).replace("'", "") + "',");
+            String first = "'" + insertList.get(insertColumns[i]).replace("'", "''") + "')";
+            String last = "'" + insertList.get(insertColumns[i]).replace("'", "") + "',";
+//            if("'null')".equals(first))
+//                first = first.replace("'", "'");
+//            if("'null',".equals(last))
+//                last = last.replace("'", "'");
+            result.append((i == insertColumns.length - 1) ?  first : last);
+
         }
 
         return result.toString() + ";";
@@ -146,21 +153,24 @@ public abstract class DBTable {
      */
     public String generateCreateUpdateSql(Map<String, String> upsertList, List<String> uniqueList){
         StringBuffer result = new StringBuffer();
-        String insertSql = generateInsertSql(upsertList);
-        result.append(insertSql.substring(0, insertSql.length()-1));
-        result.append(" ON DUPLICATE KEY UPDATE");
-        CharSequence delim = new String(".");
+        if(!upsertList.isEmpty()){
+            String insertSql = generateInsertSql(upsertList);
+            result.append(insertSql.substring(0, insertSql.length()-1));
+            result.append(" ON DUPLICATE KEY UPDATE");
+            CharSequence delim = new String(".");
 
-        // do not include the uniquelist in updating
-        List<String> filteredColumns = new ArrayList<String>(upsertList.keySet());
-        filteredColumns.removeAll(uniqueList);
-        String[] columns = filteredColumns.toArray(new String[0]);
-        for (int i = 0; i < columns.length; i++)
-        {
-            String cleaned = columns[i].contains(delim) ? (columns[i].split(delim.toString())[1]) : columns[i];
-            result.append(String.format(" %s = '%s' " + ((i == columns.length - 1) ? "" : ","), cleaned, upsertList.get(columns[i]).replace("'","''")));
+            // do not include the uniquelist in updating
+            List<String> filteredColumns = new ArrayList<String>(upsertList.keySet());
+            filteredColumns.removeAll(uniqueList);
+            String[] columns = filteredColumns.toArray(new String[0]);
+            for (int i = 0; i < columns.length; i++)
+            {
+                String cleaned = columns[i].contains(delim) ? (columns[i].split(delim.toString())[1]) : columns[i];
+                result.append(String.format(" %s = '%s' " + ((i == columns.length - 1) ? "" : ","), cleaned, upsertList.get(columns[i]).replace("'","''")));
+            }
         }
         return result.toString() + ";";
+        
     }
 
     /**
@@ -178,7 +188,14 @@ public abstract class DBTable {
      * @return generated INSERT INTO ... ON DUPLICATE KEY UPDATE ... sql without the delimiter ;
      */
     public String generateCreateUpdateSql(Map<String, String> upsertList){
-        return generateCreateUpdateSql(upsertList, Arrays.asList(getUniqueColumns()));
+        Map<String, String> realUpsertList = new HashMap<String, String>(upsertList);
+        for(String key : upsertList.keySet()){
+            String value = upsertList.get(key);
+            if(value == null || value.isEmpty() || value.equals("null")){
+                realUpsertList.remove(key);
+            }
+        }
+        return generateCreateUpdateSql(realUpsertList, Arrays.asList(getUniqueColumns()));
     }
 
 }

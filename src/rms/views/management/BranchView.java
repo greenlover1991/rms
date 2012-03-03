@@ -12,7 +12,14 @@
 package rms.views.management;
 
 import extras.IntegerCellEditor;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import rms.ProjectConstants;
 import rms.controllers.management.BranchController;
+import rms.models.BaseTableModel;
+import rms.models.DataRow;
+import rms.models.management.BranchDBTable;
 
 /**
  *
@@ -27,8 +34,10 @@ public class BranchView extends javax.swing.JInternalFrame {
     private BranchView() {
         initComponents();
         controller = new BranchController(this);
-        tabledata.setDefaultEditor(Integer.class, new IntegerCellEditor(true,1, Integer.MAX_VALUE));
+
+        initValidations();
         refreshData();
+        
     }
 
     public static BranchView getInstance(){
@@ -57,6 +66,7 @@ public class BranchView extends javax.swing.JInternalFrame {
         btnDelete = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         btnRefresh = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
@@ -118,7 +128,7 @@ public class BranchView extends javax.swing.JInternalFrame {
         jScrollPane1.setFont(new java.awt.Font("Century Gothic", 0, 12));
 
         tabledata.setAutoCreateRowSorter(true);
-        tabledata.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        tabledata.setFont(new java.awt.Font("Century Gothic", 0, 12));
         tabledata.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -155,6 +165,11 @@ public class BranchView extends javax.swing.JInternalFrame {
         tabledata.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnSave.setText("Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -170,6 +185,13 @@ public class BranchView extends javax.swing.JInternalFrame {
             }
         });
 
+        btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout bodypanelLayout = new javax.swing.GroupLayout(bodypanel);
         bodypanel.setLayout(bodypanelLayout);
         bodypanelLayout.setHorizontalGroup(
@@ -177,7 +199,9 @@ public class BranchView extends javax.swing.JInternalFrame {
             .addGroup(bodypanelLayout.createSequentialGroup()
                 .addGroup(bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(bodypanelLayout.createSequentialGroup()
-                        .addGap(236, 236, 236)
+                        .addGap(210, 210, 210)
+                        .addComponent(btnAdd)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRefresh)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSave)
@@ -200,7 +224,7 @@ public class BranchView extends javax.swing.JInternalFrame {
                 .addGroup(bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(searchfield, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(bodypanelLayout.createSequentialGroup()
-                        .addComponent(searchbutton, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                        .addComponent(searchbutton, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
                         .addGap(10, 10, 10)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -208,7 +232,8 @@ public class BranchView extends javax.swing.JInternalFrame {
                 .addGroup(bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDelete)
                     .addComponent(btnSave)
-                    .addComponent(btnRefresh))
+                    .addComponent(btnRefresh)
+                    .addComponent(btnAdd))
                 .addContainerGap())
         );
 
@@ -243,25 +268,86 @@ public class BranchView extends javax.swing.JInternalFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-        if(tabledata.editCellAt(0, 0))
-            saveData();
+        saveData();
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+        if(canAddRow())
+            addRow();
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        setInactive();
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
     public void refreshData(){
-        tabledata.setModel(controller.refresh());
-        //tabledata.removeColumn(tabledata.getColumn("ID"));
-        
+        tabledata.setModel(controller.refreshData());
+        removeInvisibleColumns();
     }
 
     public void saveData(){
-        // model is still the same with model. UI is really separate with model
         controller.save();
         refreshData();
     }
 
+    public void setInactive(){
+        int[] rows = tabledata.getSelectedRows();
+        for(int i : rows){
+            int rowId = tabledata.convertRowIndexToModel(i);
+            int colId = ((BaseTableModel)tabledata.getModel()).findColumn(BranchDBTable.STATUS);
+            int idColId = ((BaseTableModel)tabledata.getModel()).findColumn(BranchDBTable.ID);
+            // if has no id, dont inactivate
+            Object id = tabledata.getModel().getValueAt(rowId, idColId);
+            if(id == null || id.toString().isEmpty())
+               ((BaseTableModel)tabledata.getModel()).removeRow(rowId);
+            else
+               tabledata.getModel().setValueAt(ProjectConstants.STATUS_INACTIVE, rowId, colId);
+        }
+        controller.save();
+        refreshData();
+    }
+
+    private void initValidations() {
+        tabledata.setDefaultEditor(Integer.class, new IntegerCellEditor(true,1, Integer.MAX_VALUE));
+    }
+
+    private void removeInvisibleColumns(){
+        for(String inviColumn : BranchDBTable.getInstance().getInvisibleColumns()){
+            tabledata.removeColumn(tabledata.getColumn(inviColumn));
+        }
+    }
+
+    private boolean canAddRow(){
+        BaseTableModel model = (BaseTableModel)tabledata.getModel();
+        DataRow lastRow = model.getLastRow();
+        boolean isValid = true;
+        for(String column : BranchDBTable.getInstance().getNonNullableColumns()){
+            if(lastRow != null && (lastRow.get(column) == null || lastRow.get(column).toString().isEmpty())){
+                isValid = false;
+                break;
+            }
+        }
+
+        return isValid;
+    }
+
+    private void addRow() {
+        BaseTableModel model = (BaseTableModel)tabledata.getModel();
+        List<String> columnNames = Arrays.asList(BranchDBTable.getInstance().getColumns());
+        List<Object> values = new ArrayList<Object>(columnNames.size());
+        values.add(null);
+        values.add(null);
+        values.add(null);
+        values.add(ProjectConstants.STATUS_ACTIVE);
+        DataRow row = new DataRow(columnNames, values);
+        model.addRow(row);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add;
     private javax.swing.JPanel bodypanel;
+    private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnSave;
@@ -272,5 +358,9 @@ public class BranchView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel title;
     private javax.swing.JPanel toppanel;
     // End of variables declaration//GEN-END:variables
+
+
+
+
 
 }
