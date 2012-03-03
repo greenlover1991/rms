@@ -1,3 +1,5 @@
+package rms.views.management;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -9,7 +11,7 @@
  * Created on Feb 25, 2012, 8:06:06 PM
  */
 
-package rms.views;
+
 
 /**
  *
@@ -17,9 +19,16 @@ package rms.views;
  */
 public class IngredientView extends javax.swing.JInternalFrame {
 
+    private static IngredientView INSTANCE;
     /** Creates new form MasterFilesUI */
     public IngredientView() {
         initComponents();
+    }
+
+    public static IngredientView getInstance(){
+        if(INSTANCE == null)
+            INSTANCE = new IngredientView();
+        return INSTANCE;
     }
 
     /** This method is called from within the constructor to
