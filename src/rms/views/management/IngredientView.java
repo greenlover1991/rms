@@ -4,31 +4,22 @@
  */
 
 /*
- * InventoryView.java
+ * IngredientView.java
  *
- * Created on 02 7, 12, 11:17:24 PM
+ * Created on Feb 25, 2012, 8:06:06 PM
  */
 
-package rms.views.management;
-
-import javax.swing.table.DefaultTableModel;
+package rms.views;
 
 /**
  *
- * @author xmiez
+ * @author Mark Taveros
  */
 public class IngredientView extends javax.swing.JInternalFrame {
 
-    private static IngredientView INSTANCE;
-    /** Creates new form InventoryView */
-    private IngredientView() {
+    /** Creates new form MasterFilesUI */
+    public IngredientView() {
         initComponents();
-    }
-
-    public static IngredientView getInstance(){
-        if(INSTANCE == null)
-            INSTANCE = new IngredientView();
-        return INSTANCE;
     }
 
     /** This method is called from within the constructor to
@@ -40,90 +31,172 @@ public class IngredientView extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        toppanel = new javax.swing.JPanel();
+        title = new javax.swing.JLabel();
+        add = new javax.swing.JButton();
+        bodypanel = new javax.swing.JPanel();
+        searchfield = new javax.swing.JTextField();
+        searchbutton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        tabledata = new javax.swing.JTable();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconifiable(true);
-        setTitle("Ingredient");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        toppanel.setBackground(new java.awt.Color(204, 204, 204));
+
+        title.setFont(new java.awt.Font("Century Gothic", 0, 36));
+        title.setForeground(new java.awt.Color(51, 51, 51));
+        title.setText("Ingredient");
+
+        add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rms/images/Add-256.png"))); // NOI18N
+        add.setBorder(null);
+        add.setBorderPainted(false);
+        add.setContentAreaFilled(false);
+        add.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        add.setFocusPainted(false);
+        add.setMaximumSize(new java.awt.Dimension(105, 81));
+        add.setMinimumSize(new java.awt.Dimension(105, 81));
+        add.setPreferredSize(new java.awt.Dimension(73, 23));
+
+        javax.swing.GroupLayout toppanelLayout = new javax.swing.GroupLayout(toppanel);
+        toppanel.setLayout(toppanelLayout);
+        toppanelLayout.setHorizontalGroup(
+            toppanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, toppanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        toppanelLayout.setVerticalGroup(
+            toppanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(toppanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(toppanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(title, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(add, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        bodypanel.setBackground(new java.awt.Color(204, 204, 204));
+
+        searchfield.setFont(new java.awt.Font("Century Gothic", 2, 12));
+        searchfield.setText("Search");
+
+        searchbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rms/images/Search_256.png"))); // NOI18N
+        searchbutton.setBorderPainted(false);
+        searchbutton.setContentAreaFilled(false);
+        searchbutton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        searchbutton.setFocusPainted(false);
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jScrollPane1.setFont(new java.awt.Font("Century Gothic", 0, 12));
+
+        tabledata.setAutoCreateRowSorter(true);
+        tabledata.setFont(new java.awt.Font("Century Gothic", 0, 12));
+        tabledata.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Name", "Description", "Unit", "Min. Qty", "Qty"
+                "Name", "Description", "Unit of Measurel", "Minimum Quantity", "Quantity", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        tabledata.setColumnSelectionAllowed(true);
+        jScrollPane1.setViewportView(tabledata);
+        tabledata.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
-        jButton2.setText("Delete");
-        jButton2.setAutoscrolls(true);
-
-        jButton1.setText("Add");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout bodypanelLayout = new javax.swing.GroupLayout(bodypanel);
+        bodypanel.setLayout(bodypanelLayout);
+        bodypanelLayout.setHorizontalGroup(
+            bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bodypanelLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, bodypanelLayout.createSequentialGroup()
+                        .addComponent(searchfield, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(searchbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+        bodypanelLayout.setVerticalGroup(
+            bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bodypanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(bodypanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(searchfield, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(bodypanelLayout.createSequentialGroup()
+                        .addComponent(searchbutton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(10, 10, 10)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(96, 96, 96))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(bodypanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(toppanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addComponent(toppanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(bodypanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-         model.addRow(new Object[] { "", "" });
-    }//GEN-LAST:event_jButton1ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton add;
+    private javax.swing.JPanel bodypanel;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JButton searchbutton;
+    private javax.swing.JTextField searchfield;
+    private javax.swing.JTable tabledata;
+    private javax.swing.JLabel title;
+    private javax.swing.JPanel toppanel;
     // End of variables declaration//GEN-END:variables
 
 }
