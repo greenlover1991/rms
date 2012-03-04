@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import rms.ProjectConstants;
 
 /**
  * Credits to Mr. Ruselo Asentista for the idea of a generic ORM style of generating SQL.
@@ -45,6 +46,16 @@ public abstract class DBTable {
         return generateSelectColumnsWithAliases(Arrays.asList(getColumns()), Arrays.asList(getColumnsDefaultAliases()));
     }
 
+     /**
+     * Generates the SELECT * with default aliases from the dbTable whose status is active.
+     * @return the generated SELECT * FROM table with aliases with the delimiter ;
+     */
+    public String generateSelectAllActiveWithDefaultAliasesSql(){
+        String query = generateSelectColumnsWithAliases(Arrays.asList(getColumns()), Arrays.asList(getColumnsDefaultAliases()));
+        // remove delimiter, append WHERE status = 'Active';
+        return query.substring(0, query.length()-1) + String.format(" WHERE status = '%s';", ProjectConstants.STATUS_ACTIVE);
+    }
+
     /**
      * Generates the SELECT sql from the given list of select columns, and their aliases.
      * @param selectColumns list of column names to be selected
@@ -56,7 +67,7 @@ public abstract class DBTable {
         String[] columns = selectColumns.toArray(new String[0]);
         String[] aliases = selectAliases.toArray(new String[0]);
         for(int i = 0; i<columns.length;i++){
-            String cleaned = columns[i] + " AS " + aliases[i] + " ";
+            String cleaned = columns[i] + " AS '" + aliases[i] + "' ";
             result.append((i == columns.length - 1) ? cleaned + " " : cleaned + ",");
         }
 

@@ -11,7 +11,19 @@
 
 package rms.views.management;
 
-import javax.swing.table.DefaultTableModel;
+import extras.IntegerCellEditor;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.TableRowSorter;
+import rms.ProjectConstants;
+import rms.controllers.management.IngredientController;
+import rms.models.BaseTableModel;
+import rms.models.DataRow;
+import rms.models.management.IngredientDBTable;
 
 /**
  *
@@ -19,10 +31,35 @@ import javax.swing.table.DefaultTableModel;
  */
 public class IngredientView extends javax.swing.JInternalFrame {
 
+    private IngredientController controller;
+    private TableRowSorter<BaseTableModel> sorter;
+
     private static IngredientView INSTANCE;
     /** Creates new form MasterFilesUI */
     private IngredientView() {
         initComponents();
+        
+        controller = new IngredientController(this);
+
+        initValidations();
+        refreshData();
+
+        sorter = new TableRowSorter<BaseTableModel>((BaseTableModel)jTable1.getModel());
+        jTable1.setRowSorter(sorter);
+        searchField.getDocument().addDocumentListener(
+            new DocumentListener() {
+                public void changedUpdate(DocumentEvent e) {
+                    newFilter();
+                }
+                public void insertUpdate(DocumentEvent e)  {
+                    newFilter();
+                }
+                public void removeUpdate(DocumentEvent e)
+                {
+                    newFilter();
+                }
+            }
+        );
     }
 
     public static IngredientView getInstance(){
@@ -85,6 +122,11 @@ public class IngredientView extends javax.swing.JInternalFrame {
         deleteButton.setContentAreaFilled(false);
         deleteButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         deleteButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
 
         loadButton.setFont(new java.awt.Font("Tahoma", 1, 12));
         loadButton.setForeground(new java.awt.Color(153, 153, 153));
@@ -93,6 +135,11 @@ public class IngredientView extends javax.swing.JInternalFrame {
         loadButton.setContentAreaFilled(false);
         loadButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         loadButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
+        loadButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadButtonActionPerformed(evt);
+            }
+        });
 
         saveButton.setFont(new java.awt.Font("Tahoma", 1, 12));
         saveButton.setForeground(new java.awt.Color(153, 153, 153));
@@ -101,6 +148,11 @@ public class IngredientView extends javax.swing.JInternalFrame {
         saveButton.setContentAreaFilled(false);
         saveButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         saveButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -136,18 +188,22 @@ public class IngredientView extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
-        searchField.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
+        searchField.setFont(new java.awt.Font("Tahoma", 2, 12));
         searchField.setForeground(new java.awt.Color(102, 102, 102));
         searchField.setText("Search...");
         searchField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        searchField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchFieldActionPerformed(evt);
+        searchField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                searchFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                searchFieldFocusLost(evt);
             }
         });
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
+        jTable1.setAutoCreateRowSorter(true);
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -224,21 +280,127 @@ public class IngredientView extends javax.swing.JInternalFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-         model.addRow(new Object[] { "", "" });
+        // TODO add your handling code here:
+        if(canAddRow())
+            addRow();
     }//GEN-LAST:event_addButtonActionPerformed
 
-    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_searchFieldActionPerformed
+        setInactive();
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
+    private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
+        // TODO add your handling code here:
+        refreshData();
+    }//GEN-LAST:event_loadButtonActionPerformed
+
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        // TODO add your handling code here:
+        saveData();
+    }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void searchFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusGained
+         // TODO add your handling code here:
+        if(searchField.getText().equalsIgnoreCase("Search..."))
+            searchField.setText("");
+    }//GEN-LAST:event_searchFieldFocusGained
+
+    private void searchFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusLost
+        // TODO add your handling code here:
+        if(searchField.getText().equalsIgnoreCase(""))
+            searchField.setText("Search...");
+    }//GEN-LAST:event_searchFieldFocusLost
+
+    private void newFilter() {
+
+        RowFilter<BaseTableModel , Object> rf = null;
+        //declare a row filter for your table model
+        try {
+            if(!searchField.getText().equals("Search..."))
+              rf = RowFilter.regexFilter(searchField.getText(), 0);
+            //initialize with a regular expression
+        } catch (java.util.regex.PatternSyntaxException e) {
+            return;
+        }
+        sorter.setRowFilter(rf);
+    }
+    public void refreshData(){
+        jTable1.setModel(controller.refreshData());
+        searchField.setText("Search...");
+        removeInvisibleColumns();
+        if(sorter != null)
+            sorter.setModel((BaseTableModel)jTable1.getModel());
+        jTable1.setRowSorter(sorter);
+    }
+
+    public void saveData(){
+        controller.save();
+        refreshData();
+    }
+
+    public void setInactive(){
+        int[] rows = jTable1.getSelectedRows();
+        for(int i : rows){
+            int rowId = jTable1.convertRowIndexToModel(i);
+            int colId = ((BaseTableModel)jTable1.getModel()).findColumn(IngredientDBTable.STATUS);
+            int idColId = ((BaseTableModel)jTable1.getModel()).findColumn(IngredientDBTable.ID);
+            // if has no id, dont inactivate
+            Object id = jTable1.getModel().getValueAt(rowId, idColId);
+            if(id == null || id.toString().isEmpty())
+               ((BaseTableModel)jTable1.getModel()).removeRow(rowId);
+            else
+               jTable1.getModel().setValueAt(ProjectConstants.STATUS_INACTIVE, rowId, colId);
+        }
+        controller.save();
+        refreshData();
+    }
+
+    private void initValidations() {
+        jTable1.setDefaultEditor(Integer.class, new IntegerCellEditor(true,1, Integer.MAX_VALUE));
+    }
+
+    private void removeInvisibleColumns(){
+        for(String inviColumn : IngredientDBTable.getInstance().getInvisibleColumns()){
+            jTable1.removeColumn(jTable1.getColumn(inviColumn));
+        }
+    }
+
+    private boolean canAddRow(){
+        BaseTableModel model = (BaseTableModel)jTable1.getModel();
+        DataRow lastRow = model.getLastRow();
+        boolean isValid = true;
+        for(String column : IngredientDBTable.getInstance().getNonNullableColumns()){
+            if(lastRow != null && (lastRow.get(column) == null || lastRow.get(column).toString().isEmpty())){
+                isValid = false;
+                break;
+            }
+        }
+
+        return isValid;
+    }
+
+    private void addRow() {
+        BaseTableModel model = (BaseTableModel)jTable1.getModel();
+        List<String> columnNames = Arrays.asList(IngredientDBTable.getInstance().getColumns());
+        List<Object> values = new ArrayList<Object>(columnNames.size());
+        values.add(null);
+        values.add(null);
+        values.add(null);
+        values.add(null);
+        values.add(null);
+        values.add(null);
+        values.add(ProjectConstants.STATUS_ACTIVE);
+        DataRow row = new DataRow(columnNames, values);
+        model.addRow(row);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;

@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import rms.models.BaseTableModel;
 import rms.models.DataRow;
 import rms.models.management.BranchDBTable;
@@ -20,7 +19,7 @@ import supports.DataSupport;
 
 /**
  *
- * @author squeekyclean
+ * @author Mark Taveros
  */
 public class BranchController {
 
@@ -35,7 +34,7 @@ public class BranchController {
     public BaseTableModel refreshData(){
         try {
             BranchDBTable db = BranchDBTable.getInstance();
-            String query = db.generateSelectAllWithDefaultAliasesSql();
+            String query = db.generateSelectAllActiveWithDefaultAliasesSql();
             DataSupport dh = new DataSupport();
             model = dh.executeQuery(query);
         } catch (SQLException ex) {
@@ -62,9 +61,9 @@ public class BranchController {
         } catch (SQLException ex) {
             Logger.getLogger(BranchController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return result;
     }
-    
+
 
 }
