@@ -11,6 +11,7 @@
 
 package rms.views;
 
+import java.awt.Dialog;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import rms.ProjectConstants;
@@ -24,7 +25,7 @@ public class SettingsView extends javax.swing.JDialog {
 
     
     /** Creates new form SettingsView */
-    public SettingsView(java.awt.Frame parent, boolean modal) {
+    public SettingsView(Dialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         loadSettings();

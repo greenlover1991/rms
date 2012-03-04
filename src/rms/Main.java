@@ -19,7 +19,7 @@ public class Main {
      */
     public static void main(String[] args) {
         DataSupport.loadSettings();
-        new LoginView().setVisible(true);
+        LoginView.getInstance().setVisible(true);
     }
 
 }

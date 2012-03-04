@@ -12,18 +12,35 @@
 package rms.views;
 
 import java.awt.Toolkit;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import rms.ProjectConstants;
+import rms.models.BaseTableModel;
+import supports.DataSupport;
 
 
 /**
  *
  * @author squeekyclean
  */
-public class LoginView extends javax.swing.JFrame {
+public class LoginView extends javax.swing.JDialog {
+
+    private static LoginView INSTANCE;
+    private int role_id;
 
     /** Creates new form LoginView */
-    public LoginView() {
+    private LoginView() {
         initComponents();
+        role_id = -1;
     }
+    public static LoginView getInstance(){
+        if(INSTANCE == null)
+            INSTANCE = new LoginView();
+        return INSTANCE;
+    }
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -41,7 +58,6 @@ public class LoginView extends javax.swing.JFrame {
         btnLogin = new javax.swing.JButton();
         btnSettings = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Start the day");
         setName("frmLogin"); // NOI18N
         setResizable(false);
@@ -80,7 +96,7 @@ public class LoginView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnSettings)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 165, Short.MAX_VALUE)
                         .addComponent(btnLogin))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -88,7 +104,7 @@ public class LoginView extends javax.swing.JFrame {
                             .addComponent(jLabel2))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                            .addComponent(txtLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
                             .addComponent(txtPassword, 0, 0, Short.MAX_VALUE))))
                 .addGap(60, 60, 60))
         );
@@ -114,11 +130,33 @@ public class LoginView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
-        MainApplicationView main = new MainApplicationView();
-        Toolkit tk = Toolkit.getDefaultToolkit();
-        main.setSize(tk.getScreenSize().width, tk.getScreenSize().height);
-        main.setVisible(true);
+        try {
+            // TODO add your handling code here:
+            String login = txtLogin.getText();
+            String password = String.copyValueOf(txtPassword.getPassword());
+            String query = String.format("SELECT role_id FROM employees WHERE login = '%s' AND password = '%s';", login, password);
+            DataSupport dh = new DataSupport();
+            BaseTableModel result = dh.executeQuery(query);
+            if(result.rows.size() > 0){
+                role_id = Integer.parseInt(result.rows.get(0).get(0).toString());
+
+                MainApplicationView main = new MainApplicationView();
+                Toolkit tk = Toolkit.getDefaultToolkit();
+                main.setSize(tk.getScreenSize().width, tk.getScreenSize().height);
+                main.setVisible(true);
+                this.dispose();
+
+            }
+            else{
+                JOptionPane.showMessageDialog(rootPane, ProjectConstants.MSG_ERROR_LOGIN, "Login error.", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.toString(), "Login error.", JOptionPane.ERROR_MESSAGE);
+        }
+
+
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSettingsActionPerformed
