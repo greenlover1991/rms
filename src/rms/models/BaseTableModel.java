@@ -76,8 +76,6 @@ public class BaseTableModel extends AbstractTableModel {
         return columnNames.indexOf(columnName);
     }
 
-
-
     public DataRow getLastRow(){
         if(!rows.isEmpty())
             return rows.get(rows.size()-1);
