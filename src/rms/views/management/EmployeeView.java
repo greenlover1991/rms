@@ -10,19 +10,37 @@
  */
 
 package rms.views.management;
+import extras.DateCellEditor;
+import extras.IntegerCellEditor;
+import extras.StringCellEditor;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import javax.swing.table.DefaultTableCellRenderer;
+import rms.ProjectConstants;
+import rms.controllers.management.EmployeeController;
+import rms.models.BaseTableModel;
+import rms.models.DataRow;
+import rms.models.management.EmployeeDBTable;
 
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author xmiez
  */
 public class EmployeeView extends javax.swing.JInternalFrame {
-
+    private EmployeeController controller;
+    DateFormat formatter;
     private static EmployeeView INSTANCE;
     /** Creates new form MasterFilesUI */
     private EmployeeView() {
         initComponents();
+        controller = new EmployeeController(this);
+
+        initValidations();
+        refreshData();
        }
 
     public static EmployeeView getInstance(){
@@ -98,6 +116,11 @@ public class EmployeeView extends javax.swing.JInternalFrame {
         saveButton.setContentAreaFilled(false);
         saveButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         saveButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
 
         addButton1.setFont(new java.awt.Font("Tahoma", 1, 12));
         addButton1.setForeground(new java.awt.Color(153, 153, 153));
@@ -234,7 +257,7 @@ public class EmployeeView extends javax.swing.JInternalFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
@@ -242,18 +265,102 @@ public class EmployeeView extends javax.swing.JInternalFrame {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
-         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-         model.addRow(new Object[] { "", "" });
+         if(canAddRow())
+            addRow();
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
         // TODO add your handling code here:
+        refreshData();
     }//GEN-LAST:event_loadButtonActionPerformed
 
     private void addButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButton1ActionPerformed
         // TODO add your handling code here:
+        setInactive();
     }//GEN-LAST:event_addButton1ActionPerformed
 
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        // TODO add your handling code here:
+        saveData();
+    }//GEN-LAST:event_saveButtonActionPerformed
+
+    public void refreshData(){
+        jTable1.setModel(controller.refreshData());
+        removeInvisibleColumns();
+    }
+
+    public void saveData(){
+        controller.save();
+        refreshData();
+    }
+
+    public void setInactive(){
+        int[] rows = jTable1.getSelectedRows();
+        for(int i : rows){
+            int rowId = jTable1.convertRowIndexToModel(i);
+            int colId = ((BaseTableModel)jTable1.getModel()).findColumn(EmployeeDBTable.STATUS);
+            int idColId = ((BaseTableModel)jTable1.getModel()).findColumn(EmployeeDBTable.ID);
+            // if has no id, dont inactivate
+            Object id = jTable1.getModel().getValueAt(rowId, idColId);
+            if(id == null || id.toString().isEmpty())
+               ((BaseTableModel)jTable1.getModel()).removeRow(rowId);
+            else
+               jTable1.getModel().setValueAt(ProjectConstants.STATUS_INACTIVE, rowId, colId);
+        }
+        controller.save();
+        refreshData();
+    }
+
+    private void initValidations() {
+        jTable1.setDefaultEditor(Integer.class, new IntegerCellEditor(true,1, Integer.MAX_VALUE));
+        jTable1.setDefaultEditor(Date.class, new DateCellEditor());
+
+        jTable1.setDefaultRenderer(Date.class, new DefaultTableCellRenderer.UIResource(){
+
+            @Override
+            protected void setValue(Object value) {
+                if (formatter==null) {
+		formatter = DateFormat.getDateInstance(DateFormat.MEDIUM);
+	    }
+	    setText((value == null) ? "" : formatter.format(value));
+            }
+
+        });
+        jTable1.setDefaultEditor(String.class, new StringCellEditor(1, 255));
+       //jTable1.getColumn(EmployeeDBTable.ALIAS_ADDRESS).setCellEditor(new StringCellEditor(0, 3));
+       //jTable1.getColumn(EmployeeDBTable.ALIAS_F_NAME).setCellEditor(new StringCellEditor(1, 5));
+    }
+
+    private void removeInvisibleColumns(){
+        for(String inviColumn : EmployeeDBTable.getInstance().getInvisibleColumns()){
+            jTable1.removeColumn(jTable1.getColumn(inviColumn));
+        }
+    }
+
+    private boolean canAddRow(){
+        BaseTableModel model = (BaseTableModel)jTable1.getModel();
+        DataRow lastRow = model.getLastRow();
+        boolean isValid = true;
+        for(String column : EmployeeDBTable.getInstance().getNonNullableColumns()){
+            if(lastRow != null && (lastRow.get(column) == null || lastRow.get(column).toString().isEmpty())){
+                isValid = false;
+                break;
+            }
+        }
+
+        return isValid;
+    }
+
+    private void addRow() {
+        BaseTableModel model = (BaseTableModel)jTable1.getModel();
+        List<String> columnNames = Arrays.asList(EmployeeDBTable.getInstance().getColumns());
+        List<Object> values = new ArrayList<Object>(columnNames.size());
+        for(int i=0;i<columnNames.size()-1;i++ )
+        values.add(null);
+        values.add(ProjectConstants.STATUS_ACTIVE);
+        DataRow row = new DataRow(columnNames, values);
+        model.addRow(row);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
