@@ -25,7 +25,7 @@ import supports.DataSupport;
  *
  * @author squeekyclean
  */
-public class LoginView extends javax.swing.JDialog {
+public class LoginView extends javax.swing.JFrame {
 
     private static LoginView INSTANCE;
     private int role_id;
@@ -33,6 +33,7 @@ public class LoginView extends javax.swing.JDialog {
     /** Creates new form LoginView */
     private LoginView() {
         initComponents();
+        setLocationRelativeTo(null);
         role_id = -1;
     }
     public static LoginView getInstance(){
@@ -58,6 +59,7 @@ public class LoginView extends javax.swing.JDialog {
         btnLogin = new javax.swing.JButton();
         btnSettings = new javax.swing.JButton();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Start the day");
         setName("frmLogin"); // NOI18N
         setResizable(false);
@@ -72,7 +74,7 @@ public class LoginView extends javax.swing.JDialog {
 
         txtPassword.setFont(new java.awt.Font("DejaVu Sans", 0, 24));
 
-        btnLogin.setFont(new java.awt.Font("DejaVu Sans", 0, 24));
+        btnLogin.setFont(new java.awt.Font("DejaVu Sans", 0, 24)); // NOI18N
         btnLogin.setText("Login");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
