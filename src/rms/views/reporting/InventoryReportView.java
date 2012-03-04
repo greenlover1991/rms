@@ -25,6 +25,8 @@ import javax.swing.table.TableColumn;
 
 import org.jbundle.thin.base.screen.jcalendarbutton.JCalendarButton;
 
+import rms.controllers.reporting.InventoryReportController;
+import rms.models.BaseTableModel;
 import rms.models.reporting.InventoryReportModel;
 
 /*  
@@ -33,14 +35,15 @@ import rms.models.reporting.InventoryReportModel;
  */
 public class InventoryReportView extends JInternalFrame {
 	DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
-	JTable DTR;
+	JTable tableInventoryReport;
 	JPanel panelDateButtons = new JPanel();
-	JScrollPane scrollPaneDTR;
+	JScrollPane scrollPaneInventoryReport;
 	JCalendarButton buttonDate;
 	JTextField textFieldDate;
 	JLabel labelDate;
 	DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
-	InventoryReportModel model = new InventoryReportModel();
+	BaseTableModel model;
+	InventoryReportController controller = new InventoryReportController(this);
 
 	private static InventoryReportView INSTANCE;
 
@@ -52,10 +55,12 @@ public class InventoryReportView extends JInternalFrame {
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setSize((int) (screenSize.width * .85), (int) (screenSize.height * .9));
+		
+		model = controller.refresh();
 
 		initComponents();
 
-		add(scrollPaneDTR, BorderLayout.CENTER);
+		add(scrollPaneInventoryReport, BorderLayout.CENTER);
 		add(panelDateButtons, BorderLayout.PAGE_START);
 
 		setVisible(true);
@@ -94,7 +99,7 @@ public class InventoryReportView extends JInternalFrame {
 
 		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
 
-		DTR = new JTable(model){
+		tableInventoryReport = new JTable(model){
 			public Component prepareRenderer(TableCellRenderer renderer,
 					int Index_row, int Index_col) {
 				Component comp = super.prepareRenderer(renderer, Index_row,
@@ -109,31 +114,31 @@ public class InventoryReportView extends JInternalFrame {
 			}
 		};
 		TableColumn column = null;
-		column = DTR.getColumnModel().getColumn(0);
+		column = tableInventoryReport.getColumnModel().getColumn(0);
 		column.setMinWidth(150);
 		column.setCellRenderer(dtcr);
-		column = DTR.getColumnModel().getColumn(1);
+		column = tableInventoryReport.getColumnModel().getColumn(1);
 		column.setPreferredWidth(150);
 		column.setMinWidth(150);
 		column.setMaxWidth(150);
 		column.setCellRenderer(dtcr);
-		column = DTR.getColumnModel().getColumn(2);
+		column = tableInventoryReport.getColumnModel().getColumn(2);
 		column.setPreferredWidth(150);
 		column.setMinWidth(150);
 		column.setMaxWidth(150);
 		column.setCellRenderer(dtcr);
-		column = DTR.getColumnModel().getColumn(3);
+		column = tableInventoryReport.getColumnModel().getColumn(3);
 		column.setPreferredWidth(150);
 		column.setMinWidth(150);
 		column.setMaxWidth(150);
 		column.setCellRenderer(dtcr);
-		column = DTR.getColumnModel().getColumn(4);
+		column = tableInventoryReport.getColumnModel().getColumn(4);
 		column.setPreferredWidth(150);
 		column.setMinWidth(150);
 		column.setMaxWidth(150);
 		column.setCellRenderer(dtcr);
 
-		scrollPaneDTR = new JScrollPane(DTR);
+		scrollPaneInventoryReport = new JScrollPane(tableInventoryReport);
 
 	}
 

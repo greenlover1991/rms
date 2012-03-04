@@ -25,7 +25,8 @@ import javax.swing.table.TableColumn;
 
 import org.jbundle.thin.base.screen.jcalendarbutton.JCalendarButton;
 
-import rms.models.reporting.SpoilageReportModel;
+import rms.controllers.reporting.SpoilageReportController;
+import rms.models.BaseTableModel;
 
 /*
  * @author Yu
@@ -33,14 +34,15 @@ import rms.models.reporting.SpoilageReportModel;
  */
 public class SpoilageReportView extends JInternalFrame {
 	DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
-	JTable DTR;
+	JTable tableSpoilageReport;
 	JPanel panelDateButtons = new JPanel();
-	JScrollPane scrollPaneDTR;
+	JScrollPane scrollPaneSpoilageReport;
 	JCalendarButton buttonDate;
 	JTextField textFieldDate;
 	JLabel labelDate;
 	DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
-	SpoilageReportModel model = new SpoilageReportModel();
+	BaseTableModel model = new BaseTableModel();
+	SpoilageReportController controller = new SpoilageReportController(this);
 	int buttonNo = 0;
 
 	private static SpoilageReportView INSTANCE;
@@ -54,9 +56,11 @@ public class SpoilageReportView extends JInternalFrame {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setSize((int) (screenSize.width * .85), (int) (screenSize.height * .9));
 
+		model = controller.refresh();
+
 		initComponents();
 
-		add(scrollPaneDTR, BorderLayout.CENTER);
+		add(scrollPaneSpoilageReport, BorderLayout.CENTER);
 		add(panelDateButtons, BorderLayout.NORTH);
 
 		setVisible(true);
@@ -96,7 +100,7 @@ public class SpoilageReportView extends JInternalFrame {
 
 		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
 
-		DTR = new JTable(model){
+		tableSpoilageReport = new JTable(model) {
 			public Component prepareRenderer(TableCellRenderer renderer,
 					int Index_row, int Index_col) {
 				Component comp = super.prepareRenderer(renderer, Index_row,
@@ -110,16 +114,17 @@ public class SpoilageReportView extends JInternalFrame {
 				return comp;
 			}
 		};
-		TableColumn column = null;
-		column = DTR.getColumnModel().getColumn(0);
-		column.setCellRenderer(dtcr);
-		column = DTR.getColumnModel().getColumn(1);
-		column.setPreferredWidth(100);
-		column.setMinWidth(100);
-		column.setMaxWidth(100);
-		column.setCellRenderer(dtcr);
+		
+//		TableColumn column = null;
+//		column = tableSpoilageReport.getColumnModel().getColumn(0);
+//		column.setCellRenderer(dtcr);
+//		column = tableSpoilageReport.getColumnModel().getColumn(1);
+//		column.setPreferredWidth(100);
+//		column.setMinWidth(100);
+//		column.setMaxWidth(100);
+//		column.setCellRenderer(dtcr);
 
-		scrollPaneDTR = new JScrollPane(DTR);
+		scrollPaneSpoilageReport = new JScrollPane(tableSpoilageReport);
 
 	}
 

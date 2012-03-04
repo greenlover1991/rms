@@ -41,10 +41,9 @@ public class DTRReportView extends JInternalFrame {
 		setSize((int) (screenSize.width * .85), (int) (screenSize.height * .9));
 
 		model.setDataVector(new Object[][] {
-				{ "9:00:00", "7:00:00", "", "", "", "", "50", "500" },
-				{ "5:00:00", "9:00:00", "", "", "", "", "40", "160" } },
-				new Object[] { "In", "Out", "In", "Out", "In", "Out",
-						"Rate/Hr", "Total/Day" });
+				{ "9:00:00", "7:00:00", "8:00:00", "500" },
+				{ "5:00:00", "9:00:00", "", "160" } }, new Object[] { "In",
+				"Out", "Overtime", "Total/Day" });
 
 		initComponents();
 

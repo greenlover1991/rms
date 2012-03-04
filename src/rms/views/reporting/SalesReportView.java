@@ -4,25 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -33,11 +22,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
 
 import org.jbundle.thin.base.screen.jcalendarbutton.JCalendarButton;
 
-import rms.models.reporting.SalesReportModel;
+import rms.controllers.reporting.SalesReportController;
+import rms.models.BaseTableModel;
 
 /*
  * @author Yu
@@ -45,34 +34,40 @@ import rms.models.reporting.SalesReportModel;
  */
 public class SalesReportView extends JInternalFrame {
 	DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
-	JTable DTR;
+	JTable tableSalesReport;
 	JPanel panelDateButtons = new JPanel();
-	JScrollPane scrollPaneDTR;
-	JCalendarButton buttonDateFrom, buttonDateTo;
-	JTextField textFieldDateFrom, textFieldDateTo, textTotalSales;
-	JLabel labelDateFrom, labelDateTo, labelTotalSales;
+	JScrollPane scrollPaneSalesReport;
+	JCalendarButton buttonDateFrom, buttonDateTo, buttonDate;
+	JTextField textDateFrom, textDateTo, textDate, textExpenses,
+			textTotalCashOnHand, textCashSales, textCardSales;
+	JLabel labelDateFrom, labelDateTo, labelDate, labelExpenses,
+			labelTotalCashOnHand, labelCashSales, labelCardSales;
 	DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
-	SalesReportModel model = new SalesReportModel();
+	BaseTableModel model;
+	SalesReportController controller = new SalesReportController(this);
 	int buttonNum = 0;
 
-	JFXPanel panelChart = new JFXPanel();
+	// JFXPanel panelChart = new JFXPanel();
 
 	private static SalesReportView INSTANCE;
 
 	private SalesReportView() {
-		super("Sales Report", true,// resizable
+		super("Sales Report", true, // resizable
 				true, // closable
 				true, // maximizable
 				true); // iconifiable
 
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		setSize((int) (screenSize.width * .5), (int) (screenSize.height * .9));
+		
+		model = controller.refresh();
+
 		initComponents();
 
-		add(scrollPaneDTR, BorderLayout.CENTER);
+		add(scrollPaneSalesReport, BorderLayout.CENTER);
 		add(panelDateButtons, BorderLayout.PAGE_START);
-		add(panelChart, BorderLayout.EAST);
-
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		setSize((int) (screenSize.width * .85), (int) (screenSize.height * .9));
+		// add(panelChart, BorderLayout.EAST);
+		
 		setVisible(true);
 
 		// Platform.runLater(new Runnable() {
@@ -108,7 +103,7 @@ public class SalesReportView extends JInternalFrame {
 	// lineChart.setTitle("Sales Monitoring, Last 7 Days");
 	// // defining a series
 	// XYChart.Series series = new XYChart.Series();
-	// series.setName("Doña Juanita");
+	// series.setName("Doï¿½a Juanita");
 	// // populating the series with data
 	// today.add(Calendar.DATE, -6);
 	//
@@ -147,43 +142,85 @@ public class SalesReportView extends JInternalFrame {
 	// }
 
 	private void initComponents() {
+		buttonDate = new JCalendarButton();
+		textDate = new JTextField();
+		labelDate = new JLabel("Date:");
 		buttonDateFrom = new JCalendarButton();
 		buttonDateTo = new JCalendarButton();
-		textFieldDateFrom = new JTextField(10);
-		textFieldDateTo = new JTextField(10);
-		textTotalSales = new JTextField(10);
+		textDate = new JTextField(10);
+		textDateFrom = new JTextField(10);
+		textDateTo = new JTextField(10);
+		textCashSales = new JTextField(10);
+		textCardSales = new JTextField(10);
+		textExpenses = new JTextField(10);
+		textTotalCashOnHand = new JTextField(10);
 		labelDateFrom = new JLabel("From:");
 		labelDateTo = new JLabel("To:");
-		labelTotalSales = new JLabel("Total Sales");
+		labelCashSales = new JLabel("Total Cash Sales");
+		labelCardSales = new JLabel("Total Card Sales");
+		labelExpenses = new JLabel("Total Expenses");
+		labelTotalCashOnHand = new JLabel("Total Cash on Hand");
 
-		textFieldDateFrom.setHorizontalAlignment(JTextField.CENTER);
-		textFieldDateTo.setHorizontalAlignment(JTextField.CENTER);
-		textTotalSales.setHorizontalAlignment(JTextField.CENTER);
-		textTotalSales.setEditable(false);
+		textDate.setHorizontalAlignment(JTextField.CENTER);
+		textDateFrom.setHorizontalAlignment(JTextField.CENTER);
+		textDateTo.setHorizontalAlignment(JTextField.CENTER);
+		textCashSales.setHorizontalAlignment(JTextField.CENTER);
+		textCashSales.setEditable(false);
+		textCardSales.setHorizontalAlignment(JTextField.CENTER);
+		textCardSales.setEditable(false);
+		textExpenses.setHorizontalAlignment(JTextField.CENTER);
+		textExpenses.setEditable(false);
+		textTotalCashOnHand.setHorizontalAlignment(JTextField.CENTER);
+		textTotalCashOnHand.setEditable(false);
+
+		textCashSales.setText(controller.totalCashSales().getValueAt(0, 0)
+				.toString());
+		textCardSales.setText(controller.totalCardSales().getValueAt(0, 0)
+				.toString());
+		textExpenses.setText(controller.totalExpenses().getValueAt(0, 0)
+				.toString());
+
+		double totalCashOnHand = Double.parseDouble(controller.totalCashSales()
+				.getValueAt(0, 0).toString())
+				- Double.parseDouble(controller.totalExpenses()
+						.getValueAt(0, 0).toString());
+		textTotalCashOnHand.setText(Double.toString(totalCashOnHand));
 
 		buttonDateFrom.setActionCommand("setFromDate");
 		buttonDateTo.setActionCommand("setToDate");
+		buttonDate.setActionCommand("setDate");
 
-		panelDateButtons.setMaximumSize(new Dimension(250, 25));
-		panelDateButtons.setMinimumSize(new Dimension(250, 25));
-		panelDateButtons.setPreferredSize(new Dimension(250, 25));
+		panelDateButtons.setLayout(new GridLayout(3, 4));
+		panelDateButtons.setMaximumSize(new Dimension(250, 50));
+		panelDateButtons.setMinimumSize(new Dimension(250, 50));
+		panelDateButtons.setPreferredSize(new Dimension(250, 50));
 
-		panelDateButtons.add(labelDateFrom);
-		panelDateButtons.add(textFieldDateFrom);
-		panelDateButtons.add(buttonDateFrom);
-		panelDateButtons.add(labelDateTo);
-		panelDateButtons.add(textFieldDateTo);
-		panelDateButtons.add(buttonDateTo);
-		panelDateButtons.add(labelTotalSales);
-		panelDateButtons.add(textTotalSales);
+		panelDateButtons.add(labelDate);
+		panelDateButtons.add(textDate);
+		panelDateButtons.add(buttonDate);
+		// panelDateButtons.add(labelDateFrom);
+		// panelDateButtons.add(textFieldDateFrom);
+		// panelDateButtons.add(buttonDateFrom);
+		// panelDateButtons.add(labelDateTo);
+		// panelDateButtons.add(textFieldDateTo);
+		// panelDateButtons.add(buttonDateTo);
+		panelDateButtons.add(new JLabel());
+		panelDateButtons.add(labelCashSales);
+		panelDateButtons.add(textCashSales);
+		panelDateButtons.add(labelCardSales);
+		panelDateButtons.add(textCardSales);
+		panelDateButtons.add(labelExpenses);
+		panelDateButtons.add(textExpenses);
+		panelDateButtons.add(labelTotalCashOnHand);
+		panelDateButtons.add(textTotalCashOnHand);
 
-		textFieldDateFrom.addFocusListener(new FocusAdapter() {
+		textDateFrom.addFocusListener(new FocusAdapter() {
 			public void focusLost(FocusEvent evt) {
 				dateFocusLost(evt);
 			}
 		});
 
-		textFieldDateTo.addFocusListener(new FocusAdapter() {
+		textDateTo.addFocusListener(new FocusAdapter() {
 			public void focusLost(FocusEvent evt) {
 				dateFocusLost(evt);
 			}
@@ -208,7 +245,7 @@ public class SalesReportView extends JInternalFrame {
 
 		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
 
-		DTR = new JTable(model){
+		tableSalesReport = new JTable(model) {
 			public Component prepareRenderer(TableCellRenderer renderer,
 					int Index_row, int Index_col) {
 				Component comp = super.prepareRenderer(renderer, Index_row,
@@ -222,42 +259,42 @@ public class SalesReportView extends JInternalFrame {
 				return comp;
 			}
 		};
-		TableColumn column = null;
-		column = DTR.getColumnModel().getColumn(0);
-		column.setMinWidth(135);
-		column.setCellRenderer(dtcr);
-		column = DTR.getColumnModel().getColumn(1);
-		column.setPreferredWidth(85);
-		column.setMinWidth(85);
-		column.setMaxWidth(85);
-		column.setCellRenderer(dtcr);
-		column = DTR.getColumnModel().getColumn(2);
-		column.setPreferredWidth(55);
-		column.setMinWidth(55);
-		column.setMaxWidth(55);
-		column.setCellRenderer(dtcr);
-		column = DTR.getColumnModel().getColumn(3);
-		column.setPreferredWidth(135);
-		column.setMinWidth(135);
-		column.setMaxWidth(135);
-		column.setCellRenderer(dtcr);
-		column = DTR.getColumnModel().getColumn(4);
-		column.setPreferredWidth(135);
-		column.setMinWidth(135);
-		column.setMaxWidth(135);
-		column.setCellRenderer(dtcr);
-		column = DTR.getColumnModel().getColumn(5);
-		column.setPreferredWidth(135);
-		column.setMinWidth(135);
-		column.setMaxWidth(135);
-		column.setCellRenderer(dtcr);
+		// TableColumn column = null;
+		// column = DTR.getColumnModel().getColumn(0);
+		// column.setMinWidth(135);
+		// column.setCellRenderer(dtcr);
+		// column = DTR.getColumnModel().getColumn(1);
+		// column.setPreferredWidth(85);
+		// column.setMinWidth(85);
+		// column.setMaxWidth(85);
+		// column.setCellRenderer(dtcr);
+		// column = DTR.getColumnModel().getColumn(2);
+		// column.setPreferredWidth(55);
+		// column.setMinWidth(55);
+		// column.setMaxWidth(55);
+		// column.setCellRenderer(dtcr);
+		// column = DTR.getColumnModel().getColumn(3);
+		// column.setPreferredWidth(135);
+		// column.setMinWidth(135);
+		// column.setMaxWidth(135);
+		// column.setCellRenderer(dtcr);
+		// column = DTR.getColumnModel().getColumn(4);
+		// column.setPreferredWidth(135);
+		// column.setMinWidth(135);
+		// column.setMaxWidth(135);
+		// column.setCellRenderer(dtcr);
+		// column = DTR.getColumnModel().getColumn(5);
+		// column.setPreferredWidth(135);
+		// column.setMinWidth(135);
+		// column.setMaxWidth(135);
+		// column.setCellRenderer(dtcr);
 
-		scrollPaneDTR = new JScrollPane(DTR);
+		scrollPaneSalesReport = new JScrollPane(tableSalesReport);
 
 	}
 
 	private void dateFocusLost(FocusEvent evt) {
-		String date = textFieldDateFrom.getText();
+		String date = textDateFrom.getText();
 		setDate(date);
 	}
 
@@ -282,10 +319,10 @@ public class SalesReportView extends JInternalFrame {
 		if (date != null)
 			dateString = dateFormat.format(date);
 		if (buttonNum == 0) {
-			textFieldDateFrom.setText(dateString);
+			textDateFrom.setText(dateString);
 			buttonDateFrom.setTargetDate(date);
 		} else {
-			textFieldDateTo.setText(dateString);
+			textDateTo.setText(dateString);
 			buttonDateTo.setTargetDate(date);
 		}
 	}

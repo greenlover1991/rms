@@ -10,8 +10,8 @@ import javax.swing.table.AbstractTableModel;
  */
 public class SpoilageReportModel extends AbstractTableModel implements
 		TableModelListener {
-	String[] columnNames = { "Ingredient", "Measurement", "Reason/Remarks"};
-	Object[][] data = { { "Patty", "10", "" }, { "Cheese", "15", "" } };
+	String[] columnNames = { "Ingredient", "Measurement" };
+	Object[][] data = { { "Patty", "10" }, { "Cheese", "15" } };
 
 	@Override
 	public int getColumnCount() {
