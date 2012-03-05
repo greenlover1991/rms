@@ -10,8 +10,13 @@
  */
 
 package rms.views.management;
-
-import javax.swing.table.DefaultTableModel;
+import extras.IntegerCellEditor;
+import extras.StringCellEditor;
+import rms.controllers.management.SupplierPriceListController;
+import rms.models.BaseTableModel;
+import rms.models.management.IngredientDBTable;
+import rms.models.management.SupplierDBTable;
+import rms.models.management.SupplierPriceListDBTable;
 
 /**
  *
@@ -19,10 +24,16 @@ import javax.swing.table.DefaultTableModel;
  */
 public class SupplierPriceListView extends javax.swing.JInternalFrame {
 
+    private SupplierPriceListController controller;
+
     private static SupplierPriceListView INSTANCE;
     /** Creates new form MasterFilesUI */
     private SupplierPriceListView() {
         initComponents();
+        controller = new SupplierPriceListController(this);
+
+        initValidations();
+        refreshData();
        }
 
     public static SupplierPriceListView getInstance(){
@@ -47,7 +58,6 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
         searchField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton5 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         searchField1 = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -55,14 +65,13 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         masterFileLabel1 = new javax.swing.JLabel();
-        loadButton2 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
-        jButton4 = new javax.swing.JButton();
+        removeIngFromPriceList = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         masterFileLabel2 = new javax.swing.JLabel();
-        loadButton1 = new javax.swing.JButton();
+        save = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(221, 221, 221));
         setClosable(true);
@@ -77,7 +86,7 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
         masterFileLabel.setForeground(new java.awt.Color(255, 255, 255));
         masterFileLabel.setText("Supplier");
 
-        loadButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        loadButton.setFont(new java.awt.Font("Tahoma", 1, 12));
         loadButton.setForeground(new java.awt.Color(153, 153, 153));
         loadButton.setText("Refresh");
         loadButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -164,22 +173,12 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
         });
         jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jScrollPane1.setViewportView(jTable1);
-
-        jButton5.setBackground(new java.awt.Color(255, 255, 255));
-        jButton5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(153, 153, 153));
-        jButton5.setText(">>");
-        jButton5.setToolTipText("Show Price List");
-        jButton5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jButton5.setContentAreaFilled(false);
-        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton5.setFocusPainted(false);
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -189,8 +188,7 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
-                    .addComponent(searchField, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchField, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -200,9 +198,7 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
                 .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -247,7 +243,7 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(jTable2);
 
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButton2.setFont(new java.awt.Font("Tahoma", 1, 12));
         jButton2.setForeground(new java.awt.Color(153, 153, 153));
         jButton2.setText(">>");
         jButton2.setToolTipText("Add selected ingredient to price list");
@@ -292,20 +288,6 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
         masterFileLabel1.setForeground(new java.awt.Color(255, 255, 255));
         masterFileLabel1.setText("Ingredients");
 
-        loadButton2.setFont(new java.awt.Font("Tahoma", 1, 12));
-        loadButton2.setForeground(new java.awt.Color(153, 153, 153));
-        loadButton2.setText("Refresh");
-        loadButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        loadButton2.setContentAreaFilled(false);
-        loadButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        loadButton2.setFocusPainted(false);
-        loadButton2.setMargin(new java.awt.Insets(2, 0, 2, 0));
-        loadButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loadButton2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -313,18 +295,14 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(masterFileLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
-                .addComponent(loadButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(216, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(masterFileLabel1))
-                    .addComponent(loadButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(11, 11, 11)
+                .addComponent(masterFileLabel1)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -348,21 +326,21 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
                 return types [columnIndex];
             }
         });
-        jTable3.setEnabled(false);
+        jTable3.setCellSelectionEnabled(true);
         jScrollPane3.setViewportView(jTable3);
 
-        jButton4.setBackground(new java.awt.Color(34, 34, 34));
-        jButton4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(153, 153, 153));
-        jButton4.setText("<<");
-        jButton4.setToolTipText("Remove Ingredient from Price List");
-        jButton4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jButton4.setContentAreaFilled(false);
-        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton4.setFocusPainted(false);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        removeIngFromPriceList.setBackground(new java.awt.Color(34, 34, 34));
+        removeIngFromPriceList.setFont(new java.awt.Font("Tahoma", 1, 12));
+        removeIngFromPriceList.setForeground(new java.awt.Color(153, 153, 153));
+        removeIngFromPriceList.setText("<<");
+        removeIngFromPriceList.setToolTipText("Remove Ingredient from Price List");
+        removeIngFromPriceList.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        removeIngFromPriceList.setContentAreaFilled(false);
+        removeIngFromPriceList.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        removeIngFromPriceList.setFocusPainted(false);
+        removeIngFromPriceList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                removeIngFromPriceListActionPerformed(evt);
             }
         });
 
@@ -373,18 +351,18 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                    .addComponent(removeIngFromPriceList, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(removeIngFromPriceList, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jPanel6.setBackground(new java.awt.Color(34, 34, 34));
@@ -394,17 +372,16 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
         masterFileLabel2.setForeground(new java.awt.Color(255, 255, 255));
         masterFileLabel2.setText("Price List");
 
-        loadButton1.setFont(new java.awt.Font("Tahoma", 1, 12));
-        loadButton1.setForeground(new java.awt.Color(153, 153, 153));
-        loadButton1.setText("Refresh");
-        loadButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        loadButton1.setContentAreaFilled(false);
-        loadButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        loadButton1.setFocusPainted(false);
-        loadButton1.setMargin(new java.awt.Insets(2, 0, 2, 0));
-        loadButton1.addActionListener(new java.awt.event.ActionListener() {
+        save.setFont(new java.awt.Font("Tahoma", 1, 12));
+        save.setForeground(new java.awt.Color(153, 153, 153));
+        save.setText("Save");
+        save.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        save.setContentAreaFilled(false);
+        save.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        save.setMargin(new java.awt.Insets(2, 0, 2, 0));
+        save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loadButton1ActionPerformed(evt);
+                saveActionPerformed(evt);
             }
         });
 
@@ -415,18 +392,19 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(masterFileLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 173, Short.MAX_VALUE)
-                .addComponent(loadButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 180, Short.MAX_VALUE)
+                .addComponent(save, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
+                        .addContainerGap()
                         .addComponent(masterFileLabel2))
-                    .addComponent(loadButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(save, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -435,41 +413,37 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel6, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(59, 59, 59))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_loadButtonActionPerformed
 
     private void searchField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchField1ActionPerformed
         // TODO add your handling code here:
@@ -477,29 +451,74 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        int rowId = jTable1.getSelectedRow();
+        int row2Id = jTable2.getSelectedRow();
+        int SupplierId = Integer.parseInt(((BaseTableModel)jTable1.getModel()).getValueAt(rowId, SupplierDBTable.ID).toString());
+        int IngId = Integer.parseInt(((BaseTableModel)jTable2.getModel()).getValueAt(row2Id, IngredientDBTable.ID).toString());
+        if (controller.AddIngredientToPriceList(IngId, SupplierId)){
+            jTable2.setModel(controller.loadIngredients(SupplierId));
+            jTable3.setModel(controller.loadPriceList(SupplierId));
+            removeInvisibleColumnsOnPriceList();
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void removeIngFromPriceListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeIngFromPriceListActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+        int rowId = jTable3.getSelectedRow();
+        int SupplierId = Integer.parseInt(((BaseTableModel)jTable3.getModel()).getValueAt(rowId, SupplierPriceListDBTable.SUPPLIER_ID).toString());
+        int IngId = Integer.parseInt(((BaseTableModel)jTable3.getModel()).getValueAt(rowId, SupplierPriceListDBTable.INGREDIENT_ID).toString());
+        if (controller.removeIngredientFromPriceList(IngId, SupplierId)){
+            jTable2.setModel(controller.loadIngredients(SupplierId));
+            jTable3.setModel(controller.loadPriceList(SupplierId));
+            removeInvisibleColumnsOnPriceList();
+        }
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_removeIngFromPriceListActionPerformed
+
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+        controller.save((BaseTableModel)jTable3.getModel());
+}//GEN-LAST:event_saveActionPerformed
 
-    private void loadButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButton1ActionPerformed
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_loadButton1ActionPerformed
+        int rowId = jTable1.getSelectedRow();
+        int SupplierId = Integer.parseInt(((BaseTableModel)jTable1.getModel()).getValueAt(rowId, SupplierDBTable.ID).toString());
+        jTable2.setModel(controller.loadIngredients(SupplierId));
+        jTable3.setModel(controller.loadPriceList(SupplierId));
+        removeInvisibleColumnsOnPriceList();
+    }//GEN-LAST:event_jTable1MouseClicked
 
-    private void loadButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButton2ActionPerformed
+    private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_loadButton2ActionPerformed
+        refreshData();
+}//GEN-LAST:event_loadButtonActionPerformed
 
+    public void refreshData(){
+        jTable1.setModel(controller.refreshData());
+        removeInvisibleColumns();
+    }
+
+    private void initValidations() {
+        jTable1.setDefaultEditor(Integer.class, new IntegerCellEditor(true,1, Integer.MAX_VALUE));
+        jTable1.setDefaultEditor(String.class, new StringCellEditor(1, 40));
+       //jTable1.getColumn(EmployeeDBTable.ALIAS_ADDRESS).setCellEditor(new StringCellEditor(0, 3));
+       //jTable1.getColumn(EmployeeDBTable.ALIAS_F_NAME).setCellEditor(new StringCellEditor(1, 5));
+    }
+
+    private void removeInvisibleColumns(){
+        for(String inviColumn : SupplierDBTable.getInstance().getInvisibleColumns()){
+            jTable1.removeColumn(jTable1.getColumn(inviColumn));
+        }
+    }
+    private void removeInvisibleColumnsOnPriceList(){
+        jTable2.removeColumn(jTable2.getColumn(IngredientDBTable.ALIAS_ID));
+        jTable3.removeColumn(jTable3.getColumn(SupplierPriceListDBTable.INGREDIENT_ID));
+        jTable3.removeColumn(jTable3.getColumn(SupplierPriceListDBTable.SUPPLIER_ID));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -513,11 +532,11 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JButton loadButton;
-    private javax.swing.JButton loadButton1;
-    private javax.swing.JButton loadButton2;
     private javax.swing.JLabel masterFileLabel;
     private javax.swing.JLabel masterFileLabel1;
     private javax.swing.JLabel masterFileLabel2;
+    private javax.swing.JButton removeIngFromPriceList;
+    private javax.swing.JButton save;
     private javax.swing.JTextField searchField;
     private javax.swing.JTextField searchField1;
     // End of variables declaration//GEN-END:variables
