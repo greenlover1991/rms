@@ -40,8 +40,8 @@ public class EmployeeDBTable extends DBTable{
     public static final String ALIAS_STATUS = "Status";
 
 
-    private static final String[] columns = {ID, F_NAME, L_NAME, M_NAME,  BIRTHDATE, LANDLINE,MOBILE, ADDRESS, LOGIN, PASSWORD, ROLE_ID, STATUS};
-    private static final String[] columnsAliases = {ALIAS_ID, ALIAS_F_NAME, ALIAS_L_NAME, ALIAS_M_NAME, ALIAS_BIRTHDATE, ALIAS_LANDLINE, ALIAS_MOBILE, ALIAS_ADDRESS, ALIAS_LOGIN, ALIAS_PASSWORD, ALIAS_ROLE_ID, ALIAS_STATUS};
+    private static final String[] columns = {F_NAME,ID,  L_NAME, M_NAME,  BIRTHDATE, LANDLINE,MOBILE, ADDRESS, LOGIN, PASSWORD, ROLE_ID, STATUS};
+    private static final String[] columnsAliases = { ALIAS_F_NAME, ALIAS_ID,ALIAS_L_NAME, ALIAS_M_NAME, ALIAS_BIRTHDATE, ALIAS_LANDLINE, ALIAS_MOBILE, ALIAS_ADDRESS, ALIAS_LOGIN, ALIAS_PASSWORD, ALIAS_ROLE_ID, ALIAS_STATUS};
     private static final String[] primaryColumns = {ID};
     private static final String[] uniqueColumns = {ID};
     private static final String[] invisibleColumns = {ALIAS_ID, ALIAS_STATUS};

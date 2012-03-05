@@ -18,7 +18,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableRowSorter;
 import rms.ProjectConstants;
 import rms.controllers.management.EmployeeController;
 import rms.models.BaseTableModel;
@@ -33,6 +37,8 @@ import rms.models.management.EmployeeDBTable;
 public class EmployeeView extends javax.swing.JInternalFrame {
     private EmployeeController controller;
     DateFormat formatter;
+    private TableRowSorter<BaseTableModel> sorter;
+
     private static EmployeeView INSTANCE;
     /** Creates new form MasterFilesUI */
     private EmployeeView() {
@@ -41,6 +47,22 @@ public class EmployeeView extends javax.swing.JInternalFrame {
 
         initValidations();
         refreshData();
+        sorter = new TableRowSorter<BaseTableModel>((BaseTableModel)jTable1.getModel());
+        jTable1.setRowSorter(sorter);
+        searchField.getDocument().addDocumentListener(
+            new DocumentListener() {
+                public void changedUpdate(DocumentEvent e) {
+                    newFilter();
+                }
+                public void insertUpdate(DocumentEvent e)  {
+                    newFilter();
+                }
+                public void removeUpdate(DocumentEvent e)
+                {
+                    newFilter();
+                }
+            }
+        );
        }
 
     public static EmployeeView getInstance(){
@@ -174,6 +196,19 @@ public class EmployeeView extends javax.swing.JInternalFrame {
         searchField.setForeground(new java.awt.Color(102, 102, 102));
         searchField.setText("Search...");
         searchField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        searchField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchFieldActionPerformed(evt);
+            }
+        });
+        searchField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                searchFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                searchFieldFocusLost(evt);
+            }
+        });
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         jScrollPane1.setAutoscrolls(true);
@@ -257,7 +292,7 @@ public class EmployeeView extends javax.swing.JInternalFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         pack();
@@ -284,9 +319,29 @@ public class EmployeeView extends javax.swing.JInternalFrame {
         saveData();
     }//GEN-LAST:event_saveButtonActionPerformed
 
+    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_searchFieldActionPerformed
+
+    private void searchFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusGained
+        // TODO add your handling code here:
+        if(searchField.getText().equalsIgnoreCase("Search..."))
+            searchField.setText("");
+    }//GEN-LAST:event_searchFieldFocusGained
+
+    private void searchFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusLost
+        // TODO add your handling code here:
+        if(searchField.getText().equalsIgnoreCase(""))
+            searchField.setText("Search...");
+    }//GEN-LAST:event_searchFieldFocusLost
+
     public void refreshData(){
         jTable1.setModel(controller.refreshData());
         removeInvisibleColumns();
+        if(sorter != null)
+            sorter.setModel((BaseTableModel)jTable1.getModel());
+        jTable1.setRowSorter(sorter);
     }
 
     public void saveData(){
@@ -360,6 +415,19 @@ public class EmployeeView extends javax.swing.JInternalFrame {
         values.add(ProjectConstants.STATUS_ACTIVE);
         DataRow row = new DataRow(columnNames, values);
         model.addRow(row);
+    }
+    private void newFilter() {
+
+        RowFilter<BaseTableModel , Object> rf = null;
+        //declare a row filter for your table model
+        try {
+            if(!searchField.getText().equals("Search..."))
+              rf = RowFilter.regexFilter(searchField.getText(), 0);
+            //initialize with a regular expression
+        } catch (java.util.regex.PatternSyntaxException e) {
+            return;
+        }
+        sorter.setRowFilter(rf);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

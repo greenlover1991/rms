@@ -12,6 +12,10 @@
 package rms.views.management;
 import extras.IntegerCellEditor;
 import extras.StringCellEditor;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.TableRowSorter;
 import rms.controllers.management.SupplierPriceListController;
 import rms.models.BaseTableModel;
 import rms.models.management.IngredientDBTable;
@@ -25,6 +29,7 @@ import rms.models.management.SupplierPriceListDBTable;
 public class SupplierPriceListView extends javax.swing.JInternalFrame {
 
     private SupplierPriceListController controller;
+    private TableRowSorter<BaseTableModel> sorter;
 
     private static SupplierPriceListView INSTANCE;
     /** Creates new form MasterFilesUI */
@@ -34,6 +39,22 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
 
         initValidations();
         refreshData();
+        sorter = new TableRowSorter<BaseTableModel>((BaseTableModel)jTable1.getModel());
+        jTable1.setRowSorter(sorter);
+        searchField.getDocument().addDocumentListener(
+            new DocumentListener() {
+                public void changedUpdate(DocumentEvent e) {
+                    newFilter();
+                }
+                public void insertUpdate(DocumentEvent e)  {
+                    newFilter();
+                }
+                public void removeUpdate(DocumentEvent e)
+                {
+                    newFilter();
+                }
+            }
+        );
        }
 
     public static SupplierPriceListView getInstance(){
@@ -129,6 +150,14 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
         searchField.setForeground(new java.awt.Color(102, 102, 102));
         searchField.setText("Search...");
         searchField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        searchField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                searchFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                searchFieldFocusLost(evt);
+            }
+        });
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setAutoscrolls(true);
@@ -210,6 +239,14 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
         searchField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchField1ActionPerformed(evt);
+            }
+        });
+        searchField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                searchField1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                searchField1FocusLost(evt);
             }
         });
 
@@ -359,7 +396,7 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(removeIngFromPriceList, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -434,7 +471,7 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -494,9 +531,49 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
         refreshData();
 }//GEN-LAST:event_loadButtonActionPerformed
 
+    private void searchFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusGained
+        // TODO add your handling code here:
+        if(searchField.getText().equalsIgnoreCase("Search..."))
+            searchField.setText("");
+    }//GEN-LAST:event_searchFieldFocusGained
+
+    private void searchFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusLost
+        // TODO add your handling code here:
+          if(searchField.getText().equalsIgnoreCase(""))
+            searchField.setText("Search...");
+    }//GEN-LAST:event_searchFieldFocusLost
+
+    private void searchField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchField1FocusGained
+        // TODO add your handling code here:
+        if(searchField1.getText().equalsIgnoreCase("Search..."))
+            searchField1.setText("");
+    }//GEN-LAST:event_searchField1FocusGained
+
+    private void searchField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchField1FocusLost
+        // TODO add your handling code here:
+        if(searchField1.getText().equalsIgnoreCase(""))
+            searchField1.setText("Search...");
+    }//GEN-LAST:event_searchField1FocusLost
+
+    private void newFilter() {
+
+        RowFilter<BaseTableModel , Object> rf = null;
+        //declare a row filter for your table model
+        try {
+            if(!searchField.getText().equals("Search..."))
+              rf = RowFilter.regexFilter(searchField.getText(), 0);
+            //initialize with a regular expression
+        } catch (java.util.regex.PatternSyntaxException e) {
+            return;
+        }
+        sorter.setRowFilter(rf);
+    }
     public void refreshData(){
         jTable1.setModel(controller.refreshData());
         removeInvisibleColumns();
+        if(sorter != null)
+            sorter.setModel((BaseTableModel)jTable1.getModel());
+        jTable1.setRowSorter(sorter);
     }
 
     private void initValidations() {

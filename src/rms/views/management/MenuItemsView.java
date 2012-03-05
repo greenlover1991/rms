@@ -11,15 +11,15 @@
 
 package rms.views.management;
 
-import extras.DateCellEditor;
 import extras.IntegerCellEditor;
 import extras.StringCellEditor;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.TableRowSorter;
 import rms.ProjectConstants;
 import rms.controllers.management.MenuItemsController;
 import rms.models.BaseTableModel;
@@ -36,8 +36,8 @@ import rms.models.management.MenuItemsDBTable;
 public class MenuItemsView extends javax.swing.JInternalFrame {
 
     private MenuItemsController controller;
-    DateFormat formatter;
 
+    private TableRowSorter<BaseTableModel> sorter;
     private static MenuItemsView INSTANCE;
 
     /** Creates new form MasterFilesUI */
@@ -47,6 +47,22 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
 
         initValidations();
         refreshData();
+        sorter = new TableRowSorter<BaseTableModel>((BaseTableModel)jTable1.getModel());
+        jTable1.setRowSorter(sorter);
+        searchField.getDocument().addDocumentListener(
+            new DocumentListener() {
+                public void changedUpdate(DocumentEvent e) {
+                    newFilter();
+                }
+                public void insertUpdate(DocumentEvent e)  {
+                    newFilter();
+                }
+                public void removeUpdate(DocumentEvent e)
+                {
+                    newFilter();
+                }
+            }
+        );
        }
 
     public static MenuItemsView getInstance(){
@@ -214,6 +230,9 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
             }
         });
         searchField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                searchFieldFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 searchFieldFocusLost(evt);
             }
@@ -307,6 +326,14 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
         searchField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchField1ActionPerformed(evt);
+            }
+        });
+        searchField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                searchField1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                searchField1FocusLost(evt);
             }
         });
 
@@ -589,8 +616,9 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
-         if (canAddRow())
+         if (canAddRow()){
              addRow();
+        }
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
@@ -659,7 +687,6 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
 
     private void searchFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchFieldMouseClicked
         // TODO add your handling code here:
-        searchField.setText("");
     }//GEN-LAST:event_searchFieldMouseClicked
 
     private void searchFieldInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_searchFieldInputMethodTextChanged
@@ -687,10 +714,42 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
         controller.save();
     }//GEN-LAST:event_saveActionPerformed
 
+    private void searchFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusGained
+        // TODO add your handling code here:
+        if(searchField.getText().equalsIgnoreCase("Search..."))
+            searchField.setText("");
+    }//GEN-LAST:event_searchFieldFocusGained
 
+    private void searchField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchField1FocusGained
+        // TODO add your handling code here:
+        if(searchField1.getText().equalsIgnoreCase("Search..."))
+            searchField1.setText("");
+    }//GEN-LAST:event_searchField1FocusGained
+
+    private void searchField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchField1FocusLost
+        // TODO add your handling code here:
+        if(searchField1.getText().equalsIgnoreCase(""))
+            searchField1.setText("Search...");
+    }//GEN-LAST:event_searchField1FocusLost
+
+   private void newFilter() {
+        RowFilter<BaseTableModel , Object> rf = null;
+        //declare a row filter for your table model
+        try {
+            if(!searchField.getText().equals("Search..."))
+              rf = RowFilter.regexFilter(searchField.getText(), 0);
+            //initialize with a regular expression
+        } catch (java.util.regex.PatternSyntaxException e) {
+            return;
+        }
+        sorter.setRowFilter(rf);
+    }
     public void refreshData(){
         jTable1.setModel(controller.refreshData());
         removeInvisibleColumns();
+         if(sorter != null)
+            sorter.setModel((BaseTableModel)jTable1.getModel());
+        jTable1.setRowSorter(sorter);
     }
 
     public void saveData(){
@@ -717,19 +776,6 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
 
     private void initValidations() {
         jTable1.setDefaultEditor(Integer.class, new IntegerCellEditor(true,1, Integer.MAX_VALUE));
-        jTable1.setDefaultEditor(Date.class, new DateCellEditor());
-
-        jTable1.setDefaultRenderer(Date.class, new DefaultTableCellRenderer.UIResource(){
-
-            @Override
-            protected void setValue(Object value) {
-                if (formatter==null) {
-		formatter = DateFormat.getDateInstance(DateFormat.MEDIUM);
-	    }
-	    setText((value == null) ? "" : formatter.format(value));
-            }
-
-        });
         jTable1.setDefaultEditor(String.class, new StringCellEditor(1, 255));
     }
 
@@ -767,6 +813,7 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
         DataRow row = new DataRow(columnNames, values);
         model.addRow(row);
     }
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JTextArea Procedure;

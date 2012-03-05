@@ -32,8 +32,8 @@ public class SupplierDBTable extends DBTable{
     public static final String ALIAS_STATUS = "Status";
 
 
-    private static final String[] columns = {ID,NAME,ADDRESS, LANDLINE,MOBILE, CONTACT_PERSON,EMAIL_ADD, STATUS};
-    private static final String[] columnsAliases = {ALIAS_ID,ALIAS_NAME, ALIAS_ADDRESS,ALIAS_LANDLINE,ALIAS_MOBILE,ALIAS_CONTACT_PERSON,ALIAS_EMAIL_ADD,ALIAS_STATUS};
+    private static final String[] columns = {NAME,ID,ADDRESS, LANDLINE,MOBILE, CONTACT_PERSON,EMAIL_ADD, STATUS};
+    private static final String[] columnsAliases = {ALIAS_NAME,ALIAS_ID, ALIAS_ADDRESS,ALIAS_LANDLINE,ALIAS_MOBILE,ALIAS_CONTACT_PERSON,ALIAS_EMAIL_ADD,ALIAS_STATUS};
     private static final String[] primaryColumns = {ID};
     private static final String[] uniqueColumns = {ID};
     private static final String[] invisibleColumns = {ALIAS_ID, ALIAS_STATUS};
