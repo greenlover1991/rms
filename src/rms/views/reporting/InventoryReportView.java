@@ -115,29 +115,15 @@ public class InventoryReportView extends JInternalFrame {
 		};
 		TableColumn column = null;
 		column = tableInventoryReport.getColumnModel().getColumn(0);
-		column.setMinWidth(150);
 		column.setCellRenderer(dtcr);
 		column = tableInventoryReport.getColumnModel().getColumn(1);
-		column.setPreferredWidth(150);
-		column.setMinWidth(150);
-		column.setMaxWidth(150);
 		column.setCellRenderer(dtcr);
 		column = tableInventoryReport.getColumnModel().getColumn(2);
-		column.setPreferredWidth(150);
-		column.setMinWidth(150);
-		column.setMaxWidth(150);
 		column.setCellRenderer(dtcr);
 		column = tableInventoryReport.getColumnModel().getColumn(3);
-		column.setPreferredWidth(150);
-		column.setMinWidth(150);
-		column.setMaxWidth(150);
 		column.setCellRenderer(dtcr);
 		column = tableInventoryReport.getColumnModel().getColumn(4);
-		column.setPreferredWidth(150);
-		column.setMinWidth(150);
-		column.setMaxWidth(150);
 		column.setCellRenderer(dtcr);
-
 		scrollPaneInventoryReport = new JScrollPane(tableInventoryReport);
 
 	}

@@ -115,14 +115,11 @@ public class SpoilageReportView extends JInternalFrame {
 			}
 		};
 		
-//		TableColumn column = null;
-//		column = tableSpoilageReport.getColumnModel().getColumn(0);
-//		column.setCellRenderer(dtcr);
-//		column = tableSpoilageReport.getColumnModel().getColumn(1);
-//		column.setPreferredWidth(100);
-//		column.setMinWidth(100);
-//		column.setMaxWidth(100);
-//		column.setCellRenderer(dtcr);
+		TableColumn column = null;
+		column = tableSpoilageReport.getColumnModel().getColumn(0);
+		column.setCellRenderer(dtcr);
+		column = tableSpoilageReport.getColumnModel().getColumn(1);
+		column.setCellRenderer(dtcr);
 
 		scrollPaneSpoilageReport = new JScrollPane(tableSpoilageReport);
 

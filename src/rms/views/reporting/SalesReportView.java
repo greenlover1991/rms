@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 import org.jbundle.thin.base.screen.jcalendarbutton.JCalendarButton;
 
@@ -59,7 +60,7 @@ public class SalesReportView extends JInternalFrame {
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setSize((int) (screenSize.width * .5), (int) (screenSize.height * .9));
-		
+
 		model = controller.refresh();
 
 		initComponents();
@@ -67,7 +68,7 @@ public class SalesReportView extends JInternalFrame {
 		add(scrollPaneSalesReport, BorderLayout.CENTER);
 		add(panelDateButtons, BorderLayout.PAGE_START);
 		// add(panelChart, BorderLayout.EAST);
-		
+
 		setVisible(true);
 
 		// Platform.runLater(new Runnable() {
@@ -214,6 +215,12 @@ public class SalesReportView extends JInternalFrame {
 		panelDateButtons.add(labelTotalCashOnHand);
 		panelDateButtons.add(textTotalCashOnHand);
 
+		textDate.addFocusListener(new FocusAdapter() {
+			public void focusLost(FocusEvent evt) {
+				dateFocusLost(evt);
+			}
+		});
+
 		textDateFrom.addFocusListener(new FocusAdapter() {
 			public void focusLost(FocusEvent evt) {
 				dateFocusLost(evt);
@@ -223,6 +230,15 @@ public class SalesReportView extends JInternalFrame {
 		textDateTo.addFocusListener(new FocusAdapter() {
 			public void focusLost(FocusEvent evt) {
 				dateFocusLost(evt);
+			}
+		});
+
+		buttonDate.addPropertyChangeListener(new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				buttonNum = 0;
+				dateOnlyPopupChanged(evt);
 			}
 		});
 
@@ -259,15 +275,15 @@ public class SalesReportView extends JInternalFrame {
 				return comp;
 			}
 		};
-		// TableColumn column = null;
-		// column = DTR.getColumnModel().getColumn(0);
+		TableColumn column = null;
+		column = tableSalesReport.getColumnModel().getColumn(0);
 		// column.setMinWidth(135);
-		// column.setCellRenderer(dtcr);
-		// column = DTR.getColumnModel().getColumn(1);
+		column.setCellRenderer(dtcr);
+		column = tableSalesReport.getColumnModel().getColumn(1);
 		// column.setPreferredWidth(85);
 		// column.setMinWidth(85);
 		// column.setMaxWidth(85);
-		// column.setCellRenderer(dtcr);
+		column.setCellRenderer(dtcr);
 		// column = DTR.getColumnModel().getColumn(2);
 		// column.setPreferredWidth(55);
 		// column.setMinWidth(55);
@@ -294,7 +310,7 @@ public class SalesReportView extends JInternalFrame {
 	}
 
 	private void dateFocusLost(FocusEvent evt) {
-		String date = textDateFrom.getText();
+		String date = textDate.getText();
 		setDate(date);
 	}
 
@@ -318,13 +334,15 @@ public class SalesReportView extends JInternalFrame {
 		String dateString = "";
 		if (date != null)
 			dateString = dateFormat.format(date);
-		if (buttonNum == 0) {
-			textDateFrom.setText(dateString);
-			buttonDateFrom.setTargetDate(date);
-		} else {
-			textDateTo.setText(dateString);
-			buttonDateTo.setTargetDate(date);
-		}
+		textDate.setText(dateString);
+		buttonDate.setTargetDate(date);
+		// if (buttonNum == 0) {
+		// textDateFrom.setText(dateString);
+		// buttonDateFrom.setTargetDate(date);
+		// } else {
+		// textDateTo.setText(dateString);
+		// buttonDateTo.setTargetDate(date);
+		// }
 	}
 
 	// for (int i = 0, rows = model.getRowCount(); i < rows; i++)

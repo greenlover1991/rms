@@ -25,11 +25,10 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 	int row, column;
 	JPanel panelOrderSlipView = new JPanel();
 	JPanel panelTables = new JPanel();
-	JPanel[][] panelTable, panelButtons;
+	JPanel[][] panelTable;
 	JScrollPane scrollPaneTables;
-	JButton[][] buttonOrderSlip, buttonOccupied, buttonVacant, buttonDirty,
-			buttonReserved, buttonInactive;
-	JColorChooser chooserTableStatus = new JColorChooser();
+	JButton[][] buttonOrderSlip;
+	JButton buttonClean;
 
 	private static TableOccupancyMonitorView INSTANCE;
 
@@ -63,18 +62,10 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 		panelOrderSlipView.setPreferredSize(new Dimension(400, 0));
 
 		buttonOrderSlip = new JButton[row][column];
-		buttonOccupied = new JButton[row][column];
-		buttonVacant = new JButton[row][column];
-		buttonDirty = new JButton[row][column];
-		buttonReserved = new JButton[row][column];
-		buttonInactive = new JButton[row][column];
 
 		panelTable = new JPanel[row][column];
-		panelButtons = new JPanel[row][column];
 
 		panelTables.setLayout(new GridLayout(row, column, 10, 10));
-
-		Dimension buttonDimension = new Dimension(50, 25);
 
 		for (int i = 0; i < row; i++) {
 			System.out.println("i:" + i);
@@ -82,49 +73,18 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 				System.out.println("j:" + j);
 				buttonOrderSlip[i][j] = new JButton("Order Slip #"
 						+ ((i * 3) + (j + 1)));
-				buttonOccupied[i][j] = new JButton();
-				buttonOccupied[i][j].setBackground(Color.RED);
-				buttonOccupied[i][j].setPreferredSize(buttonDimension);
-				buttonOccupied[i][j].addActionListener((ActionListener) this);
-				buttonOccupied[i][j].setActionCommand("o" + i + "" + j);
 
-				buttonVacant[i][j] = new JButton();
-				buttonVacant[i][j].setBackground(Color.GREEN);
-				buttonVacant[i][j].setPreferredSize(buttonDimension);
-				buttonVacant[i][j].addActionListener((ActionListener) this);
-				buttonVacant[i][j].setActionCommand("v" + i + "" + j);
-
-				buttonDirty[i][j] = new JButton();
-				buttonDirty[i][j].setBackground(Color.ORANGE);
-				buttonDirty[i][j].setPreferredSize(buttonDimension);
-				buttonDirty[i][j].addActionListener((ActionListener) this);
-				buttonDirty[i][j].setActionCommand("d" + i + "" + j);
-
-				buttonReserved[i][j] = new JButton();
-				buttonReserved[i][j].setBackground(Color.BLUE);
-				buttonReserved[i][j].setPreferredSize(buttonDimension);
-				buttonReserved[i][j].addActionListener((ActionListener) this);
-				buttonReserved[i][j].setActionCommand("r" + i + "" + j);
-
-				buttonInactive[i][j] = new JButton();
-				buttonInactive[i][j].setBackground(Color.GRAY);
-				buttonInactive[i][j].setPreferredSize(buttonDimension);
-				buttonInactive[i][j].addActionListener((ActionListener) this);
-				buttonInactive[i][j].setActionCommand("i" + i + "" + j);
-
-				panelButtons[i][j] = new JPanel();
-				panelButtons[i][j].add(buttonOccupied[i][j]);
-				panelButtons[i][j].add(buttonVacant[i][j]);
-				panelButtons[i][j].add(buttonDirty[i][j]);
-				panelButtons[i][j].add(buttonReserved[i][j]);
-				panelButtons[i][j].add(buttonInactive[i][j]);
+				buttonClean = new JButton("Clean Table");
+				// buttonClean.setBackground(Color.ORANGE);
+				buttonClean.addActionListener((ActionListener) this);
+				buttonClean.setActionCommand("d" + i + "" + j);
 
 				panelTable[i][j] = new JPanel();
 				panelTable[i][j].setLayout(new BorderLayout(0, 0));
 				panelTable[i][j].setPreferredSize(new Dimension(150, 150));
 				panelTable[i][j]
 						.add(buttonOrderSlip[i][j], BorderLayout.CENTER);
-				panelTable[i][j].add(panelButtons[i][j], BorderLayout.SOUTH);
+				panelTable[i][j].add(buttonClean, BorderLayout.SOUTH);
 
 				panelTables.add(panelTable[i][j]);
 
@@ -137,29 +97,29 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 
 	public void actionPerformed(ActionEvent ae) {
 		String ac = ae.getActionCommand();
-		Color color = null;
-		switch (ac.charAt(0)) {
-		case 'o':
-			color = Color.RED;
-			break;
-		case 'v':
-			color = Color.GREEN;
-			break;
-		case 'd':
-			color = Color.ORANGE;
-			break;
-		case 'r':
-			color = Color.BLUE;
-			break;
-		case 'i':
-			color = Color.GRAY;
-			break;
-		}
+		// Color color = null;
+		// switch (ac.charAt(0)) {
+		// case 'o':
+		// color = Color.RED;
+		// break;
+		// case 'v':
+		// color = Color.GREEN;
+		// break;
+		// case 'd':
+		// color = Color.ORANGE;
+		// break;
+		// case 'r':
+		// color = Color.BLUE;
+		// break;
+		// case 'i':
+		// color = Color.GRAY;
+		// break;
+		// }
 
 		System.out.print(Character.getNumericValue(ac.charAt(1)) + " "
 				+ Character.getNumericValue(ac.charAt(2)));
 		buttonOrderSlip[Character.getNumericValue(ac.charAt(1))][Character
-				.getNumericValue(ac.charAt(2))].setBackground(color);
+				.getNumericValue(ac.charAt(2))].setBackground(Color.GREEN);
 
 	}
 
