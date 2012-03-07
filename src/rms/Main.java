@@ -5,8 +5,7 @@
 
 package rms;
 
-import java.awt.Toolkit;
-import rms.views.MainApplicationView;
+import rms.views.LoginView;
 import supports.DataSupport;
 
 /**
@@ -20,11 +19,7 @@ public class Main {
      */
     public static void main(String[] args) {
         DataSupport.loadSettings();
-        //LoginView.getInstance().setVisible(true);
-        MainApplicationView main = new MainApplicationView();
-        Toolkit tk = Toolkit.getDefaultToolkit();
-        main.setSize(tk.getScreenSize().width, tk.getScreenSize().height);
-        main.setVisible(true);
+        LoginView.getInstance().setVisible(true);
     }
 
 }

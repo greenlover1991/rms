@@ -11,6 +11,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT=0;
 START TRANSACTION;
 
+CREATE SCHEMA IF NOT EXISTS `rms` DEFAULT CHARACTER SET utf8;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -280,6 +281,7 @@ CREATE TABLE IF NOT EXISTS `order_slip_items` (
   `amount` decimal(10,2) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `order_status` varchar(40) NOT NULL,
+  `discounted_items` int(10) DEFAULT NULL,
   `discount_fixed_amount` decimal(10,2) DEFAULT NULL,
   `discount_rate` decimal(10,2) DEFAULT NULL,
   `discount_description` varchar(40) DEFAULT NULL,

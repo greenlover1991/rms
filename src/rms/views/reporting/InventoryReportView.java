@@ -1,7 +1,10 @@
 package rms.views.reporting;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.beans.PropertyChangeEvent;
@@ -17,134 +20,116 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import org.jbundle.thin.base.screen.jcalendarbutton.JCalendarButton;
+
+import rms.controllers.reporting.InventoryReportController;
+import rms.models.BaseTableModel;
+import rms.models.reporting.InventoryReportModel;
 
 /*  
  * @author Yu
  *
  */
 public class InventoryReportView extends JInternalFrame {
-	String[] columnNames = { "Ingredients", "Initial", "In", "Out",
-			"End"};
-	Object[][] data = { { "Sesame Seeds", "99", "10", "20", "89" },
-			{ "Pasta", "199", "20", "10", "189" } };
 	DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
-	JTable DTR;
+	JTable tableInventoryReport;
 	JPanel panelDateButtons = new JPanel();
-	JScrollPane scrollPaneDTR;
-	JCalendarButton buttonDateFrom, buttonDateTo;
-	JTextField textFieldDateFrom, textFieldDateTo;
-	JLabel labelDateFrom, labelDateTo;
+	JScrollPane scrollPaneInventoryReport;
+	JCalendarButton buttonDate;
+	JTextField textFieldDate;
+	JLabel labelDate;
 	DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
-	int buttonNum = 0;
+	BaseTableModel model;
+	InventoryReportController controller = new InventoryReportController(this);
 
-        private static InventoryReportView INSTANCE;
+	private static InventoryReportView INSTANCE;
+
 	private InventoryReportView() {
 		super("Inventory Report", true,// resizable
 				true, // closable
 				true, // maximizable
 				true); // iconifiable
-		setSize(500, 500);
+
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		setSize((int) (screenSize.width * .85), (int) (screenSize.height * .9));
+		
+		model = controller.refresh();
 
 		initComponents();
 
-		add(scrollPaneDTR, BorderLayout.CENTER);
+		add(scrollPaneInventoryReport, BorderLayout.CENTER);
 		add(panelDateButtons, BorderLayout.PAGE_START);
 
-		pack();
 		setVisible(true);
 	}
 
 	private void initComponents() {
-		buttonDateFrom = new JCalendarButton();
-		buttonDateTo = new JCalendarButton();
-		textFieldDateFrom = new JTextField(10);
-		textFieldDateTo = new JTextField(10);
-		labelDateFrom = new JLabel("From:");
-		labelDateTo = new JLabel("To:");
+		buttonDate = new JCalendarButton();
+		textFieldDate = new JTextField(10);
+		labelDate = new JLabel("Date: ");
 
-		textFieldDateFrom.setHorizontalAlignment(JTextField.CENTER);
-		textFieldDateTo.setHorizontalAlignment(JTextField.CENTER);
+		textFieldDate.setHorizontalAlignment(JTextField.CENTER);
 
-		buttonDateFrom.setActionCommand("setFromDate");
-		buttonDateTo.setActionCommand("setToDate");
+		buttonDate.setActionCommand("setFromDate");
 
 		panelDateButtons.setMaximumSize(new Dimension(250, 25));
 		panelDateButtons.setMinimumSize(new Dimension(250, 25));
 		panelDateButtons.setPreferredSize(new Dimension(250, 25));
 
-		panelDateButtons.add(labelDateFrom);
-		panelDateButtons.add(textFieldDateFrom);
-		panelDateButtons.add(buttonDateFrom);
-		panelDateButtons.add(labelDateTo);
-		panelDateButtons.add(textFieldDateTo);
-		panelDateButtons.add(buttonDateTo);
+		panelDateButtons.add(labelDate);
+		panelDateButtons.add(textFieldDate);
+		panelDateButtons.add(buttonDate);
 
-		textFieldDateFrom.addFocusListener(new FocusAdapter() {
+		textFieldDate.addFocusListener(new FocusAdapter() {
 			public void focusLost(FocusEvent evt) {
 				dateFocusLost(evt);
 			}
 		});
 
-		textFieldDateTo.addFocusListener(new FocusAdapter() {
-			public void focusLost(FocusEvent evt) {
-				dateFocusLost(evt);
-			}
-		});
-
-		buttonDateFrom.addPropertyChangeListener(new PropertyChangeListener() {
+		buttonDate.addPropertyChangeListener(new PropertyChangeListener() {
 
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
-				buttonNum = 0;
-				dateOnlyPopupChanged(evt);
-			}
-		});
-
-		buttonDateTo.addPropertyChangeListener(new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				buttonNum = 1;
 				dateOnlyPopupChanged(evt);
 			}
 		});
 
 		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
 
-		DTR = new JTable(data, columnNames);
+		tableInventoryReport = new JTable(model){
+			public Component prepareRenderer(TableCellRenderer renderer,
+					int Index_row, int Index_col) {
+				Component comp = super.prepareRenderer(renderer, Index_row,
+						Index_col);
+				// even index, selected or not selected
+				if (Index_row % 2 == 0 && !isCellSelected(Index_row, Index_col)) {
+					comp.setBackground(Color.GREEN);
+				} else {
+					comp.setBackground(Color.WHITE);
+				}
+				return comp;
+			}
+		};
 		TableColumn column = null;
-		column = DTR.getColumnModel().getColumn(0);
-		column.setMinWidth(150);
+		column = tableInventoryReport.getColumnModel().getColumn(0);
 		column.setCellRenderer(dtcr);
-		column = DTR.getColumnModel().getColumn(1);
-		column.setPreferredWidth(150);
-		column.setMinWidth(150);
-		column.setMaxWidth(150);
+		column = tableInventoryReport.getColumnModel().getColumn(1);
 		column.setCellRenderer(dtcr);
-		column = DTR.getColumnModel().getColumn(2);
-		column.setPreferredWidth(150);
-		column.setMinWidth(150);
-		column.setMaxWidth(150);
+		column = tableInventoryReport.getColumnModel().getColumn(2);
 		column.setCellRenderer(dtcr);
-		column = DTR.getColumnModel().getColumn(3);
-		column.setPreferredWidth(150);
-		column.setMinWidth(150);
-		column.setMaxWidth(150);
+		column = tableInventoryReport.getColumnModel().getColumn(3);
 		column.setCellRenderer(dtcr);
-		column = DTR.getColumnModel().getColumn(4);
-		column.setPreferredWidth(150);
-		column.setMinWidth(150);
-		column.setMaxWidth(150);
+		column = tableInventoryReport.getColumnModel().getColumn(4);
 		column.setCellRenderer(dtcr);
-
-		scrollPaneDTR = new JScrollPane(DTR);
+		scrollPaneInventoryReport = new JScrollPane(tableInventoryReport);
 
 	}
 
 	private void dateFocusLost(FocusEvent evt) {
-		String date = textFieldDateFrom.getText();
+		String date = textFieldDate.getText();
 		setDate(date);
 	}
 
@@ -168,18 +153,14 @@ public class InventoryReportView extends JInternalFrame {
 		String dateString = "";
 		if (date != null)
 			dateString = dateFormat.format(date);
-		if (buttonNum == 0) {
-			textFieldDateFrom.setText(dateString);
-			buttonDateFrom.setTargetDate(date);
-		} else {
-			textFieldDateTo.setText(dateString);
-			buttonDateTo.setTargetDate(date);
-		}
+		textFieldDate.setText(dateString);
+		buttonDate.setTargetDate(date);
+
 	}
 
-        public static InventoryReportView getInstance(){
-            if(INSTANCE == null)
-                INSTANCE = new InventoryReportView();
-            return INSTANCE;
-        }
+	public static InventoryReportView getInstance() {
+		if (INSTANCE == null)
+			INSTANCE = new InventoryReportView();
+		return INSTANCE;
+	}
 }

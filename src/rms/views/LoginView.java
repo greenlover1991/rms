@@ -28,13 +28,12 @@ import supports.DataSupport;
 public class LoginView extends javax.swing.JFrame {
 
     private static LoginView INSTANCE;
-    private int role_id;
 
     /** Creates new form LoginView */
     private LoginView() {
         initComponents();
         setLocationRelativeTo(null);
-        role_id = -1;
+        
     }
     public static LoginView getInstance(){
         if(INSTANCE == null)
@@ -136,12 +135,13 @@ public class LoginView extends javax.swing.JFrame {
             // TODO add your handling code here:
             String login = txtLogin.getText();
             String password = String.copyValueOf(txtPassword.getPassword());
-            String query = String.format("SELECT role_id FROM employees WHERE login = '%s' AND password = '%s';", login, password);
+            String query = String.format("SELECT name FROM employees INNER JOIN roles ON employees.role_id = roles.id WHERE login = '%s' AND password = '%s';", login, password);
             DataSupport dh = new DataSupport();
             BaseTableModel result = dh.executeQuery(query);
             if(result.rows.size() > 0){
-                role_id = Integer.parseInt(result.rows.get(0).get(0).toString());
+                String roleName = result.rows.get(0).get(0).toString();
 
+                MainApplicationView.roleName = roleName;
                 MainApplicationView main = new MainApplicationView();
                 Toolkit tk = Toolkit.getDefaultToolkit();
                 main.setSize(tk.getScreenSize().width, tk.getScreenSize().height);
