@@ -23,7 +23,6 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import rms.views.monitoring.TableOccupancyMonitorView;
 import rms.views.monitoring.ChefQueueView;
-import rms.views.inventory.InventoryView;
 import rms.views.inventory.PurchaseView;
 import rms.views.inventory.SpoilageView;
 import rms.views.inventory.RequisitionView;
@@ -62,7 +61,6 @@ public class MainApplicationView extends javax.swing.JFrame {
         private BranchView branch;
 
         // inventory
-        private InventoryView inventory;
         private PurchaseView purchase;
         private RequisitionView requisition;
         private SpoilageView spoilage;
@@ -121,7 +119,6 @@ public class MainApplicationView extends javax.swing.JFrame {
         pnlOrdering = new javax.swing.JPanel();
         btnOrderSlip = new javax.swing.JButton();
         pnlInventory = new javax.swing.JPanel();
-        btnInventory = new javax.swing.JButton();
         btnRequisition = new javax.swing.JButton();
         btnPurchase = new javax.swing.JButton();
         btnSpoilage = new javax.swing.JButton();
@@ -279,13 +276,6 @@ public class MainApplicationView extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Ordering", pnlOrdering);
 
-        btnInventory.setText("Inventory");
-        btnInventory.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnInventoryMouseClicked(evt);
-            }
-        });
-
         btnRequisition.setText("Requisition");
         btnRequisition.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -311,7 +301,6 @@ public class MainApplicationView extends javax.swing.JFrame {
         pnlInventory.setLayout(pnlInventoryLayout);
         pnlInventoryLayout.setHorizontalGroup(
             pnlInventoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnInventory, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
             .addComponent(btnRequisition, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
             .addComponent(btnPurchase, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
             .addComponent(btnSpoilage, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
@@ -319,8 +308,7 @@ public class MainApplicationView extends javax.swing.JFrame {
         pnlInventoryLayout.setVerticalGroup(
             pnlInventoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlInventoryLayout.createSequentialGroup()
-                .addComponent(btnInventory, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(74, 74, 74)
                 .addComponent(btnRequisition, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnPurchase, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -564,12 +552,6 @@ public class MainApplicationView extends javax.swing.JFrame {
             addToMainMDI(branch);
         }//GEN-LAST:event_btnBranchActionPerformed
 
-	private void btnInventoryMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnInventoryMouseClicked
-            // TODO add your handling code here:
-            inventory = InventoryView.getInstance();
-            addToMainMDI(inventory);
-	}// GEN-LAST:event_btnInventoryMouseClicked
-
 	private void btnRequisitionMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnRequisitionMouseClicked
             // TODO add your handling code here:
             requisition = RequisitionView.getInstance();
@@ -626,7 +608,6 @@ public class MainApplicationView extends javax.swing.JFrame {
     private javax.swing.JButton btnEmployee;
     private javax.swing.JButton btnGeneralReport;
     private javax.swing.JButton btnIngredient;
-    private javax.swing.JButton btnInventory;
     private javax.swing.JButton btnInventoryReport;
     private javax.swing.JButton btnMenuCategory;
     private javax.swing.JButton btnMenuItem;
