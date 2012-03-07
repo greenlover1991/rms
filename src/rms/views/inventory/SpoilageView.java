@@ -11,16 +11,50 @@
 
 package rms.views.inventory;
 
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.TableRowSorter;
+import rms.controllers.inventory.SpoilageInventoryController;
+import rms.models.BaseTableModel;
+import rms.models.management.IngredientDBTable;
+
 /**
  *
  * @author squeekyclean
  */
 public class SpoilageView extends javax.swing.JInternalFrame {
 
+    SpoilageInventoryController controller;
     private static SpoilageView INSTANCE;
+
+    private TableRowSorter<BaseTableModel> sorter;
+
     /** Creates new form SpoilageView */
     private SpoilageView() {
         initComponents();
+        controller = new SpoilageInventoryController(this);
+        loadIngredients();
+        loadSpoilageOfTheDay();
+        
+        sorter = new TableRowSorter<BaseTableModel>((BaseTableModel)tblIngredients.getModel());
+        tblIngredients.setRowSorter(sorter);
+        txtFilter.getDocument().addDocumentListener(
+            new DocumentListener() {
+                public void changedUpdate(DocumentEvent e) {
+                    newFilter();
+                }
+                public void insertUpdate(DocumentEvent e)  {
+                    newFilter();
+                }
+                public void removeUpdate(DocumentEvent e)
+                {
+                    newFilter();
+                }
+
+
+            }
+        );
     }
 
     public static SpoilageView getInstance(){
@@ -44,11 +78,10 @@ public class SpoilageView extends javax.swing.JInternalFrame {
         tblSpoilage = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblIngredients = new javax.swing.JTable();
-        jLabel3 = new javax.swing.JLabel();
-        txtFilter = new javax.swing.JTextField();
         btnAdd = new javax.swing.JButton();
         txtDate = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        txtFilter = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -99,13 +132,29 @@ public class SpoilageView extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(tblIngredients);
 
-        jLabel3.setText("Filter:");
-
         btnAdd.setText(">>");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         txtDate.setText("March 10, 2012");
 
         jLabel1.setText("Date:");
+
+        txtFilter.setFont(new java.awt.Font("Tahoma", 2, 12));
+        txtFilter.setForeground(new java.awt.Color(102, 102, 102));
+        txtFilter.setText("Search...");
+        txtFilter.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        txtFilter.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtFilterFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtFilterFocusLost(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,12 +164,9 @@ public class SpoilageView extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(3, 3, 3)
-                                .addComponent(txtFilter, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtFilter)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnRemove)
@@ -143,20 +189,18 @@ public class SpoilageView extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel3)
-                                        .addComponent(txtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel2))
-                                .addGap(11, 11, 11))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap(21, Short.MAX_VALUE)
+                                .addContainerGap(23, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtDate)
                                     .addComponent(jLabel1))
-                                .addGap(14, 14, 14)))
+                                .addGap(14, 14, 14))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2))
+                                .addGap(13, 13, 13)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, 0, 0, Short.MAX_VALUE)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -173,6 +217,22 @@ public class SpoilageView extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtFilterFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFilterFocusGained
+        // TODO add your handling code here:
+        if(txtFilter.getText().equalsIgnoreCase("Search..."))
+            txtFilter.setText("");
+}//GEN-LAST:event_txtFilterFocusGained
+
+    private void txtFilterFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFilterFocusLost
+        // TODO add your handling code here:
+        if(txtFilter.getText().equalsIgnoreCase(""))
+            txtFilter.setText("Search...");
+}//GEN-LAST:event_txtFilterFocusLost
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
@@ -180,13 +240,38 @@ public class SpoilageView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnSave;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tblIngredients;
     private javax.swing.JTable tblSpoilage;
-    private javax.swing.JLabel txtDate;
+    public javax.swing.JLabel txtDate;
     private javax.swing.JTextField txtFilter;
     // End of variables declaration//GEN-END:variables
 
+    private void loadIngredients() {
+        tblIngredients.setModel(controller.loadIngredients());
+        removeIngredientsColumns();
+    }
+
+    private void loadSpoilageOfTheDay() {
+        //throw new UnsupportedOperationException("Not yet implemented");
+        tblSpoilage.setModel(controller.loadSpoilage());
+    }
+
+    private void newFilter() {
+        RowFilter<BaseTableModel , Object> rf = null;
+        //declare a row filter for your table model
+        try {
+            if(!txtFilter.getText().equals("Search..."))
+              rf = RowFilter.regexFilter(txtFilter.getText(), 0);
+            //initialize with a regular expression
+        } catch (java.util.regex.PatternSyntaxException e) {
+            return;
+        }
+        sorter.setRowFilter(rf);
+    }
+
+    private void removeIngredientsColumns() {
+        tblIngredients.removeColumn(tblIngredients.getColumn(IngredientDBTable.ALIAS_ID));
+    }
 }
