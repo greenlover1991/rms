@@ -155,15 +155,15 @@ VALUES
 35,
 35,
 'No milk please.',
-'',
+'Queued',
 35,
 0,
 '',
 35,
-'2012-03-01 10:25:00',
+'2012-03-01 10:24:00',
 '2012-03-01 10:27:00',
 '2012-03-01 10:30:00',
-'Queued'
+''
 );
 
 INSERT IGNORE INTO `rms`.`order_slip_items`
@@ -192,7 +192,7 @@ VALUES
 100,
 100,
 'Extra sesame seeds please.',
-'',
+'Processing',
 100,
 0,
 '',
@@ -200,7 +200,7 @@ VALUES
 '2012-03-01 10:25:00',
 '2012-03-01 10:27:00',
 '2012-03-01 10:30:00',
-'Processing'
+''
 );
 
 INSERT IGNORE INTO `rms`.`requisition_slips`
@@ -269,7 +269,12 @@ INSERT IGNORE INTO `rms`.`restaurant_tables`
 `table_status`,
 `status`)
 VALUES
-(1,1,'',5,'Vacant','Active'),(2,2,'',5,'Occupied','Active'),(3,3,'',5,'Dirty','Active'),(4,4,'',5,'Reserved','Active'),(5,5,'',5,'Dirty','Active'),(6,6,'',5,'Vacant','Active');
+(1,1,'',5,'Vacant','Active'),
+(2,3,'',5,'Occupied','Active'),
+(3,4,'',5,'Dirty','Active'),
+(4,5,'',5,'Reserved','Active'),
+(5,7,'',5,'Dirty','Active'),
+(6,10,'',5,'Vacant','Active');
 
 DELETE FROM `rms`.`employees`
 WHERE id > 0;

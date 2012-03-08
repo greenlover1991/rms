@@ -91,8 +91,7 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 				if (((i * column) + (j + 1)) <= tableCount) {
 					System.out.println("column: " + j);
 					// button name is table number.
-					buttonOrderSlip[i][j] = new JButton(""
-							+ ((i * column) + (j + 1)));
+					buttonOrderSlip[i][j] = new JButton(controller.refresh().getValueAt(((i * column) + j), 1).toString());
 					// set table color.
 					buttonOrderSlip[i][j].setBackground(determineTableColor(i,
 							j));
@@ -180,11 +179,9 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 				+ ((row * this.column) + (column + 1)));
 		// display table status in console.
 		System.out.println("table status is: "
-				+ controller.findTable(((row * this.column) + (column + 1)))
-						.getValueAt(0, 1).toString());
+				+ controller.refresh().getValueAt(((row * this.column) + column), 2).toString());
 
-		switch (controller.findTable(((row * this.column) + (column + 1)))
-				.getValueAt(0, 1).toString()) {
+		switch (controller.refresh().getValueAt(((row * this.column) + column), 2).toString()) {
 		case "Occupied":
 			color = Color.RED;
 			break;
@@ -203,6 +200,13 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 		}
 		return color;
 
+	}
+	
+	public void updateChefView() {
+		//update table colors.
+		for (int i = 0; i < row; i++)
+			for (int j = 0; j < column; j++)
+				buttonOrderSlip[i][j].setBackground(determineTableColor(i, j));
 	}
 
 	public static TableOccupancyMonitorView getInstance() {

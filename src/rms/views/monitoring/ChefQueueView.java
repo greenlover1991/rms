@@ -10,6 +10,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -65,6 +67,31 @@ public class ChefQueueView extends JInternalFrame {
 
 	private void initComponents() {
 
+		buttonProcess.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				controller.setStatusTo(
+						Integer.parseInt(chefQueued.getValueAt(
+								chefQueued.getSelectedRow(), 0).toString()),
+						"Processing");
+				chefProcessing.setModel(controller.refreshProcessing());
+				chefQueued.setModel(controller.refreshQueue());
+			}
+		});
+
+		buttonReady.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				controller.setStatusTo(
+						Integer.parseInt(chefProcessing.getValueAt(
+								chefProcessing.getSelectedRow(), 0).toString()),
+						"Ready");
+				chefProcessing.setModel(controller.refreshProcessing());
+			}
+		});
+
 		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
 
 		chefQueued = new JTable(modelQueued) {
@@ -81,6 +108,7 @@ public class ChefQueueView extends JInternalFrame {
 				return comp;
 			}
 		};
+		
 
 		chefProcessing = new JTable(modelProcessing) {
 			public Component prepareRenderer(TableCellRenderer renderer,
@@ -96,8 +124,8 @@ public class ChefQueueView extends JInternalFrame {
 				return comp;
 			}
 		};
-		
-		//TODO resize processing table.
+
+		// TODO resize processing table.
 
 		chefQueued.setName("Queued");
 		chefProcessing.setName("Processing");
@@ -107,10 +135,14 @@ public class ChefQueueView extends JInternalFrame {
 		//
 		TableColumn column = null;
 		column = chefQueued.getColumnModel().getColumn(0);
+		chefQueued.removeColumn(column);
+		column = chefQueued.getColumnModel().getColumn(0);
 		column.setCellRenderer(dtcr);
 		column = chefQueued.getColumnModel().getColumn(1);
 		column.setCellRenderer(dtcr);
 
+		column = chefProcessing.getColumnModel().getColumn(0);
+		chefProcessing.removeColumn(column);
 		column = chefProcessing.getColumnModel().getColumn(0);
 		column.setCellRenderer(dtcr);
 
@@ -145,6 +177,10 @@ public class ChefQueueView extends JInternalFrame {
 		// panelButtons.add(buttonReady);
 		// panelButtons.add(buttonConfig);
 
+	}
+	
+	public void refreshChefQueue() {
+		chefQueued.setModel(controller.refreshQueue());
 	}
 
 	public static ChefQueueView getInstance() {
