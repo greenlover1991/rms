@@ -577,8 +577,8 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
     }
 
     private void initValidations() {
-        SupplierTable.setDefaultEditor(Integer.class, new IntegerCellEditor(true,1, Integer.MAX_VALUE));
-        SupplierTable.setDefaultEditor(String.class, new StringCellEditor(1, 40));
+        //SupplierTable.setDefaultEditor(Integer.class, new IntegerCellEditor(true,1, Integer.MAX_VALUE));
+       // SupplierTable.setDefaultEditor(String.class, new StringCellEditor(1, 40));
        //jTable1.getColumn(EmployeeDBTable.ALIAS_ADDRESS).setCellEditor(new StringCellEditor(0, 3));
        //jTable1.getColumn(EmployeeDBTable.ALIAS_F_NAME).setCellEditor(new StringCellEditor(1, 5));
     }

@@ -47,8 +47,8 @@ public class EmployeeView extends javax.swing.JInternalFrame {
 
         initValidations();
         refreshData();
-        sorter = new TableRowSorter<BaseTableModel>((BaseTableModel)jTable1.getModel());
-        jTable1.setRowSorter(sorter);
+        sorter = new TableRowSorter<BaseTableModel>((BaseTableModel)EmployeeTable.getModel());
+        EmployeeTable.setRowSorter(sorter);
         searchField.getDocument().addDocumentListener(
             new DocumentListener() {
                 public void changedUpdate(DocumentEvent e) {
@@ -89,7 +89,7 @@ public class EmployeeView extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         searchField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        EmployeeTable = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(221, 221, 221));
         setClosable(true);
@@ -100,11 +100,11 @@ public class EmployeeView extends javax.swing.JInternalFrame {
         jPanel1.setBackground(new java.awt.Color(34, 34, 34));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
 
-        masterFileLabel.setFont(new java.awt.Font("Tahoma", 1, 20));
+        masterFileLabel.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         masterFileLabel.setForeground(new java.awt.Color(255, 255, 255));
         masterFileLabel.setText("EMPLOYEE");
 
-        addButton.setFont(new java.awt.Font("Tahoma", 1, 12));
+        addButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         addButton.setForeground(new java.awt.Color(153, 153, 153));
         addButton.setText("Add");
         addButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -118,7 +118,7 @@ public class EmployeeView extends javax.swing.JInternalFrame {
             }
         });
 
-        loadButton.setFont(new java.awt.Font("Tahoma", 1, 12));
+        loadButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         loadButton.setForeground(new java.awt.Color(153, 153, 153));
         loadButton.setText("Refresh");
         loadButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -131,7 +131,7 @@ public class EmployeeView extends javax.swing.JInternalFrame {
             }
         });
 
-        saveButton.setFont(new java.awt.Font("Tahoma", 1, 12));
+        saveButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         saveButton.setForeground(new java.awt.Color(153, 153, 153));
         saveButton.setText("Save");
         saveButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -144,7 +144,7 @@ public class EmployeeView extends javax.swing.JInternalFrame {
             }
         });
 
-        addButton1.setFont(new java.awt.Font("Tahoma", 1, 12));
+        addButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         addButton1.setForeground(new java.awt.Color(153, 153, 153));
         addButton1.setText("Delete");
         addButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -178,10 +178,10 @@ public class EmployeeView extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
-                    .addComponent(loadButton, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                    .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
-                    .addComponent(addButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+                    .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(loadButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(57, 57, 57))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(11, 11, 11)
@@ -192,7 +192,7 @@ public class EmployeeView extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
-        searchField.setFont(new java.awt.Font("Tahoma", 2, 12));
+        searchField.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
         searchField.setForeground(new java.awt.Color(102, 102, 102));
         searchField.setText("Search...");
         searchField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
@@ -213,8 +213,8 @@ public class EmployeeView extends javax.swing.JInternalFrame {
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         jScrollPane1.setAutoscrolls(true);
 
-        jTable1.setAutoCreateRowSorter(true);
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        EmployeeTable.setAutoCreateRowSorter(true);
+        EmployeeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null},
@@ -251,9 +251,9 @@ public class EmployeeView extends javax.swing.JInternalFrame {
                 return types [columnIndex];
             }
         });
-        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jScrollPane1.setViewportView(jTable1);
+        EmployeeTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        EmployeeTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jScrollPane1.setViewportView(EmployeeTable);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -292,7 +292,7 @@ public class EmployeeView extends javax.swing.JInternalFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();
@@ -337,11 +337,11 @@ public class EmployeeView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_searchFieldFocusLost
 
     public void refreshData(){
-        jTable1.setModel(controller.refreshData());
+        EmployeeTable.setModel(controller.refreshData());
         removeInvisibleColumns();
         if(sorter != null)
-            sorter.setModel((BaseTableModel)jTable1.getModel());
-        jTable1.setRowSorter(sorter);
+            sorter.setModel((BaseTableModel)EmployeeTable.getModel());
+        EmployeeTable.setRowSorter(sorter);
     }
 
     public void saveData(){
@@ -350,50 +350,35 @@ public class EmployeeView extends javax.swing.JInternalFrame {
     }
 
     public void setInactive(){
-        int[] rows = jTable1.getSelectedRows();
+        int[] rows = EmployeeTable.getSelectedRows();
         for(int i : rows){
-            int rowId = jTable1.convertRowIndexToModel(i);
-            int colId = ((BaseTableModel)jTable1.getModel()).findColumn(EmployeeDBTable.STATUS);
-            int idColId = ((BaseTableModel)jTable1.getModel()).findColumn(EmployeeDBTable.ID);
+            int rowId = EmployeeTable.convertRowIndexToModel(i);
+            int colId = ((BaseTableModel)EmployeeTable.getModel()).findColumn(EmployeeDBTable.STATUS);
+            int idColId = ((BaseTableModel)EmployeeTable.getModel()).findColumn(EmployeeDBTable.ID);
             // if has no id, dont inactivate
-            Object id = jTable1.getModel().getValueAt(rowId, idColId);
+            Object id = EmployeeTable.getModel().getValueAt(rowId, idColId);
             if(id == null || id.toString().isEmpty())
-               ((BaseTableModel)jTable1.getModel()).removeRow(rowId);
+               ((BaseTableModel)EmployeeTable.getModel()).removeRow(rowId);
             else
-               jTable1.getModel().setValueAt(ProjectConstants.STATUS_INACTIVE, rowId, colId);
+               EmployeeTable.getModel().setValueAt(ProjectConstants.STATUS_INACTIVE, rowId, colId);
         }
         controller.save();
         refreshData();
     }
 
     private void initValidations() {
-        jTable1.setDefaultEditor(Integer.class, new IntegerCellEditor(true,1, Integer.MAX_VALUE));
-        jTable1.setDefaultEditor(Date.class, new DateCellEditor());
-
-        jTable1.setDefaultRenderer(Date.class, new DefaultTableCellRenderer.UIResource(){
-
-            @Override
-            protected void setValue(Object value) {
-                if (formatter==null) {
-		formatter = DateFormat.getDateInstance(DateFormat.MEDIUM);
-	    }
-	    setText((value == null) ? "" : formatter.format(value));
-            }
-
-        });
-        jTable1.setDefaultEditor(String.class, new StringCellEditor(1, 255));
-       //jTable1.getColumn(EmployeeDBTable.ALIAS_ADDRESS).setCellEditor(new StringCellEditor(0, 3));
-       //jTable1.getColumn(EmployeeDBTable.ALIAS_F_NAME).setCellEditor(new StringCellEditor(1, 5));
+        //EmployeeTable.setDefaultEditor(Integer.class, new IntegerCellEditor(true,1, Integer.MAX_VALUE));
+        //EmployeeTable.getColumn("name").setCellEditor(new StringCellEditor(1, 40));
     }
 
     private void removeInvisibleColumns(){
         for(String inviColumn : EmployeeDBTable.getInstance().getInvisibleColumns()){
-            jTable1.removeColumn(jTable1.getColumn(inviColumn));
+            EmployeeTable.removeColumn(EmployeeTable.getColumn(inviColumn));
         }
     }
 
     private boolean canAddRow(){
-        BaseTableModel model = (BaseTableModel)jTable1.getModel();
+        BaseTableModel model = (BaseTableModel)EmployeeTable.getModel();
         DataRow lastRow = model.getLastRow();
         boolean isValid = true;
         for(String column : EmployeeDBTable.getInstance().getNonNullableColumns()){
@@ -407,7 +392,7 @@ public class EmployeeView extends javax.swing.JInternalFrame {
     }
 
     private void addRow() {
-        BaseTableModel model = (BaseTableModel)jTable1.getModel();
+        BaseTableModel model = (BaseTableModel)EmployeeTable.getModel();
         List<String> columnNames = Arrays.asList(EmployeeDBTable.getInstance().getColumns());
         List<Object> values = new ArrayList<Object>(columnNames.size());
         for(int i=0;i<columnNames.size()-1;i++ )
@@ -431,12 +416,12 @@ public class EmployeeView extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable EmployeeTable;
     private javax.swing.JButton addButton;
     private javax.swing.JButton addButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton loadButton;
     private javax.swing.JLabel masterFileLabel;
     private javax.swing.JButton saveButton;
