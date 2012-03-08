@@ -13,6 +13,7 @@ import rms.views.MainApplicationView;
 public class OrderSlipView extends javax.swing.JInternalFrame {
 
     private BillOutView billOut;
+    private NewOrderView newOrder;
     private static MainApplicationView parent;
     private static OrderSlipView INSTANCE;
     /** Creates new form MasterFilesUI */
@@ -40,30 +41,49 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblOrderItems = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tblMenuItems = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btnAddItem = new javax.swing.JButton();
         btnNewOS = new javax.swing.JButton();
-        btnDeleteOS = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
-        btnSaveOS = new javax.swing.JButton();
-        totalAmount = new javax.swing.JTextField();
-        btnBillOut = new javax.swing.JButton();
+        tblOrderSlips = new javax.swing.JTable();
         btnQueueOS = new javax.swing.JButton();
-        btnMakeOTChanges = new javax.swing.JButton();
+        btnUpdateOSI = new javax.swing.JButton();
+        btnRefresh = new javax.swing.JButton();
+        btnRemoveItem = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        btnSaveOS = new javax.swing.JButton();
+        btnDeleteOS = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        btnBillOut = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtNetAmount = new javax.swing.JTextField();
+        txtNetDiscount = new javax.swing.JTextField();
+        txtGrandTotal = new javax.swing.JTextField();
+        txtTables = new javax.swing.JTextField();
+        txtOrderSlipId = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        btnChooser = new javax.swing.JButton();
+        txtCustomers = new javax.swing.JSpinner();
+        cmbWaiters = new javax.swing.JComboBox();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        searchField = new javax.swing.JTextField();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMaximizable(true);
-        setResizable(true);
+        setIconifiable(true);
         setTitle("Order Slip");
 
-        jTable2.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblOrderItems.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
+        tblOrderItems.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -85,119 +105,101 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
                 "Quantity", "Particulars", "Unit Price", "Discount Rate", "No. of Discounted Items", "Total", "Status"
             }
         ));
-        jTable2.setGridColor(new java.awt.Color(204, 204, 204));
-        jTable2.setInheritsPopupMenu(true);
-        jScrollPane2.setViewportView(jTable2);
-        jTable2.getColumnModel().getColumn(0).setResizable(false);
-        jTable2.getColumnModel().getColumn(1).setResizable(false);
-        jTable2.getColumnModel().getColumn(2).setResizable(false);
-        jTable2.getColumnModel().getColumn(3).setResizable(false);
-        jTable2.getColumnModel().getColumn(4).setResizable(false);
-        jTable2.getColumnModel().getColumn(5).setResizable(false);
-        jTable2.getColumnModel().getColumn(6).setResizable(false);
+        tblOrderItems.setGridColor(new java.awt.Color(204, 204, 204));
+        tblOrderItems.setInheritsPopupMenu(true);
+        jScrollPane2.setViewportView(tblOrderItems);
+        tblOrderItems.getColumnModel().getColumn(0).setResizable(false);
+        tblOrderItems.getColumnModel().getColumn(1).setResizable(false);
+        tblOrderItems.getColumnModel().getColumn(2).setResizable(false);
+        tblOrderItems.getColumnModel().getColumn(3).setResizable(false);
+        tblOrderItems.getColumnModel().getColumn(4).setResizable(false);
+        tblOrderItems.getColumnModel().getColumn(5).setResizable(false);
+        tblOrderItems.getColumnModel().getColumn(6).setResizable(false);
 
-        jTable3.setFont(new java.awt.Font("Trebuchet MS", 0, 11));
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tblMenuItems.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
+        tblMenuItems.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Category", "Item", "Price"
+                "Category", "Item", "Price", "Stocks"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, false
+                false, true, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTable3.setGridColor(new java.awt.Color(204, 204, 204));
-        jTable3.setInheritsPopupMenu(true);
-        jTable3.getTableHeader().setReorderingAllowed(false);
-        jScrollPane3.setViewportView(jTable3);
-        jTable3.getColumnModel().getColumn(0).setResizable(false);
-        jTable3.getColumnModel().getColumn(1).setResizable(false);
-        jTable3.getColumnModel().getColumn(2).setResizable(false);
+        tblMenuItems.setGridColor(new java.awt.Color(204, 204, 204));
+        tblMenuItems.setInheritsPopupMenu(true);
+        tblMenuItems.getTableHeader().setReorderingAllowed(false);
+        jScrollPane3.setViewportView(tblMenuItems);
+        tblMenuItems.getColumnModel().getColumn(0).setResizable(false);
+        tblMenuItems.getColumnModel().getColumn(1).setResizable(false);
+        tblMenuItems.getColumnModel().getColumn(2).setResizable(false);
 
-        jLabel2.setFont(new java.awt.Font("Trebuchet MS", 1, 14));
-        jLabel2.setText("Order");
+        jLabel2.setFont(new java.awt.Font("DejaVu Sans", 1, 14)); // NOI18N
+        jLabel2.setText("Orders");
 
-        jLabel4.setFont(new java.awt.Font("Trebuchet MS", 1, 14));
+        jLabel4.setFont(new java.awt.Font("DejaVu Sans", 1, 14));
         jLabel4.setText("Menu");
 
-        btnAddItem.setText("Add Item");
+        btnAddItem.setText(">>");
 
         btnNewOS.setText("New Order Slip");
+        btnNewOS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewOSActionPerformed(evt);
+            }
+        });
 
-        btnDeleteOS.setText("Delete Order Slip");
-
-        jTable4.setForeground(new java.awt.Color(204, 204, 204));
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        tblOrderSlips.setForeground(new java.awt.Color(204, 204, 204));
+        tblOrderSlips.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Order ID", "Table No.", "Balance", "Take out", "Waited by", "Tendered by"
+                "Order", "Table", "Balance", "Waiter", "Take out"
             }
         ));
-        jTable4.setGridColor(new java.awt.Color(204, 204, 204));
-        jScrollPane4.setViewportView(jTable4);
-
-        btnSaveOS.setText("Save Order Slip");
-        btnSaveOS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveOSActionPerformed(evt);
-            }
-        });
-
-        totalAmount.setEditable(false);
-        totalAmount.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                totalAmountActionPerformed(evt);
-            }
-        });
-
-        btnBillOut.setText("Bill Out");
-        btnBillOut.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBillOutActionPerformed(evt);
-            }
-        });
+        tblOrderSlips.setGridColor(new java.awt.Color(204, 204, 204));
+        jScrollPane4.setViewportView(tblOrderSlips);
 
         btnQueueOS.setText("Queue Order to Kitchen");
         btnQueueOS.addActionListener(new java.awt.event.ActionListener() {
@@ -206,10 +208,194 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
             }
         });
 
-        btnMakeOTChanges.setText("Make Changes");
-        btnMakeOTChanges.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdateOSI.setText("Make Changes");
+        btnUpdateOSI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMakeOTChangesActionPerformed(evt);
+                btnUpdateOSIActionPerformed(evt);
+            }
+        });
+
+        btnRefresh.setText("Refresh");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+
+        btnRemoveItem.setText("<<");
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel3.setFont(new java.awt.Font("DejaVu Sans", 1, 14));
+        jLabel3.setText("Order Slip:");
+
+        jLabel5.setFont(new java.awt.Font("DejaVu Sans", 1, 14));
+        jLabel5.setText("Table:");
+
+        btnSaveOS.setText("Update");
+        btnSaveOS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveOSActionPerformed(evt);
+            }
+        });
+
+        btnDeleteOS.setText("Cancel");
+
+        jLabel6.setFont(new java.awt.Font("DejaVu Sans", 1, 14));
+        jLabel6.setText("No. of Customers:");
+
+        jLabel7.setFont(new java.awt.Font("DejaVu Sans", 1, 14));
+        jLabel7.setText("Waiter:");
+
+        btnBillOut.setText("Bill Out");
+        btnBillOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBillOutActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("March 8, 2012 12:00 PM");
+
+        txtNetAmount.setEditable(false);
+        txtNetAmount.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        txtNetDiscount.setEditable(false);
+        txtNetDiscount.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        txtGrandTotal.setEditable(false);
+        txtGrandTotal.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        txtTables.setEditable(false);
+        txtTables.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        txtOrderSlipId.setEditable(false);
+        txtOrderSlipId.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        jLabel8.setFont(new java.awt.Font("DejaVu Sans", 1, 14));
+        jLabel8.setText("Net Amount:");
+
+        jLabel9.setFont(new java.awt.Font("DejaVu Sans", 1, 14));
+        jLabel9.setText("Net Discount:");
+
+        jLabel10.setFont(new java.awt.Font("DejaVu Sans", 1, 14));
+        jLabel10.setText("Grand Total:");
+
+        btnChooser.setText("...");
+        btnChooser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChooserActionPerformed(evt);
+            }
+        });
+
+        cmbWaiters.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jCheckBox1.setText("Take Out");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnSaveOS)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDeleteOS)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 269, Short.MAX_VALUE)
+                        .addComponent(btnBillOut))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtCustomers))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtOrderSlipId, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtTables, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnChooser))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbWaiters, 0, 121, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(102, 102, 102)
+                                .addComponent(jLabel1))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel10))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtNetDiscount, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                                    .addComponent(txtGrandTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                                    .addComponent(txtNetAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addComponent(jCheckBox1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel1)
+                    .addComponent(txtOrderSlipId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtTables, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNetAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(btnChooser))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtNetDiscount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(txtCustomers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(txtGrandTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel10))
+                    .addComponent(cmbWaiters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBox1)
+                .addGap(9, 9, 9)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnBillOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSaveOS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDeleteOS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        searchField.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
+        searchField.setForeground(new java.awt.Color(102, 102, 102));
+        searchField.setText("Search...");
+        searchField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        searchField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchFieldActionPerformed(evt);
+            }
+        });
+        searchField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                searchFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                searchFieldFocusLost(evt);
             }
         });
 
@@ -218,88 +404,86 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnNewOS)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDeleteOS))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(111, 111, 111)
-                                .addComponent(btnAddItem, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(94, 94, 94)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnBillOut)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnQueueOS)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnMakeOTChanges))
-                                    .addComponent(totalAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(105, 105, 105))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnSaveOS))
-                            .addComponent(jLabel2)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(searchField)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(btnNewOS)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(btnRefresh))
+                                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE))
+                                        .addGap(6, 6, 6))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jScrollPane3, 0, 0, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnAddItem, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnRemoveItem, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel2))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnQueueOS)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnUpdateOSI)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(161, 161, 161)
-                        .addComponent(btnSaveOS)
-                        .addGap(19, 19, 19)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnNewOS)
-                            .addComponent(btnDeleteOS))
+                            .addComponent(btnRefresh))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAddItem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(totalAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBillOut, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMakeOTChanges, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel4))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addComponent(btnAddItem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnRemoveItem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnUpdateOSI, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnQueueOS, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void totalAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalAmountActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_totalAmountActionPerformed
-
     private void btnQueueOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQueueOSActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnQueueOSActionPerformed
 
-    private void btnMakeOTChangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMakeOTChangesActionPerformed
+    private void btnUpdateOSIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateOSIActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnMakeOTChangesActionPerformed
+    }//GEN-LAST:event_btnUpdateOSIActionPerformed
 
     private void btnBillOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBillOutActionPerformed
          // TODO add your handling code here:
@@ -312,23 +496,78 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSaveOSActionPerformed
 
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchFieldActionPerformed
+
+    private void searchFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusGained
+        // TODO add your handling code here:
+        if(searchField.getText().equalsIgnoreCase("Search..."))
+            searchField.setText("");
+}//GEN-LAST:event_searchFieldFocusGained
+
+    private void searchFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusLost
+        // TODO add your handling code here:
+        if(searchField.getText().equalsIgnoreCase(""))
+            searchField.setText("Search...");
+}//GEN-LAST:event_searchFieldFocusLost
+
+    private void btnNewOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewOSActionPerformed
+        // TODO add your handling code here:
+        newOrder = new NewOrderView(parent, true);
+        // if save succesfully, refresh
+        newOrder.showDialog();
+    }//GEN-LAST:event_btnNewOSActionPerformed
+
+    private void btnChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooserActionPerformed
+        // TODO add your handling code here:
+        TableChooserView chooser = new TableChooserView(parent, true);
+        String tables = chooser.showDialog();
+        if(tables != null && !tables.isEmpty())
+            txtTables.setText(tables);
+    }//GEN-LAST:event_btnChooserActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddItem;
     private javax.swing.JButton btnBillOut;
+    private javax.swing.JButton btnChooser;
     private javax.swing.JButton btnDeleteOS;
-    private javax.swing.JButton btnMakeOTChanges;
     private javax.swing.JButton btnNewOS;
     private javax.swing.JButton btnQueueOS;
+    private javax.swing.JButton btnRefresh;
+    private javax.swing.JButton btnRemoveItem;
     private javax.swing.JButton btnSaveOS;
+    private javax.swing.JButton btnUpdateOSI;
+    private javax.swing.JComboBox cmbWaiters;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
-    private javax.swing.JTextField totalAmount;
+    private javax.swing.JTextField searchField;
+    private javax.swing.JTable tblMenuItems;
+    private javax.swing.JTable tblOrderItems;
+    private javax.swing.JTable tblOrderSlips;
+    private javax.swing.JSpinner txtCustomers;
+    private javax.swing.JTextField txtGrandTotal;
+    private javax.swing.JTextField txtNetAmount;
+    private javax.swing.JTextField txtNetDiscount;
+    private javax.swing.JTextField txtOrderSlipId;
+    private javax.swing.JTextField txtTables;
     // End of variables declaration//GEN-END:variables
     
     
