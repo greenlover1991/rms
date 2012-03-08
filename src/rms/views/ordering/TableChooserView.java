@@ -49,6 +49,7 @@ public class TableChooserView extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Choose Tables");
+        setAlwaysOnTop(true);
         setResizable(false);
 
         btnChoose.setText("Choose");
@@ -125,7 +126,8 @@ public class TableChooserView extends javax.swing.JDialog {
         try {
             DataSupport dh = new DataSupport();
             TableDBTable db = TableDBTable.getInstance();
-            BaseTableModel temp = dh.executeQuery(db.generateSelectAllWithDefaultAliasesSql());
+            String query = db.generateSelectAllWithDefaultAliasesSql();
+            BaseTableModel temp = dh.executeQuery(query.substring(0, query.length()-1) + " WHERE status = 'Active' AND table_status = 'Available';");
             BaseTableModel model = new BaseTableModel(temp.columnNames, temp.columnAliases, temp.columnClasses){
 
                 @Override

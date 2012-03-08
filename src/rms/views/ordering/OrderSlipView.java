@@ -4,6 +4,13 @@
  */
 package rms.views.ordering;
 
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.TableRowSorter;
+import rms.controllers.ordering.OrderSlipController;
+import rms.models.BaseTableModel;
+import rms.models.management.MenuItemsDBTable;
 import rms.views.MainApplicationView;
 
 /**
@@ -16,9 +23,30 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
     private NewOrderView newOrder;
     private static MainApplicationView parent;
     private static OrderSlipView INSTANCE;
+    private TableRowSorter<BaseTableModel> sorter;
+    OrderSlipController controller;
     /** Creates new form MasterFilesUI */
     private OrderSlipView() {
         initComponents();
+        controller = new OrderSlipController(this);
+        refreshData();
+
+        sorter = new TableRowSorter<BaseTableModel>((BaseTableModel)tblMenuItems.getModel());
+        tblMenuItems.setRowSorter(sorter);
+        searchField.getDocument().addDocumentListener(
+            new DocumentListener() {
+                public void changedUpdate(DocumentEvent e) {
+                    newFilter();
+                }
+                public void insertUpdate(DocumentEvent e)  {
+                    newFilter();
+                }
+                public void removeUpdate(DocumentEvent e)
+                {
+                    newFilter();
+                }
+            }
+        );
         
     }
 
@@ -82,7 +110,6 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setTitle("Order Slip");
 
-        tblOrderItems.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
         tblOrderItems.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -116,7 +143,6 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
         tblOrderItems.getColumnModel().getColumn(5).setResizable(false);
         tblOrderItems.getColumnModel().getColumn(6).setResizable(false);
 
-        tblMenuItems.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
         tblMenuItems.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -165,7 +191,7 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
         tblMenuItems.getColumnModel().getColumn(1).setResizable(false);
         tblMenuItems.getColumnModel().getColumn(2).setResizable(false);
 
-        jLabel2.setFont(new java.awt.Font("DejaVu Sans", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("DejaVu Sans", 1, 14));
         jLabel2.setText("Orders");
 
         jLabel4.setFont(new java.awt.Font("DejaVu Sans", 1, 14));
@@ -180,7 +206,6 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
             }
         });
 
-        tblOrderSlips.setForeground(new java.awt.Color(204, 204, 204));
         tblOrderSlips.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -381,7 +406,7 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        searchField.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
+        searchField.setFont(new java.awt.Font("Tahoma", 2, 12));
         searchField.setForeground(new java.awt.Color(102, 102, 102));
         searchField.setText("Search...");
         searchField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
@@ -409,26 +434,22 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jScrollPane3, 0, 0, Short.MAX_VALUE)
+                                    .addComponent(searchField)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(searchField)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(btnNewOS)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(btnRefresh))
-                                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE))
-                                        .addGap(6, 6, 6))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jScrollPane3, 0, 0, Short.MAX_VALUE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnAddItem, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnRemoveItem, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(btnNewOS)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnRefresh))
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(btnAddItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnRemoveItem, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)))
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel2))))
@@ -458,15 +479,15 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
                     .addComponent(jLabel4))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
+                        .addGap(49, 49, 49)
                         .addComponent(btnAddItem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(27, 27, 27)
                         .addComponent(btnRemoveItem, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUpdateOSI, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -498,6 +519,7 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         // TODO add your handling code here:
+        refreshData();
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
@@ -531,6 +553,19 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
             txtTables.setText(tables);
     }//GEN-LAST:event_btnChooserActionPerformed
 
+     private void newFilter() {
+
+        RowFilter<BaseTableModel , Object> rf = null;
+        //declare a row filter for your table model
+        try {
+            if(!searchField.getText().equals("Search..."))
+              rf = RowFilter.regexFilter(searchField.getText(), 0);
+            //initialize with a regular expression
+        } catch (java.util.regex.PatternSyntaxException e) {
+            return;
+        }
+        sorter.setRowFilter(rf);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddItem;
     private javax.swing.JButton btnBillOut;
@@ -569,6 +604,19 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtOrderSlipId;
     private javax.swing.JTextField txtTables;
     // End of variables declaration//GEN-END:variables
-    
+
+    private void refreshData() {
+        loadOrderSlips();
+        loadMenuItems();
+    }
+
+    private void loadOrderSlips(){
+        tblOrderSlips.setModel(controller.loadOrderSlips());
+    }
+
+    private void loadMenuItems(){
+        tblMenuItems.setModel(controller.loadMenuItems());
+        tblMenuItems.removeColumn(tblMenuItems.getColumn(MenuItemsDBTable.ALIAS_MENU_CAT_ID));
+    }
     
 }

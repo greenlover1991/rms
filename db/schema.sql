@@ -253,22 +253,6 @@ CREATE TABLE IF NOT EXISTS `order_slips` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_slips_restaurant_tables`
---
-
-CREATE TABLE IF NOT EXISTS `order_slips_restaurant_tables` (
-  `order_slip_id` int(10) NOT NULL,
-  `restaurant_table_id` int(10) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `order_slips_restaurant_tables`
---
-
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `order_slip_items`
 --
 
@@ -444,6 +428,7 @@ CREATE TABLE IF NOT EXISTS `restaurant_tables` (
   `capacity` int(10) NOT NULL,
   `table_status` varchar(80) NOT NULL,
   `status` varchar(40) NOT NULL,
+  `order_slip_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 

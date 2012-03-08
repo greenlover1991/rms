@@ -12,9 +12,14 @@
 package rms.views.ordering;
 
 import java.awt.Frame;
-import javax.swing.ComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.event.ListDataListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import rms.models.BaseTableModel;
+import supports.DataSupport;
 
 /**
  *
@@ -30,6 +35,8 @@ public class NewOrderView extends javax.swing.JDialog {
         this.parent = parent;
         initComponents();
         setLocationRelativeTo(parent);
+        loadWaiters();
+
     }
 
     /** This method is called from within the constructor to
@@ -140,9 +147,11 @@ public class NewOrderView extends javax.swing.JDialog {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-        // save()
-        setVisible(false);
-        dispose();
+        if(save()){
+            setVisible(false);
+            dispose();
+        }
+
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnTableChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTableChooserActionPerformed
@@ -168,5 +177,51 @@ public class NewOrderView extends javax.swing.JDialog {
     private javax.swing.JCheckBox txtIsTakeOut;
     private javax.swing.JTextField txtTables;
     // End of variables declaration//GEN-END:variables
+
+    private boolean save() {
+        boolean res = false;
+        String tbs = txtTables.getText();
+        int noOfCustomers = Integer.parseInt(txtCustomers.getValue().toString());
+        String loginName = cmbWaiter.getSelectedItem().toString();
+        int isTakeout = txtIsTakeOut.isSelected() ? 1 : 0;
+        
+        if(isTakeout==1)
+            tbs = "";
+        // if has tables and is not take out
+        String query = String.format("INSERT INTO order_slips(id, datetime_of_order, waited_by, total_amount, grand_total, order_status, number_of_customers, is_takeout, status) " +
+                "   VALUES(null, NOW(), (SELECT id FROM employees WHERE login = '%s'), 0, 0, 'Active', %d, %d,  'Active');", loginName, noOfCustomers, isTakeout);
+        StringBuilder tblSql = new StringBuilder();
+        tblSql.append(String.format("UPDATE restaurant_tables SET table_status = 'Occupied', order_slip_id = LAST_INSERT_ID() WHERE table_number IN (%s)", tbs));
+        DataSupport dh;
+        try {
+            dh = new DataSupport();
+            List<String> sqls = new ArrayList<String>();
+            sqls.add(query);
+            if(isTakeout==0){
+                sqls.add(tblSql.toString());
+            }
+            dh.executeBatchUpdate(sqls);
+            res = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(NewOrderView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return res;
+    }
+
+    private void loadWaiters() {
+        try {
+            DataSupport dh = new DataSupport();
+            String query = "SELECT login FROM employees WHERE status = 'Active';";
+            BaseTableModel model = dh.executeQuery(query);
+            Object[] waiters = new Object[model.rows.size()];
+            for (int i = 0; i < model.rows.size(); i++) {
+                waiters[i] = model.getValueAt(i, 0).toString();
+            }
+            cmbWaiter.setModel(new DefaultComboBoxModel(waiters));
+        } catch (SQLException ex) {
+            Logger.getLogger(NewOrderView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }

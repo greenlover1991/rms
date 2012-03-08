@@ -222,4 +222,70 @@ public class DataSupport {
 
 
 
+
+    /**
+     * Executes the given SQL statement, which returns a single ResultSet object.
+     * refer to Statement.executeQuery
+     * @param sql an SQL statement to be sent to the database, typically a static SQL SELECT statement
+     * @return a BaseTableModel object that contains the data produced by the given query, using alias columns; never null
+     */
+    public BaseTableModel executeQueryUsingAlias(String sql) throws SQLException{
+        BaseTableModel result = null;
+
+        try {
+            Statement command = conn.createStatement();
+            ResultSet rs = command.executeQuery(sql);
+            result = convertResultSetToTableModelUsingAlias(rs);
+            rs.close();
+            command.close();
+            conn.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(DataSupport.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            conn.rollback();
+            result = null;
+            throw ex;
+        }
+        finally{
+            conn.close();
+        }
+
+        return result;
+    }
+
+    private BaseTableModel convertResultSetToTableModelUsingAlias(ResultSet rs){
+        BaseTableModel result = null;
+        try {
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            int columns = rsmd.getColumnCount();
+
+            List<String> columnNames = new ArrayList<String>();
+            List<String> columnAliases = new ArrayList<String>();
+            List<Class> columnClasses = new ArrayList<Class>();
+
+
+            for(int i=1; i<=columns ; i++){
+                columnNames.add(rsmd.getColumnName(i));
+                columnAliases.add(rsmd.getColumnLabel(i));
+                columnClasses.add(Class.forName(rsmd.getColumnClassName(i)));
+            }
+
+            result = new BaseTableModel(columnNames, columnAliases, columnClasses);
+            while(rs.next()){
+                List<Object> values = new ArrayList<Object>();
+                for(int i=1;i<=columns;i++)
+                    values.add(rs.getObject(i));
+                DataRow row = new DataRow(columnAliases, values);
+                result.rows.add(row);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DataSupport.class.getName()).log(Level.SEVERE, null, ex);
+        } catch(ClassNotFoundException ex){
+            Logger.getLogger(DataSupport.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+
+    }
 }
