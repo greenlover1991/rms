@@ -11,6 +11,8 @@
 
 package rms.views.inventory;
 
+import java.text.DateFormat;
+import java.util.Date;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -33,6 +35,7 @@ public class SpoilageView extends javax.swing.JInternalFrame {
     /** Creates new form SpoilageView */
     private SpoilageView() {
         initComponents();
+        txtDate.setText(DateFormat.getDateInstance(DateFormat.LONG).format(new Date()));
         controller = new SpoilageInventoryController(this);
         loadIngredients();
         loadSpoilageOfTheDay();
@@ -88,8 +91,18 @@ public class SpoilageView extends javax.swing.JInternalFrame {
         setTitle("Spoilage Form");
 
         btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         btnRemove.setText("<<");
+        btnRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("DejaVu Sans", 0, 24));
         jLabel2.setText("Spoilage Report");
@@ -130,6 +143,8 @@ public class SpoilageView extends javax.swing.JInternalFrame {
                 return types [columnIndex];
             }
         });
+        tblIngredients.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tblIngredients.setColumnSelectionAllowed(true);
         jScrollPane2.setViewportView(tblIngredients);
 
         btnAdd.setText(">>");
@@ -190,7 +205,7 @@ public class SpoilageView extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap(23, Short.MAX_VALUE)
+                                .addContainerGap(25, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtDate)
                                     .addComponent(jLabel1))
@@ -231,7 +246,31 @@ public class SpoilageView extends javax.swing.JInternalFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
+        int rowIndx = tblIngredients.getSelectedRow();
+        if(rowIndx != -1){
+            int ingredientId = Integer.parseInt(tblIngredients.getModel().getValueAt(rowIndx, 1).toString());
+            controller.add(ingredientId);
+            loadIngredients();
+            loadSpoilageOfTheDay();
+        }
     }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        controller.save((BaseTableModel)tblSpoilage.getModel());
+        loadSpoilageOfTheDay();
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
+        // TODO add your handling code here:
+        int rowIndx = tblSpoilage.getSelectedRow();
+        if(rowIndx != -1){
+            int sri_id = Integer.parseInt(tblSpoilage.getModel().getValueAt(rowIndx, 1).toString());
+            controller.remove(sri_id);
+            loadIngredients();
+            loadSpoilageOfTheDay();
+        }
+    }//GEN-LAST:event_btnRemoveActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -254,8 +293,8 @@ public class SpoilageView extends javax.swing.JInternalFrame {
     }
 
     private void loadSpoilageOfTheDay() {
-        //throw new UnsupportedOperationException("Not yet implemented");
         tblSpoilage.setModel(controller.loadSpoilage());
+        removeSpoilageColumns();
     }
 
     private void newFilter() {
@@ -273,5 +312,11 @@ public class SpoilageView extends javax.swing.JInternalFrame {
 
     private void removeIngredientsColumns() {
         tblIngredients.removeColumn(tblIngredients.getColumn(IngredientDBTable.ALIAS_ID));
+    }
+
+    private void removeSpoilageColumns() {
+        tblSpoilage.removeColumn(tblSpoilage.getColumn("id"));
+        tblSpoilage.removeColumn(tblSpoilage.getColumn("spoilage_report_id"));
+        tblSpoilage.removeColumn(tblSpoilage.getColumn("ingredient_id"));
     }
 }
