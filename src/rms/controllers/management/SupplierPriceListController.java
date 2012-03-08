@@ -68,7 +68,7 @@ public class SupplierPriceListController {
 
         return result;
     }
-  public boolean saveRecipe(BaseTableModel spl){
+  public boolean savePriceList(BaseTableModel spl){
         boolean result = false;
         List<String> sqls = new ArrayList<String>();
         SupplierPriceListDBTable db = SupplierPriceListDBTable.getInstance();

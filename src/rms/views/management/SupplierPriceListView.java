@@ -514,7 +514,7 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
         // TODO add your handling code here:
-        controller.saveRecipe((BaseTableModel)PriceListTable.getModel());
+        controller.savePriceList((BaseTableModel)PriceListTable.getModel());
 }//GEN-LAST:event_saveActionPerformed
 
     private void SupplierTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SupplierTableMouseClicked

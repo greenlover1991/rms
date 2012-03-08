@@ -70,6 +70,31 @@ public class MenuItemsController {
 
         return result;
     }
+    public boolean saveRecipe(BaseTableModel spl){
+        boolean result = false;
+        List<String> sqls = new ArrayList<String>();
+        RecipeDBTable db = RecipeDBTable.getInstance();
+
+        for(DataRow row : spl.rows){
+            Map<String, String> updateList = new HashMap<String, String>();
+            updateList.put("quantity", row.get("quantity").toString());
+            Map<String, String> primary = new HashMap<String,String>();
+            primary.put("menu_item_id", row.get("menu_item_id").toString());
+            primary.put("ingredient_id", row.get("ingredient_id").toString());
+            sqls.add(db.generateUpdateSql(updateList, primary));
+        }
+
+        DataSupport dh;
+
+        try {
+            dh = new DataSupport();
+            dh.executeBatchUpdate(sqls);
+        } catch (SQLException ex) {
+            Logger.getLogger(SupplierPriceListController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return result;
+    }
     public BaseTableModel loadIngredients(int menuItemId){
          String query = String.format("SELECT  i.id AS ID, i.name AS Name "
                                     + "FROM ingredients i "
@@ -90,7 +115,7 @@ public class MenuItemsController {
             return ingredients;
     }
      public BaseTableModel loadIngredientsOnRecipe(int menuItemId){
-         String query = String.format("SELECT r.ingredient_id, r.menu_item_id, i.name as Name, i.unit_of_measure as 'Unit of Measure', i.quantity AS 'Needed Qty' "
+         String query = String.format("SELECT r.ingredient_id, r.menu_item_id, i.name as Name, i.unit_of_measure as 'Unit of Measure', r.quantity AS 'Needed Qty' "
                                     + "FROM ingredients i "
                                     + "inner join recipes r "
                                     + "on r.ingredient_id=i.id "
@@ -119,14 +144,22 @@ public class MenuItemsController {
     }
     
     public boolean addIngredientToRecipe(int menuItemID, int ingID){
+        Double qty=0.0;
+       boolean isValid = false;
+       do{
+           try{
+              qty = Double.parseDouble(JOptionPane.showInputDialog(view, "INPUT QUANTITY:"));
+              isValid=true;
+           }catch(NumberFormatException e){}
+       }while(!isValid);
         boolean result = false;
+        
          try{
             RecipeDBTable db = RecipeDBTable.getInstance();
             Map<String,String> map=new HashMap<String, String>();
             map.put(RecipeDBTable.MENU_ITEM_ID, menuItemID+"");
             map.put(RecipeDBTable.INGREDIENT_ID, ingID+"");
-            map.put(RecipeDBTable.QTY, 1+"" );
-
+            map.put(RecipeDBTable.QTY, qty+"" );
 
             String query = db.generateInsertSql(map);
             DataSupport dh = new DataSupport();
