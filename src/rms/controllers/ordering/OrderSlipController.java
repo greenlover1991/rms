@@ -6,8 +6,17 @@
 package rms.controllers.ordering;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import rms.ProjectConstants;
+import rms.controllers.management.SupplierPriceListController;
 import rms.models.BaseTableModel;
 import rms.views.ordering.OrderSlipView;
 import supports.DataSupport;
@@ -20,6 +29,7 @@ public class OrderSlipController {
     OrderSlipView view;
     public OrderSlipController(OrderSlipView view){
         this.view = view;
+        loadWaiters();
     }
 
     public BaseTableModel loadMenuItems(){
@@ -57,12 +67,10 @@ public class OrderSlipController {
         try {
             dh = new DataSupport();
             String query = "SELECT os.id AS  'Order No.', GROUP_CONCAT( CAST( t.table_number AS CHAR ) " +
-                "ORDER BY t.table_number ASC ) AS  'Table No.', os.grand_total AS Balance, e.login AS Waiter, os.is_takeout 'Take out' " +
-                "FROM order_slips os " +
+                "ORDER BY t.table_number ASC ) AS  'Table No.', os.grand_total AS Balance, e.login AS Waiter " +
+                "FROM (SELECT * FROM order_slips WHERE status = 'Active' AND order_status != 'Tendered' AND order_status != 'Cancelled') os " +
                 "INNER JOIN employees e ON os.waited_by = e.id " +
-                "INNER JOIN restaurant_tables t ON os.id = t.order_slip_id " +
-                "WHERE os.status =  'Active' " +
-                "   AND os.order_status !=  'Tendered' " +
+                "LEFT OUTER JOIN restaurant_tables t ON os.id = t.order_slip_id " +
                 "GROUP BY os.id, os.grand_total, e.login, os.is_takeout";
             BaseTableModel temp = dh.executeQuery(query);
             result = new BaseTableModel(temp.columnNames, temp.columnAliases, temp.columnClasses){
@@ -77,6 +85,166 @@ public class OrderSlipController {
         } catch (SQLException ex) {
             Logger.getLogger(OrderSlipController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return result;
+    }
+
+    public void loadOrderSlipDetails(int orderSlipId) {
+        try {
+            String query = String.format("SELECT os.id, os.datetime_of_order, GROUP_CONCAT( CAST( t.table_number AS CHAR ) " +
+                    "ORDER BY t.table_number ASC ) AS  'Table No.', os.is_takeout, os.number_of_customers, os.total_amount, os.total_discount_amount, e.login, os.grand_total " +
+                    "FROM order_slips os " +
+                    "INNER JOIN restaurant_tables t ON t.order_slip_id = os.id " +
+                    "LEFT OUTER JOIN employees e ON e.id = os.waited_by " +
+                    "WHERE os.id = %d", orderSlipId);
+            DataSupport dh = new DataSupport();
+            BaseTableModel model = dh.executeQuery(query);
+            
+            // set views
+            Date datetime = (Date)model.getValueAt(0, 1);
+            String tables = model.getValueAt(0, 2) == null ? "" : model.getValueAt(0,2).toString();
+            String customers = model.getValueAt(0, 4) == null ? "0" : model.getValueAt(0,4).toString();
+            double totalAmount = Double.parseDouble(model.getValueAt(0, 5) == null ? "0" : model.getValueAt(0,5).toString());
+            double totalDiscountAmount = Double.parseDouble(model.getValueAt(0, 6) == null ? "0" : model.getValueAt(0,6).toString());
+            String waiter = model.getValueAt(0, 7).toString();
+            double grandAmount = Double.parseDouble(model.getValueAt(0, 8) == null ? "0" : model.getValueAt(0,8).toString());
+            view.prevTables.delete(0, view.prevTables.length());
+            view.prevTables.append(tables);
+            view.txtOrderSlipId.setText(orderSlipId+"");
+            SimpleDateFormat format = new SimpleDateFormat("MMM dd, yyyy HH:mm");
+            view.lblDate.setText(format.format(datetime));
+            view.txtTables.setText(tables);
+            view.txtCustomers.setValue(new Integer(customers));
+            view.cmbWaiters.setSelectedItem(waiter);
+            view.txtNetAmount.setText(totalAmount + "");
+            view.txtNetDiscount.setText(totalDiscountAmount + "");
+            view.txtGrandTotal.setText(grandAmount + "");
+
+
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderSlipController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void loadWaiters() {
+        try {
+            DataSupport dh = new DataSupport();
+            String query = "SELECT login FROM employees WHERE status = 'Active';";
+            BaseTableModel model = dh.executeQuery(query);
+            Object[] waiters = new Object[model.rows.size()];
+            for (int i = 0; i < model.rows.size(); i++) {
+                waiters[i] = model.getValueAt(i, 0).toString();
+            }
+            view.cmbWaiters.setModel(new DefaultComboBoxModel(waiters));
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderSlipController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void updateOrderSlipDetails(){
+        String orderSlipId = view.txtOrderSlipId.getText();
+        if(!orderSlipId.isEmpty()){
+            String tbs = view.txtTables.getText();
+            int noOfCustomers = Integer.parseInt(view.txtCustomers.getValue().toString());
+            String waiterName = view.cmbWaiters.getSelectedItem().toString();
+            int isTakeout = tbs.trim().isEmpty() ? 1 : 0;
+
+            String updateOS = String.format("UPDATE order_slips SET number_of_customers= %d, is_takeout = %d, " +
+                    "waited_by = (SELECT id FROM employees WHERE login = '%s') " +
+                    "WHERE id = %s;", noOfCustomers, isTakeout, waiterName, orderSlipId);
+            String availTables = String.format("UPDATE restaurant_tables SET table_status = 'Available', order_slip_id = null " +
+                "WHERE table_number IN (%s);", view.prevTables);
+            String occupyTables = String.format("UPDATE restaurant_tables SET table_status = 'Occupied', order_slip_id = %s " +
+                "WHERE table_number IN (%s);", orderSlipId, tbs);
+            List<String> sqls = new ArrayList<String>();
+            sqls.add(updateOS);
+            if(view.prevTables.length() > 0){
+                sqls.add(availTables);
+            }
+            if(isTakeout == 0){
+                sqls.add(occupyTables);
+            }
+            try {
+                DataSupport dh = new DataSupport();
+                dh.executeBatchUpdate(sqls);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(OrderSlipView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void cancelOrderSlip(String orderSlipId){
+        try {
+            String cancelOSItems = String.format("UPDATE order_slip_items SET order_status = 'Cancelled' WHERE order_slip_id = %s;", orderSlipId);
+            String cancelOS = String.format("UPDATE order_slips SET order_status = 'Cancelled' WHERE id = %s;", orderSlipId);
+            String updateTables = String.format("UPDATE restaurant_tables set table_status = 'Available', order_slip_id = null WHERE order_slip_id = %s;", orderSlipId);
+            List<String> sqls = Arrays.asList(new String[]{cancelOSItems, cancelOS, updateTables});
+            DataSupport dh = new DataSupport();
+            dh.executeBatchUpdate(sqls);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderSlipController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public BaseTableModel loadOrderItems(int orderSlipId){
+        BaseTableModel result = null;
+        try {
+
+            String query = String.format("SELECT osi.id, osi.quantity AS Quantity, mi.name AS Name, osi.description AS 'Notes', osi.unit_cost AS 'Price', osi.amount AS 'Amount', osi.discounted_items AS 'Disc. items', osi.discount_rate AS 'Disc. rate', osi.discount_fixed_amount AS 'Fixed Disc. Amount', osi.net_amount AS 'Net Amount', osi.order_status AS 'Status' " +
+                    "FROM order_slip_items osi " +
+                    "INNER JOIN menu_items mi ON mi.id = osi.menu_item_id " +
+                    "WHERE osi.order_slip_id = %d;", orderSlipId);
+            DataSupport dh = new DataSupport();
+            BaseTableModel temp = dh.executeQuery(query);
+            result = new BaseTableModel(temp.columnNames, temp.columnAliases, temp.columnClasses) {
+
+                @Override
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    // if status pending, quantity can be edited
+                    // if discounted item, discounted fix, rate = all editable
+                    if(columnIndex >= 6 && columnIndex <= 8){
+                        return true;
+                    }
+                    else if((columnIndex == 1 || columnIndex == 3) && ProjectConstants.ORDER_ITEM_STATUS_PENDING.equals(getValueAt(rowIndex, 10).toString())){
+                        return true;
+                    }
+                    else
+                        return false;
+                }
+            };
+            result.rows = temp.rows;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderSlipController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+
+    public boolean addMenuItemId(int menuItemId, int orderSlipId) {
+       int quantity = 0;
+       boolean isValid = false;
+       do{
+           try{
+              quantity = Integer.parseInt(JOptionPane.showInputDialog(view, "INPUT Quantity:"));
+              isValid=true;
+           }catch(NumberFormatException e){}
+       }while(!isValid);
+
+        boolean result = false;
+         try{
+            
+
+            String query = String.format("INSERT INTO order_slip_items (order_slip_id, quantity, menu_item_id, unit_cost, amount, order_status, net_amount, datetime_of_order, status) " +
+                    "VALUES(%d, %d, %d, (SELECT price FROM menu_items WHERE id = %d), quantity*unit_cost, '%s', quantity*unit_cost, NOW(), '%s');",
+                    orderSlipId, quantity, menuItemId, menuItemId, ProjectConstants.ORDER_ITEM_STATUS_PENDING, ProjectConstants.STATUS_ACTIVE);
+            DataSupport dh = new DataSupport();
+            dh.executeUpdate(query);
+            result = true;
+        }
+         catch(SQLException ex){
+             Logger.getLogger(SupplierPriceListController.class.getName()).log(Level.SEVERE, null, ex);
+             JOptionPane.showMessageDialog(view, ex.toString());
+         }
         return result;
     }
 }

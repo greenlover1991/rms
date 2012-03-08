@@ -25,12 +25,14 @@ import supports.DataSupport;
 public class TableChooserView extends javax.swing.JDialog {
 
     StringBuilder result;
+    String existingTbls;
     /** Creates new form TableChooserView */
-    public TableChooserView(java.awt.Frame parent, boolean modal) {
+    public TableChooserView(java.awt.Frame parent, boolean modal, String existingTbls) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(parent);
         result = new StringBuilder();
+        this.existingTbls = existingTbls;
         loadTables();
     }
 
@@ -106,6 +108,10 @@ public class TableChooserView extends javax.swing.JDialog {
             }
             result.deleteCharAt(result.length()-1);
         }
+        else{
+            result.append(" ");
+        }
+
         setVisible(false);
         dispose();
     }//GEN-LAST:event_btnChooseActionPerformed
@@ -127,7 +133,7 @@ public class TableChooserView extends javax.swing.JDialog {
             DataSupport dh = new DataSupport();
             TableDBTable db = TableDBTable.getInstance();
             String query = db.generateSelectAllWithDefaultAliasesSql();
-            BaseTableModel temp = dh.executeQuery(query.substring(0, query.length()-1) + " WHERE status = 'Active' AND table_status = 'Available';");
+            BaseTableModel temp = dh.executeQuery(query.substring(0, query.length()-1) + String.format(" WHERE %s (status = 'Active' AND table_status = 'Available');", (existingTbls !=null && !existingTbls.isEmpty() && !existingTbls.trim().isEmpty()) ?" table_number IN ("+ existingTbls+") || ": " "));
             BaseTableModel model = new BaseTableModel(temp.columnNames, temp.columnAliases, temp.columnClasses){
 
                 @Override

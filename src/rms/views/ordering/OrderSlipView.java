@@ -4,13 +4,18 @@
  */
 package rms.views.ordering;
 
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import rms.ProjectConstants;
 import rms.controllers.ordering.OrderSlipController;
 import rms.models.BaseTableModel;
 import rms.models.management.MenuItemsDBTable;
+import rms.models.ordering.OrderSlipDBTable;
+import rms.models.ordering.OrderSlipItemsDBTable;
 import rms.views.MainApplicationView;
 
 /**
@@ -25,10 +30,13 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
     private static OrderSlipView INSTANCE;
     private TableRowSorter<BaseTableModel> sorter;
     OrderSlipController controller;
+    public StringBuilder prevTables;
     /** Creates new form MasterFilesUI */
     private OrderSlipView() {
         initComponents();
         controller = new OrderSlipController(this);
+        prevTables = new StringBuilder();
+        resetViews();
         refreshData();
 
         sorter = new TableRowSorter<BaseTableModel>((BaseTableModel)tblMenuItems.getModel());
@@ -90,7 +98,7 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         btnBillOut = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        lblDate = new javax.swing.JLabel();
         txtNetAmount = new javax.swing.JTextField();
         txtNetDiscount = new javax.swing.JTextField();
         txtGrandTotal = new javax.swing.JTextField();
@@ -102,7 +110,6 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
         btnChooser = new javax.swing.JButton();
         txtCustomers = new javax.swing.JSpinner();
         cmbWaiters = new javax.swing.JComboBox();
-        jCheckBox1 = new javax.swing.JCheckBox();
         searchField = new javax.swing.JTextField();
 
         setClosable(true);
@@ -198,6 +205,11 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
         jLabel4.setText("Menu");
 
         btnAddItem.setText(">>");
+        btnAddItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddItemActionPerformed(evt);
+            }
+        });
 
         btnNewOS.setText("New Order Slip");
         btnNewOS.addActionListener(new java.awt.event.ActionListener() {
@@ -224,6 +236,11 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
             }
         ));
         tblOrderSlips.setGridColor(new java.awt.Color(204, 204, 204));
+        tblOrderSlips.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblOrderSlipsMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(tblOrderSlips);
 
         btnQueueOS.setText("Queue Order to Kitchen");
@@ -265,6 +282,11 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
         });
 
         btnDeleteOS.setText("Cancel");
+        btnDeleteOS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteOSActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("DejaVu Sans", 1, 14));
         jLabel6.setText("No. of Customers:");
@@ -279,7 +301,7 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel1.setText("March 8, 2012 12:00 PM");
+        lblDate.setText("March 8, 2012 12:00 PM");
 
         txtNetAmount.setEditable(false);
         txtNetAmount.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -312,9 +334,9 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
             }
         });
 
-        cmbWaiters.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        txtCustomers.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
 
-        jCheckBox1.setText("Take Out");
+        cmbWaiters.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -327,7 +349,7 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
                         .addComponent(btnSaveOS)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDeleteOS)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 269, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 274, Short.MAX_VALUE)
                         .addComponent(btnBillOut))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -338,22 +360,22 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtOrderSlipId, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE))
+                                .addComponent(txtOrderSlipId, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTables, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                                .addComponent(txtTables, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnChooser))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmbWaiters, 0, 121, Short.MAX_VALUE)))
+                                .addComponent(cmbWaiters, 0, 126, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGap(102, 102, 102)
-                                .addComponent(jLabel1))
+                                .addComponent(lblDate))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(42, 42, 42)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -364,8 +386,7 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(txtNetDiscount, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
                                     .addComponent(txtGrandTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
-                                    .addComponent(txtNetAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addComponent(jCheckBox1, javax.swing.GroupLayout.Alignment.TRAILING))
+                                    .addComponent(txtNetAmount, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE))))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -374,7 +395,7 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel1)
+                    .addComponent(lblDate)
                     .addComponent(txtOrderSlipId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -396,9 +417,7 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
                         .addComponent(txtGrandTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel10))
                     .addComponent(cmbWaiters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox1)
-                .addGap(9, 9, 9)
+                .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnBillOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSaveOS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -449,7 +468,7 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel2))))
@@ -513,12 +532,9 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_btnBillOutActionPerformed
 
-    private void btnSaveOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveOSActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSaveOSActionPerformed
-
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         // TODO add your handling code here:
+        resetViews();
         refreshData();
     }//GEN-LAST:event_btnRefreshActionPerformed
 
@@ -542,16 +558,66 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         newOrder = new NewOrderView(parent, true);
         // if save succesfully, refresh
-        newOrder.showDialog();
+        if(newOrder.showDialog()){
+            resetViews();
+            refreshData();
+        }
     }//GEN-LAST:event_btnNewOSActionPerformed
 
     private void btnChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooserActionPerformed
         // TODO add your handling code here:
-        TableChooserView chooser = new TableChooserView(parent, true);
+        TableChooserView chooser = new TableChooserView(parent, true, txtTables.getText());
         String tables = chooser.showDialog();
         if(tables != null && !tables.isEmpty())
             txtTables.setText(tables);
-    }//GEN-LAST:event_btnChooserActionPerformed
+}//GEN-LAST:event_btnChooserActionPerformed
+
+    private void btnSaveOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveOSActionPerformed
+        // TODO add your handling code here:
+        controller.updateOrderSlipDetails();
+        tblOrderSlipsMouseClicked(null);
+        loadOrderSlips();
+}//GEN-LAST:event_btnSaveOSActionPerformed
+
+    private void tblOrderSlipsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblOrderSlipsMouseClicked
+        // TODO add your handling code here:
+        int rowId = tblOrderSlips.getSelectedRow();
+
+        if(rowId >= 0){
+            BaseTableModel model = (BaseTableModel)tblOrderSlips.getModel();
+            int orderSlipId = Integer.parseInt(model.getValueAt(tblOrderSlips.convertRowIndexToModel(rowId), model.findColumn(OrderSlipDBTable.ID)).toString());
+            loadOrderSlipDetails(orderSlipId);
+            loadOrderItems(orderSlipId);
+        }
+    }//GEN-LAST:event_tblOrderSlipsMouseClicked
+
+    private void btnDeleteOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteOSActionPerformed
+        // TODO add your handling code here:
+        if(txtOrderSlipId.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Cannot cancel non-existing order slips.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(Double.parseDouble(txtGrandTotal.getText()) > 0.0){
+            JOptionPane.showMessageDialog(this, "Cannot cancel order slips with orders.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            if(JOptionPane.showConfirmDialog(this, ProjectConstants.MSG_CONFIRM_DELETE, "Cancelling Order", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+                controller.cancelOrderSlip(txtOrderSlipId.getText());
+                resetViews();
+                loadOrderSlips();
+            }
+        }
+    }//GEN-LAST:event_btnDeleteOSActionPerformed
+
+    private void btnAddItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddItemActionPerformed
+        // TODO add your handling code here:
+        int rowId = tblMenuItems.getSelectedRow();
+        String orderSlipId = txtOrderSlipId.getText();
+        if(!orderSlipId.trim().isEmpty() && rowId >= 0){
+            BaseTableModel model = (BaseTableModel)tblMenuItems.getModel();
+            int menuItemId = Integer.parseInt(model.getValueAt(tblMenuItems.convertRowIndexToModel(rowId), model.findColumn(MenuItemsDBTable.ID)).toString());
+            addMenuItemId(menuItemId, Integer.parseInt(orderSlipId));
+        }
+    }//GEN-LAST:event_btnAddItemActionPerformed
 
      private void newFilter() {
 
@@ -577,9 +643,7 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnRemoveItem;
     private javax.swing.JButton btnSaveOS;
     private javax.swing.JButton btnUpdateOSI;
-    private javax.swing.JComboBox cmbWaiters;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JLabel jLabel1;
+    public javax.swing.JComboBox cmbWaiters;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -593,16 +657,17 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    public javax.swing.JLabel lblDate;
     private javax.swing.JTextField searchField;
     private javax.swing.JTable tblMenuItems;
     private javax.swing.JTable tblOrderItems;
     private javax.swing.JTable tblOrderSlips;
-    private javax.swing.JSpinner txtCustomers;
-    private javax.swing.JTextField txtGrandTotal;
-    private javax.swing.JTextField txtNetAmount;
-    private javax.swing.JTextField txtNetDiscount;
-    private javax.swing.JTextField txtOrderSlipId;
-    private javax.swing.JTextField txtTables;
+    public javax.swing.JSpinner txtCustomers;
+    public javax.swing.JTextField txtGrandTotal;
+    public javax.swing.JTextField txtNetAmount;
+    public javax.swing.JTextField txtNetDiscount;
+    public javax.swing.JTextField txtOrderSlipId;
+    public javax.swing.JTextField txtTables;
     // End of variables declaration//GEN-END:variables
 
     private void refreshData() {
@@ -617,6 +682,31 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
     private void loadMenuItems(){
         tblMenuItems.setModel(controller.loadMenuItems());
         tblMenuItems.removeColumn(tblMenuItems.getColumn(MenuItemsDBTable.ALIAS_MENU_CAT_ID));
+    }
+
+    private void loadOrderSlipDetails(int orderSlipId) {
+        controller.loadOrderSlipDetails(orderSlipId);
+    }
+    private void resetViews(){
+        prevTables.delete(0, prevTables.length());
+        txtCustomers.setValue(new Integer(0));
+        txtGrandTotal.setText("");
+        txtNetAmount.setText("");
+        txtNetDiscount.setText("");
+        txtOrderSlipId.setText("");
+        txtTables.setText("");
+        lblDate.setText("");
+
+        tblOrderItems.setModel(new DefaultTableModel());
+    }
+
+    private void addMenuItemId(int menuItemId, int orderItemId) {
+        controller.addMenuItemId(menuItemId, orderItemId);
+    }
+
+    private void loadOrderItems(int orderSlipId) {
+        tblOrderItems.setModel(controller.loadOrderItems(orderSlipId));
+        tblOrderItems.removeColumn(tblOrderItems.getColumn(OrderSlipItemsDBTable.ID));
     }
     
 }

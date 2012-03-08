@@ -50,7 +50,6 @@ public class NewOrderView extends javax.swing.JDialog {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtIsTakeOut = new javax.swing.JCheckBox();
         txtTables = new javax.swing.JTextField();
         btnTableChooser = new javax.swing.JButton();
         txtCustomers = new javax.swing.JSpinner();
@@ -66,8 +65,6 @@ public class NewOrderView extends javax.swing.JDialog {
         jLabel1.setText("Tables:");
 
         jLabel2.setText("No. Of Customers:");
-
-        txtIsTakeOut.setText("Take Out");
 
         txtTables.setEditable(false);
 
@@ -97,15 +94,12 @@ public class NewOrderView extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtIsTakeOut)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSave))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnSave, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbWaiter, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(cmbWaiter, 0, 133, Short.MAX_VALUE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel1)
@@ -136,9 +130,7 @@ public class NewOrderView extends javax.swing.JDialog {
                     .addComponent(jLabel3)
                     .addComponent(cmbWaiter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtIsTakeOut)
-                    .addComponent(btnSave))
+                .addComponent(btnSave)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -156,10 +148,12 @@ public class NewOrderView extends javax.swing.JDialog {
 
     private void btnTableChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTableChooserActionPerformed
         // TODO add your handling code here:
-        TableChooserView chooser = new TableChooserView(parent, true);
+        TableChooserView chooser = new TableChooserView(parent, true, txtTables.getText());
         String tables = chooser.showDialog();
-        if(tables != null && !tables.isEmpty())
+        if(tables != null && !tables.isEmpty()){
             txtTables.setText(tables);
+            result = true;
+        }
     }//GEN-LAST:event_btnTableChooserActionPerformed
 
     public boolean showDialog(){
@@ -174,7 +168,6 @@ public class NewOrderView extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JSpinner txtCustomers;
-    private javax.swing.JCheckBox txtIsTakeOut;
     private javax.swing.JTextField txtTables;
     // End of variables declaration//GEN-END:variables
 
@@ -183,7 +176,7 @@ public class NewOrderView extends javax.swing.JDialog {
         String tbs = txtTables.getText();
         int noOfCustomers = Integer.parseInt(txtCustomers.getValue().toString());
         String loginName = cmbWaiter.getSelectedItem().toString();
-        int isTakeout = txtIsTakeOut.isSelected() ? 1 : 0;
+        int isTakeout = tbs.trim().isEmpty() ? 1 : 0;
         
         if(isTakeout==1)
             tbs = "";

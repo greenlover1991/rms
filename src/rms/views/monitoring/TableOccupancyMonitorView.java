@@ -183,23 +183,23 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 				+ controller.findTable(((row * this.column) + (column + 1)))
 						.getValueAt(0, 1).toString());
 
-		switch (controller.findTable(((row * this.column) + (column + 1))).getValueAt(0, 1).toString()) {
-		case "Occupied":
-			color = Color.RED;
-			break;
-		case "Vacant":
-			color = Color.GREEN;
-			break;
-		case "Dirty":
-			color = Color.ORANGE;
-			break;
-		case "Reserved":
-			color = Color.BLUE;
-			break;
-		case "Inactive":
-			color = Color.GRAY;
-			break;
-		}
+//		switch (controller.findTable(((row * this.column) + (column + 1))).getValueAt(0, 1).toString()) {
+//		case "Occupied":
+//			color = Color.RED;
+//			break;
+//		case "Vacant":
+//			color = Color.GREEN;
+//			break;
+//		case "Dirty":
+//			color = Color.ORANGE;
+//			break;
+//		case "Reserved":
+//			color = Color.BLUE;
+//			break;
+//		case "Inactive":
+//			color = Color.GRAY;
+//			break;
+//		}
 		return color;
 
 	}
