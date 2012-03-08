@@ -281,6 +281,7 @@ CREATE TABLE IF NOT EXISTS `order_slip_items` (
   `amount` decimal(10,2) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `order_status` varchar(40) NOT NULL,
+  `discounted_items` int(10) DEFAULT NULL,
   `discount_fixed_amount` decimal(10,2) DEFAULT NULL,
   `discount_rate` decimal(10,2) DEFAULT NULL,
   `discount_description` varchar(40) DEFAULT NULL,

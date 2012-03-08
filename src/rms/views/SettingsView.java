@@ -28,6 +28,7 @@ public class SettingsView extends javax.swing.JDialog {
     public SettingsView(JFrame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(this);
         loadSettings();
     }
 
