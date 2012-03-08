@@ -42,8 +42,8 @@ public class SupplierView extends javax.swing.JInternalFrame {
 
         initValidations();
         refreshData();
-        sorter = new TableRowSorter<BaseTableModel>((BaseTableModel)jTable1.getModel());
-        jTable1.setRowSorter(sorter);
+        sorter = new TableRowSorter<BaseTableModel>((BaseTableModel)SupplierTable.getModel());
+        SupplierTable.setRowSorter(sorter);
         searchField.getDocument().addDocumentListener(
             new DocumentListener() {
                 public void changedUpdate(DocumentEvent e) {
@@ -84,7 +84,7 @@ public class SupplierView extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         searchField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        SupplierTable = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(221, 221, 221));
         setClosable(true);
@@ -95,25 +95,25 @@ public class SupplierView extends javax.swing.JInternalFrame {
         jPanel1.setBackground(new java.awt.Color(34, 34, 34));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
 
-        masterFileLabel.setFont(new java.awt.Font("Tahoma", 1, 20));
+        masterFileLabel.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         masterFileLabel.setForeground(new java.awt.Color(255, 255, 255));
         masterFileLabel.setText("SUPPLIER");
 
-        addButton.setFont(new java.awt.Font("Tahoma", 1, 12));
+        addButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         addButton.setForeground(new java.awt.Color(153, 153, 153));
         addButton.setText("Add");
         addButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         addButton.setContentAreaFilled(false);
         addButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         addButton.setFocusPainted(false);
-        addButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
+        addButton.setMargin(new java.awt.Insets(5, 0, 5, 0));
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addButtonActionPerformed(evt);
             }
         });
 
-        loadButton.setFont(new java.awt.Font("Tahoma", 1, 12));
+        loadButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         loadButton.setForeground(new java.awt.Color(153, 153, 153));
         loadButton.setText("Refresh");
         loadButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -126,7 +126,7 @@ public class SupplierView extends javax.swing.JInternalFrame {
             }
         });
 
-        saveButton.setFont(new java.awt.Font("Tahoma", 1, 12));
+        saveButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         saveButton.setForeground(new java.awt.Color(153, 153, 153));
         saveButton.setText("Save");
         saveButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -139,7 +139,7 @@ public class SupplierView extends javax.swing.JInternalFrame {
             }
         });
 
-        addButton1.setFont(new java.awt.Font("Tahoma", 1, 12));
+        addButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         addButton1.setForeground(new java.awt.Color(153, 153, 153));
         addButton1.setText("Delete");
         addButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -160,34 +160,38 @@ public class SupplierView extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(masterFileLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addGap(56, 56, 56)
                 .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(addButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(loadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
-                    .addComponent(loadButton, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                    .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
-                    .addComponent(addButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
-                .addGap(57, 57, 57))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(masterFileLabel)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(saveButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addComponent(masterFileLabel))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(addButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(loadButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
-        searchField.setFont(new java.awt.Font("Tahoma", 2, 12));
+        searchField.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
         searchField.setForeground(new java.awt.Color(102, 102, 102));
         searchField.setText("Search...");
         searchField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
@@ -203,8 +207,8 @@ public class SupplierView extends javax.swing.JInternalFrame {
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         jScrollPane1.setAutoscrolls(true);
 
-        jTable1.setAutoCreateRowSorter(true);
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        SupplierTable.setAutoCreateRowSorter(true);
+        SupplierTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -241,9 +245,9 @@ public class SupplierView extends javax.swing.JInternalFrame {
                 return types [columnIndex];
             }
         });
-        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jScrollPane1.setViewportView(jTable1);
+        SupplierTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        SupplierTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jScrollPane1.setViewportView(SupplierTable);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -270,11 +274,11 @@ public class SupplierView extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,7 +286,7 @@ public class SupplierView extends javax.swing.JInternalFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         pack();
@@ -335,11 +339,11 @@ public class SupplierView extends javax.swing.JInternalFrame {
         sorter.setRowFilter(rf);
     }
     public void refreshData(){
-        jTable1.setModel(controller.refreshData());
+        SupplierTable.setModel(controller.refreshData());
         removeInvisibleColumns();
         if(sorter != null)
-            sorter.setModel((BaseTableModel)jTable1.getModel());
-        jTable1.setRowSorter(sorter);
+            sorter.setModel((BaseTableModel)SupplierTable.getModel());
+        SupplierTable.setRowSorter(sorter);
     }
 
     public void saveData(){
@@ -348,37 +352,34 @@ public class SupplierView extends javax.swing.JInternalFrame {
     }
 
     public void setInactive(){
-        int[] rows = jTable1.getSelectedRows();
+        int[] rows = SupplierTable.getSelectedRows();
         for(int i : rows){
-            int rowId = jTable1.convertRowIndexToModel(i);
-            int colId = ((BaseTableModel)jTable1.getModel()).findColumn(SupplierDBTable.STATUS);
-            int idColId = ((BaseTableModel)jTable1.getModel()).findColumn(SupplierDBTable.ID);
+            int rowId = SupplierTable.convertRowIndexToModel(i);
+            int colId = ((BaseTableModel)SupplierTable.getModel()).findColumn(SupplierDBTable.STATUS);
+            int idColId = ((BaseTableModel)SupplierTable.getModel()).findColumn(SupplierDBTable.ID);
             // if has no id, dont inactivate
-            Object id = jTable1.getModel().getValueAt(rowId, idColId);
+            Object id = SupplierTable.getModel().getValueAt(rowId, idColId);
             if(id == null || id.toString().isEmpty())
-               ((BaseTableModel)jTable1.getModel()).removeRow(rowId);
+               ((BaseTableModel)SupplierTable.getModel()).removeRow(rowId);
             else
-               jTable1.getModel().setValueAt(ProjectConstants.STATUS_INACTIVE, rowId, colId);
+               SupplierTable.getModel().setValueAt(ProjectConstants.STATUS_INACTIVE, rowId, colId);
         }
         controller.save();
         refreshData();
     }
 
     private void initValidations() {
-        jTable1.setDefaultEditor(Integer.class, new IntegerCellEditor(true,1, Integer.MAX_VALUE));
-        jTable1.setDefaultEditor(String.class, (TableCellEditor) new StringCellEditor(1, 255));
-       //jTable1.getColumn(EmployeeDBTable.ALIAS_ADDRESS).setCellEditor(new StringCellEditor(0, 3));
-       //jTable1.getColumn(EmployeeDBTable.ALIAS_F_NAME).setCellEditor(new StringCellEditor(1, 5));
+        SupplierTable.getColumnModel().getColumn(1).setCellEditor(new StringCellEditor(1, 5)); 
     }
 
     private void removeInvisibleColumns(){
         for(String inviColumn : SupplierDBTable.getInstance().getInvisibleColumns()){
-            jTable1.removeColumn(jTable1.getColumn(inviColumn));
+            SupplierTable.removeColumn(SupplierTable.getColumn(inviColumn));
         }
     }
 
     private boolean canAddRow(){
-        BaseTableModel model = (BaseTableModel)jTable1.getModel();
+        BaseTableModel model = (BaseTableModel)SupplierTable.getModel();
         DataRow lastRow = model.getLastRow();
         boolean isValid = true;
         for(String column : SupplierDBTable.getInstance().getNonNullableColumns()){
@@ -392,7 +393,7 @@ public class SupplierView extends javax.swing.JInternalFrame {
     }
 
     private void addRow() {
-        BaseTableModel model = (BaseTableModel)jTable1.getModel();
+        BaseTableModel model = (BaseTableModel)SupplierTable.getModel();
         List<String> columnNames = Arrays.asList(SupplierDBTable.getInstance().getColumns());
         List<Object> values = new ArrayList<Object>(columnNames.size());
         for(int i=0;i<columnNames.size()-1;i++ )
@@ -403,12 +404,12 @@ public class SupplierView extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable SupplierTable;
     private javax.swing.JButton addButton;
     private javax.swing.JButton addButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton loadButton;
     private javax.swing.JLabel masterFileLabel;
     private javax.swing.JButton saveButton;

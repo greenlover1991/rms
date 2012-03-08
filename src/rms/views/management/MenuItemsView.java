@@ -47,8 +47,8 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
 
         initValidations();
         refreshData();
-        sorter = new TableRowSorter<BaseTableModel>((BaseTableModel)jTable1.getModel());
-        jTable1.setRowSorter(sorter);
+        sorter = new TableRowSorter<BaseTableModel>((BaseTableModel)MenuItemsTable.getModel());
+        MenuItemsTable.setRowSorter(sorter);
         searchField.getDocument().addDocumentListener(
             new DocumentListener() {
                 public void changedUpdate(DocumentEvent e) {
@@ -89,18 +89,18 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         searchField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        MenuItemsTable = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         searchField1 = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        IngredientTable = new javax.swing.JTable();
         buttonAddIngr = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         masterFileLabel1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         name = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        RecipeTable = new javax.swing.JTable();
         jPanel7 = new javax.swing.JPanel();
         masterFileLabel3 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -119,11 +119,11 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
         jPanel1.setBackground(new java.awt.Color(34, 34, 34));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
 
-        masterFileLabel.setFont(new java.awt.Font("Tahoma", 1, 20));
+        masterFileLabel.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         masterFileLabel.setForeground(new java.awt.Color(255, 255, 255));
         masterFileLabel.setText("Menu Items");
 
-        addButton.setFont(new java.awt.Font("Tahoma", 1, 12));
+        addButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         addButton.setForeground(new java.awt.Color(153, 153, 153));
         addButton.setText("Add");
         addButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -137,7 +137,7 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
             }
         });
 
-        loadButton.setFont(new java.awt.Font("Tahoma", 1, 12));
+        loadButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         loadButton.setForeground(new java.awt.Color(153, 153, 153));
         loadButton.setText("Refresh");
         loadButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -150,7 +150,7 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
             }
         });
 
-        delete.setFont(new java.awt.Font("Tahoma", 1, 12));
+        delete.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         delete.setForeground(new java.awt.Color(153, 153, 153));
         delete.setText("Delete");
         delete.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -164,7 +164,7 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
             }
         });
 
-        save.setFont(new java.awt.Font("Tahoma", 1, 12));
+        save.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         save.setForeground(new java.awt.Color(153, 153, 153));
         save.setText("Save");
         save.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -197,22 +197,24 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(masterFileLabel))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
-                        .addComponent(delete, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                        .addComponent(loadButton, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                        .addComponent(save, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addComponent(save, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(addButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                            .addComponent(delete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(loadButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(masterFileLabel)
+                                .addContainerGap())))))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
-        searchField.setFont(new java.awt.Font("Tahoma", 2, 12));
+        searchField.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
         searchField.setForeground(new java.awt.Color(102, 102, 102));
         searchField.setText("Search...");
         searchField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
@@ -248,9 +250,9 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setAutoscrolls(true);
 
-        jTable1.setRowSelectionAllowed(true);
-        jTable1.setAutoCreateRowSorter(true);
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        MenuItemsTable.setRowSelectionAllowed(true);
+        MenuItemsTable.setAutoCreateRowSorter(true);
+        MenuItemsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -287,14 +289,14 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
                 return types [columnIndex];
             }
         });
-        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        MenuItemsTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        MenuItemsTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        MenuItemsTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                MenuItemsTableMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(MenuItemsTable);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -319,7 +321,7 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        searchField1.setFont(new java.awt.Font("Tahoma", 2, 12));
+        searchField1.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
         searchField1.setForeground(new java.awt.Color(102, 102, 102));
         searchField1.setText("Search...");
         searchField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
@@ -337,7 +339,7 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        IngredientTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
                 {null},
@@ -363,11 +365,11 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable2.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        jScrollPane2.setViewportView(jTable2);
+        IngredientTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jScrollPane2.setViewportView(IngredientTable);
 
         buttonAddIngr.setBackground(new java.awt.Color(255, 255, 255));
-        buttonAddIngr.setFont(new java.awt.Font("Tahoma", 1, 12));
+        buttonAddIngr.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         buttonAddIngr.setForeground(new java.awt.Color(153, 153, 153));
         buttonAddIngr.setText(">>");
         buttonAddIngr.setToolTipText("Add Ingredient to Recipe");
@@ -407,7 +409,7 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
         jPanel4.setBackground(new java.awt.Color(34, 34, 34));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
 
-        masterFileLabel1.setFont(new java.awt.Font("Tahoma", 1, 20));
+        masterFileLabel1.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         masterFileLabel1.setForeground(new java.awt.Color(255, 255, 255));
         masterFileLabel1.setText("Ingredients");
 
@@ -430,9 +432,9 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
-        name.setFont(new java.awt.Font("Tahoma", 1, 20));
+        name.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        RecipeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -458,13 +460,13 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable3.setColumnSelectionAllowed(true);
-        jScrollPane3.setViewportView(jTable3);
+        RecipeTable.setColumnSelectionAllowed(true);
+        jScrollPane3.setViewportView(RecipeTable);
 
         jPanel7.setBackground(new java.awt.Color(34, 34, 34));
         jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
 
-        masterFileLabel3.setFont(new java.awt.Font("Tahoma", 1, 12));
+        masterFileLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         masterFileLabel3.setForeground(new java.awt.Color(255, 255, 255));
         masterFileLabel3.setText("Ingredients");
 
@@ -488,7 +490,7 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
         jScrollPane4.setViewportView(Procedure);
 
         removeIngFromRecipe.setBackground(new java.awt.Color(34, 34, 34));
-        removeIngFromRecipe.setFont(new java.awt.Font("Tahoma", 1, 12));
+        removeIngFromRecipe.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         removeIngFromRecipe.setForeground(new java.awt.Color(153, 153, 153));
         removeIngFromRecipe.setText("<<");
         removeIngFromRecipe.setToolTipText("Remove Ingredient");
@@ -530,17 +532,17 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
                 .addComponent(removeIngFromRecipe, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel6.setBackground(new java.awt.Color(34, 34, 34));
         jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
 
-        masterFileLabel2.setFont(new java.awt.Font("Tahoma", 1, 20));
+        masterFileLabel2.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         masterFileLabel2.setForeground(new java.awt.Color(255, 255, 255));
         masterFileLabel2.setText("Recipe");
 
-        saveButton2.setFont(new java.awt.Font("Tahoma", 1, 12));
+        saveButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         saveButton2.setForeground(new java.awt.Color(153, 153, 153));
         saveButton2.setText("Save Recipe");
         saveButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -570,7 +572,7 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(saveButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
+                        .addComponent(saveButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addComponent(masterFileLabel2)))
@@ -598,13 +600,13 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel6, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -637,14 +639,14 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
 
     private void buttonAddIngrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddIngrActionPerformed
         // TODO add your handling code here:
-        int rowId = jTable1.getSelectedRow();
-        int row2Id = jTable2.getSelectedRow();
-        int menuItemId = Integer.parseInt(((BaseTableModel)jTable1.getModel()).getValueAt(rowId, MenuItemsDBTable.ID).toString());
-        int IngId = Integer.parseInt(((BaseTableModel)jTable2.getModel()).getValueAt(row2Id, IngredientDBTable.ID).toString());
+        int rowId = MenuItemsTable.getSelectedRow();
+        int row2Id = IngredientTable.getSelectedRow();
+        int menuItemId = Integer.parseInt(((BaseTableModel)MenuItemsTable.getModel()).getValueAt(rowId, MenuItemsDBTable.ID).toString());
+        int IngId = Integer.parseInt(((BaseTableModel)IngredientTable.getModel()).getValueAt(row2Id, IngredientDBTable.ID).toString());
         if(controller.addIngredientToRecipe(menuItemId,IngId))
         {
-            jTable2.setModel(controller.loadIngredients(menuItemId));
-            jTable3.setModel(controller.loadIngredientsOnRecipe(menuItemId));
+            IngredientTable.setModel(controller.loadIngredients(menuItemId));
+            RecipeTable.setModel(controller.loadIngredientsOnRecipe(menuItemId));
             removeInvisibleColumnsOnIngredientRecipe();
         }
         
@@ -652,13 +654,13 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
 
     private void removeIngFromRecipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeIngFromRecipeActionPerformed
         // TODO add your handling code here:
-        int rowId = jTable3.getSelectedRow();
-        int menuItemId = Integer.parseInt(((BaseTableModel)jTable3.getModel()).getValueAt(rowId, RecipeDBTable.MENU_ITEM_ID).toString());
-        int IngId = Integer.parseInt(((BaseTableModel)jTable3.getModel()).getValueAt(rowId, RecipeDBTable.INGREDIENT_ID).toString());
+        int rowId = RecipeTable.getSelectedRow();
+        int menuItemId = Integer.parseInt(((BaseTableModel)RecipeTable.getModel()).getValueAt(rowId, RecipeDBTable.MENU_ITEM_ID).toString());
+        int IngId = Integer.parseInt(((BaseTableModel)RecipeTable.getModel()).getValueAt(rowId, RecipeDBTable.INGREDIENT_ID).toString());
         if(controller.removeIngredientFromRecipe(IngId,menuItemId))
         {
-            jTable2.setModel(controller.loadIngredients(menuItemId));
-            jTable3.setModel(controller.loadIngredientsOnRecipe(menuItemId));
+            IngredientTable.setModel(controller.loadIngredients(menuItemId));
+            RecipeTable.setModel(controller.loadIngredientsOnRecipe(menuItemId));
             removeInvisibleColumnsOnIngredientRecipe();
         }
     }//GEN-LAST:event_removeIngFromRecipeActionPerformed
@@ -671,19 +673,19 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_searchFieldActionPerformed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void MenuItemsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuItemsTableMouseClicked
         // TODO add your handling code here:
-        int rowId = jTable1.getSelectedRow();
-        int menuItemId = Integer.parseInt(((BaseTableModel)jTable1.getModel()).getValueAt(rowId, MenuItemsDBTable.ID).toString());
-        jTable2.setModel(controller.loadIngredients(menuItemId));
-        jTable3.setModel(controller.loadIngredientsOnRecipe(menuItemId));
+        int rowId = MenuItemsTable.getSelectedRow();
+        int menuItemId = Integer.parseInt(((BaseTableModel)MenuItemsTable.getModel()).getValueAt(rowId, MenuItemsDBTable.ID).toString());
+        IngredientTable.setModel(controller.loadIngredients(menuItemId));
+        RecipeTable.setModel(controller.loadIngredientsOnRecipe(menuItemId));
         removeInvisibleColumnsOnIngredientRecipe();
         BaseTableModel proc= controller.loadProcedure(menuItemId);
         Procedure.setText( proc.getValueAt(0, 0).toString());
-        String title= ((BaseTableModel )jTable1.getModel()).getValueAt(rowId, MenuItemsDBTable.NAME).toString();
+        String title= ((BaseTableModel )MenuItemsTable.getModel()).getValueAt(rowId, MenuItemsDBTable.NAME).toString();
         name.setText(title);
 
-    }//GEN-LAST:event_jTable1MouseClicked
+    }//GEN-LAST:event_MenuItemsTableMouseClicked
 
     private void searchFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchFieldMouseClicked
         // TODO add your handling code here:
@@ -706,7 +708,7 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
 
     private void saveButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton2ActionPerformed
         // TODO add your handling code here:
-
+        controller.saveRecipe((BaseTableModel)RecipeTable.getModel());
     }//GEN-LAST:event_saveButton2ActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
@@ -745,11 +747,11 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
         sorter.setRowFilter(rf);
     }
     public void refreshData(){
-        jTable1.setModel(controller.refreshData());
+        MenuItemsTable.setModel(controller.refreshData());
         removeInvisibleColumns();
          if(sorter != null)
-            sorter.setModel((BaseTableModel)jTable1.getModel());
-        jTable1.setRowSorter(sorter);
+            sorter.setModel((BaseTableModel)MenuItemsTable.getModel());
+        MenuItemsTable.setRowSorter(sorter);
     }
 
     public void saveData(){
@@ -758,39 +760,39 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
     }
 
     public void setInactive(){
-        int[] rows = jTable1.getSelectedRows();
+        int[] rows = MenuItemsTable.getSelectedRows();
         for(int i : rows){
-            int rowId = jTable1.convertRowIndexToModel(i);
-            int colId = ((BaseTableModel)jTable1.getModel()).findColumn(MenuItemsDBTable.STATUS);
-            int idColId = ((BaseTableModel)jTable1.getModel()).findColumn(MenuItemsDBTable.ID);
+            int rowId = MenuItemsTable.convertRowIndexToModel(i);
+            int colId = ((BaseTableModel)MenuItemsTable.getModel()).findColumn(MenuItemsDBTable.STATUS);
+            int idColId = ((BaseTableModel)MenuItemsTable.getModel()).findColumn(MenuItemsDBTable.ID);
             // if has no id, dont inactivate
-            Object id = jTable1.getModel().getValueAt(rowId, idColId);
+            Object id = MenuItemsTable.getModel().getValueAt(rowId, idColId);
             if(id == null || id.toString().isEmpty())
-               ((BaseTableModel)jTable1.getModel()).removeRow(rowId);
+               ((BaseTableModel)MenuItemsTable.getModel()).removeRow(rowId);
             else
-               jTable1.getModel().setValueAt(ProjectConstants.STATUS_INACTIVE, rowId, colId);
+               MenuItemsTable.getModel().setValueAt(ProjectConstants.STATUS_INACTIVE, rowId, colId);
         }
         controller.save();
         refreshData();
     }
 
     private void initValidations() {
-        jTable1.setDefaultEditor(Integer.class, new IntegerCellEditor(true,1, Integer.MAX_VALUE));
-        jTable1.setDefaultEditor(String.class, new StringCellEditor(1, 255));
+        //MenuItemsTable.setDefaultEditor(Integer.class, new IntegerCellEditor(true,1, Integer.MAX_VALUE));
+        //MenuItemsTable.setDefaultEditor(String.class, new StringCellEditor(1, 255));
     }
 
     private void removeInvisibleColumns(){
         for(String inviColumn : MenuItemsDBTable.getInstance().getInvisibleColumns()){
-            jTable1.removeColumn(jTable1.getColumn(inviColumn));
+            MenuItemsTable.removeColumn(MenuItemsTable.getColumn(inviColumn));
         }
     }
     private void removeInvisibleColumnsOnIngredientRecipe(){
-        jTable2.removeColumn(jTable2.getColumn(IngredientDBTable.ALIAS_ID));
-        jTable3.removeColumn(jTable3.getColumn(RecipeDBTable.INGREDIENT_ID));
-        jTable3.removeColumn(jTable3.getColumn(RecipeDBTable.MENU_ITEM_ID));
+        IngredientTable.removeColumn(IngredientTable.getColumn(IngredientDBTable.ALIAS_ID));
+        RecipeTable.removeColumn(RecipeTable.getColumn(RecipeDBTable.INGREDIENT_ID));
+        RecipeTable.removeColumn(RecipeTable.getColumn(RecipeDBTable.MENU_ITEM_ID));
     }
     private boolean canAddRow(){
-        BaseTableModel model = (BaseTableModel)jTable1.getModel();
+        BaseTableModel model = (BaseTableModel)MenuItemsTable.getModel();
         DataRow lastRow = model.getLastRow();
         boolean isValid = true;
         for(String column : MenuItemsDBTable.getInstance().getNonNullableColumns()){
@@ -804,7 +806,7 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
     }
 
     private void addRow() {
-        BaseTableModel model = (BaseTableModel)jTable1.getModel();
+        BaseTableModel model = (BaseTableModel)MenuItemsTable.getModel();
         List<String> columnNames = Arrays.asList(MenuItemsDBTable.getInstance().getColumns());
         List<Object> values = new ArrayList<Object>(columnNames.size());
         for(int i=0;i<columnNames.size()-1;i++ )
@@ -816,7 +818,10 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable IngredientTable;
+    private javax.swing.JTable MenuItemsTable;
     public javax.swing.JTextArea Procedure;
+    private javax.swing.JTable RecipeTable;
     private javax.swing.JButton addButton;
     private javax.swing.JButton buttonAddIngr;
     private javax.swing.JButton delete;
@@ -831,9 +836,6 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
     private javax.swing.JButton loadButton;
     private javax.swing.JLabel masterFileLabel;
     private javax.swing.JLabel masterFileLabel1;
