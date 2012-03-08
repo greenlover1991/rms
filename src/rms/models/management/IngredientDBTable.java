@@ -9,7 +9,7 @@ import rms.models.DBTable;
 
 /**
  *
- * @author squeekyclean
+ * @author Mark Taveros
  */
 public class IngredientDBTable extends DBTable{
     public static final String TABLE_NAME = "ingredients";
@@ -30,10 +30,13 @@ public class IngredientDBTable extends DBTable{
     public static final String ALIAS_QUANTITY = "Quantity";
     public static final String ALIAS_STATUS = "Status";
 
-    private static final String[] columns = {ID, NAME, DESCRIPTION, UNIT_OF_MEASURE, MINIMUM_QUANTITY, QUANTITY, STATUS};
-    private static final String[] columnsAliases = {ALIAS_ID, ALIAS_NAME, ALIAS_DESCRIPTION, ALIAS_UNIT_OF_MEASURE, ALIAS_MINIMUM_QUANTITY, ALIAS_QUANTITY, ALIAS_STATUS};
+    private static final String[] columns = {NAME, ID, DESCRIPTION, UNIT_OF_MEASURE, MINIMUM_QUANTITY, QUANTITY, STATUS};
+    private static final String[] columnsAliases = {ALIAS_NAME, ALIAS_ID, ALIAS_DESCRIPTION, ALIAS_UNIT_OF_MEASURE, ALIAS_MINIMUM_QUANTITY, ALIAS_QUANTITY, ALIAS_STATUS};
     private static final String[] primaryColumns = {ID};
     private static final String[] uniqueColumns = {ID};
+    private static final String[] invisibleColumns = {ALIAS_ID, ALIAS_STATUS};
+    private static final String[] uneditableColumns = {ID, STATUS};
+    private static final String[] nonNullableColumns = {ID, NAME, STATUS};
 
     private static IngredientDBTable INSTANCE;
     private IngredientDBTable(){}
@@ -60,14 +63,31 @@ public class IngredientDBTable extends DBTable{
     }
 
     @Override
-    protected String[] getUniqueColumns() {
+    public String[] getUniqueColumns() {
         return uniqueColumns;
     }
 
     @Override
-    protected String[] getColumnsDefaultAliases() {
+    public String[] getColumnsDefaultAliases() {
         return columnsAliases;
     }
+
+    @Override
+    public String[] getInvisibleColumns() {
+        return invisibleColumns;
+    }
+
+    @Override
+    public String[] getNonNullableColumns() {
+        return nonNullableColumns;
+    }
+
+    @Override
+    public String[] getUneditableColumns() {
+        return uneditableColumns;
+    }
+
+
 
 
 }

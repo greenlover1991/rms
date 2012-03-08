@@ -96,6 +96,8 @@ public class ChefQueueView extends JInternalFrame {
 				return comp;
 			}
 		};
+		
+		//TODO resize processing table.
 
 		chefQueued.setName("Queued");
 		chefProcessing.setName("Processing");
@@ -105,6 +107,8 @@ public class ChefQueueView extends JInternalFrame {
 		//
 		TableColumn column = null;
 		column = chefQueued.getColumnModel().getColumn(0);
+		column.setCellRenderer(dtcr);
+		column = chefQueued.getColumnModel().getColumn(1);
 		column.setCellRenderer(dtcr);
 
 		column = chefProcessing.getColumnModel().getColumn(0);

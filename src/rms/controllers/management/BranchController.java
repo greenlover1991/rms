@@ -19,7 +19,7 @@ import supports.DataSupport;
 
 /**
  *
- * @author squeekyclean
+ * @author Mark Taveros
  */
 public class BranchController {
 
@@ -31,11 +31,11 @@ public class BranchController {
         this.model = new BaseTableModel();
     }
 
-    public BaseTableModel refresh(){
+    public BaseTableModel refreshData(){
         try {
-            DataSupport dh = new DataSupport();
             BranchDBTable db = BranchDBTable.getInstance();
-            String query = db.generateSelectAllWithDefaultAliasesSql();
+            String query = db.generateSelectAllActiveWithDefaultAliasesSql();
+            DataSupport dh = new DataSupport();
             model = dh.executeQuery(query);
         } catch (SQLException ex) {
             Logger.getLogger(BranchController.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,8 +61,9 @@ public class BranchController {
         } catch (SQLException ex) {
             Logger.getLogger(BranchController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return result;
     }
+
 
 }

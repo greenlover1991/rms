@@ -24,10 +24,13 @@ public class BranchDBTable extends DBTable{
     public static final String ALIAS_ADDRESS = "Address";
     public static final String ALIAS_STATUS = "Status";
 
-    private static final String[] columns = {ID, NAME, ADDRESS, STATUS};
-    private static final String[] columnsAliases = {ALIAS_ID, ALIAS_NAME, ALIAS_ADDRESS, ALIAS_STATUS};
+    private static final String[] columns = {NAME, ID, ADDRESS, STATUS};
+    private static final String[] columnsAliases = {ALIAS_NAME, ALIAS_ID, ALIAS_ADDRESS, ALIAS_STATUS};
     private static final String[] primaryColumns = {ID};
     private static final String[] uniqueColumns = {ID};
+    private static final String[] invisibleColumns = {ALIAS_ID, ALIAS_STATUS};
+    private static final String[] uneditableColumns = {ID, STATUS};
+    private static final String[] nonNullableColumns = {NAME, STATUS};
 
     private static BranchDBTable INSTANCE;
     private BranchDBTable(){}
@@ -54,13 +57,28 @@ public class BranchDBTable extends DBTable{
     }
 
     @Override
-    protected String[] getUniqueColumns() {
+    public String[] getUniqueColumns() {
         return uniqueColumns;
     }
 
     @Override
-    protected String[] getColumnsDefaultAliases() {
+    public String[] getColumnsDefaultAliases() {
         return columnsAliases;
+    }
+
+    @Override
+    public String[] getInvisibleColumns() {
+        return invisibleColumns;
+    }
+
+    @Override
+    public String[] getNonNullableColumns() {
+        return nonNullableColumns;
+    }
+
+    @Override
+    public String[] getUneditableColumns() {
+        return uneditableColumns;
     }
 
 

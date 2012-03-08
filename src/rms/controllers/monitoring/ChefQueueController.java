@@ -28,7 +28,7 @@ public class ChefQueueController {
 	public BaseTableModel refreshQueue() {
 		try {
 			DataSupport dh = new DataSupport();
-			String query = "SELECT MI.name AS Queued "
+			String query = "SELECT MI.name AS Queued, OSI.description AS 'Special Instructions' "
 					+ "FROM order_slip_items OSI "
 					+ "INNER JOIN menu_items MI "
 					+ "ON OSI.menu_item_id = MI.id "

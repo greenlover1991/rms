@@ -154,7 +154,7 @@ VALUES
 1,
 35,
 35,
-'',
+'No milk please.',
 '',
 35,
 0,
@@ -191,7 +191,7 @@ VALUES
 2,
 100,
 100,
-'',
+'Extra sesame seeds please.',
 '',
 100,
 0,
@@ -254,6 +254,57 @@ VALUES
 1,
 '',
 1,
+''
+);
+
+DELETE FROM `rms`.`restaurant_tables`
+WHERE id > 0;
+
+
+INSERT IGNORE INTO `rms`.`restaurant_tables`
+(`id`,
+`table_number`,
+`description`,
+`capacity`,
+`table_status`,
+`status`)
+VALUES
+(1,1,'',5,'Vacant','Active'),(2,2,'',5,'Occupied','Active'),(3,3,'',5,'Dirty','Active'),(4,4,'',5,'Reserved','Active'),(5,5,'',5,'Dirty','Active'),(6,6,'',5,'Vacant','Active');
+
+DELETE FROM `rms`.`employees`
+WHERE id > 0;
+
+
+INSERT IGNORE INTO `rms`.`employees`
+(`id`,
+`first_name`,
+`last_name`,
+`middle_name`,
+`nickname`,
+`birthdate`,
+`landline_number`,
+`mobile_number`,
+`address`,
+`login`,
+`password`,
+`role_id`,
+`image_url`,
+`status`)
+VALUES
+(
+99,
+'Luf',
+'Fy',
+'D',
+'Pirate King',
+'1991-01-01',
+'',
+'',
+'East Blue',
+'',
+'',
+1,
+'',
 ''
 );
 

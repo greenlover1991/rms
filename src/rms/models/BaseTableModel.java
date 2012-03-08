@@ -8,7 +8,6 @@ package rms.models;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableColumn;
 
 /**
  *
@@ -71,6 +70,28 @@ public class BaseTableModel extends AbstractTableModel {
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         return true;
     }
+
+    @Override
+    public int findColumn(String columnName) {
+        return columnNames.indexOf(columnName);
+    }
+
+    public DataRow getLastRow(){
+        if(!rows.isEmpty())
+            return rows.get(rows.size()-1);
+        return null;
+    }
+
+    public void addRow(DataRow row){
+        rows.add(row);
+        this.fireTableDataChanged();
+    }
+
+    public void removeRow(int row){
+        rows.remove(row);
+        this.fireTableDataChanged();
+    }
+
 
 
 
