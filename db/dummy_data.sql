@@ -274,7 +274,6 @@ VALUES
 DELETE FROM `rms`.`employees`
 WHERE id > 0;
 
-
 INSERT IGNORE INTO `rms`.`employees`
 (`id`,
 `first_name`,
@@ -308,7 +307,21 @@ VALUES
 ''
 );
 
+DELETE FROM `rms`.`roles`
+WHERE id > 0;
 
+INSERT IGNORE INTO `rms`.`roles`
+(`id`,
+`name`,
+`description`,
+`status`)
+VALUES
+(
+1,
+'Developer',
+'',
+''
+);
 
 
 
