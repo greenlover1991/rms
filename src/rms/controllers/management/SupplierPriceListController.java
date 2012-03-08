@@ -68,6 +68,30 @@ public class SupplierPriceListController {
 
         return result;
     }
+  public boolean saveRecipe(BaseTableModel spl){
+        boolean result = false;
+        List<String> sqls = new ArrayList<String>();
+        SupplierPriceListDBTable db = SupplierPriceListDBTable.getInstance();
+
+        for(DataRow row : spl.rows){
+            Map<String, String> updateList = new HashMap<String, String>();
+            updateList.put("price", row.get("price").toString());
+            Map<String, String> primary = new HashMap<String,String>();
+            primary.put("id", row.get("id").toString());
+            sqls.add(db.generateUpdateSql(updateList, primary));
+        }
+
+        DataSupport dh;
+
+        try {
+            dh = new DataSupport();
+            dh.executeBatchUpdate(sqls);
+        } catch (SQLException ex) {
+            Logger.getLogger(SupplierPriceListController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return result;
+    }
     public BaseTableModel loadIngredients(int supplierId){
          String query = String.format("SELECT  i.id AS ID, i.name AS Name "
                                     + "FROM ingredients i "
@@ -88,7 +112,7 @@ public class SupplierPriceListController {
             return ingredients;
     }
      public BaseTableModel loadPriceList(int supplierId){
-         String query = String.format("SELECT s.supplier_id,s.ingredient_id, i.name as Name, s.price "
+         String query = String.format("SELECT s.id, s.supplier_id,s.ingredient_id, i.name as Name, s.price "
                                     + "FROM ingredients i "
                                     + "inner join supplier_price_lists s "
                                     + "on i.id=s.ingredient_id "
