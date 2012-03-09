@@ -11,12 +11,19 @@
 
 package rms.views.management;
 
+import java.awt.ItemSelectable;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableRowSorter;
 import rms.ProjectConstants;
 import rms.controllers.management.MenuItemsController;
@@ -35,20 +42,21 @@ import rms.models.management.MenuItemsDBTable;
 public class MenuItemsView extends javax.swing.JInternalFrame {
 
     private MenuItemsController controller;
-
+    Map <String,Integer> menuCats;
     private TableRowSorter<BaseTableModel> sorter;
     private static MenuItemsView INSTANCE;
-
+    
     /** Creates new form MasterFilesUI */
     private MenuItemsView() {
         initComponents();
         controller = new MenuItemsController(this);
-
-        initValidations();
+        menuCats=controller.getCategories();
+        
+        //initValidations();
         refreshData();
         sorter = new TableRowSorter<BaseTableModel>((BaseTableModel)MenuItemsTable.getModel());
         MenuItemsTable.setRowSorter(sorter);
-        searchField.getDocument().addDocumentListener(
+         searchField.getDocument().addDocumentListener(
             new DocumentListener() {
                 public void changedUpdate(DocumentEvent e) {
                     newFilter();
@@ -217,32 +225,12 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
         searchField.setForeground(new java.awt.Color(102, 102, 102));
         searchField.setText("Search...");
         searchField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        searchField.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                searchFieldMouseClicked(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                searchFieldMouseExited(evt);
-            }
-        });
-        searchField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchFieldActionPerformed(evt);
-            }
-        });
         searchField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 searchFieldFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 searchFieldFocusLost(evt);
-            }
-        });
-        searchField.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                searchFieldInputMethodTextChanged(evt);
             }
         });
 
@@ -324,11 +312,6 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
         searchField1.setForeground(new java.awt.Color(102, 102, 102));
         searchField1.setText("Search...");
         searchField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        searchField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchField1ActionPerformed(evt);
-            }
-        });
         searchField1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 searchField1FocusGained(evt);
@@ -617,7 +600,7 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
-         if (canAddRow()){
+         if (!canAddRow()){
              addRow();
         }
     }//GEN-LAST:event_addButtonActionPerformed
@@ -631,10 +614,6 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         setInactive();
     }//GEN-LAST:event_deleteActionPerformed
-
-    private void searchField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchField1ActionPerformed
 
     private void buttonAddIngrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddIngrActionPerformed
         // TODO add your handling code here:
@@ -664,52 +643,46 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_removeIngFromRecipeActionPerformed
 
-    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
-        // TODO add your handling code here:
-        if (searchField.getText().equalsIgnoreCase("Search...")){
-
-            searchField.setText("");
-        }
-    }//GEN-LAST:event_searchFieldActionPerformed
-
     private void MenuItemsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuItemsTableMouseClicked
         // TODO add your handling code here:
         //get Menu_Item_ID and Ingredient_id
         int rowId = MenuItemsTable.getSelectedRow();
-        int menuItemId = Integer.parseInt(((BaseTableModel)MenuItemsTable.getModel()).getValueAt(rowId, MenuItemsDBTable.ID).toString());
+        Object o= ((BaseTableModel)MenuItemsTable.getModel()).getValueAt(rowId, "menu item id");
+        if(o != null){
+            int menuItemId = Integer.parseInt(o.toString());
         //load items to table
-        IngredientTable.setModel(controller.loadIngredients(menuItemId));
-        RecipeTable.setModel(controller.loadIngredientsOnRecipe(menuItemId));
-        //remove invisible columns
-        removeInvisibleColumnsOnIngredientRecipe();
-        //load procedure 
-        BaseTableModel proc= controller.loadProcedure(menuItemId);
-        Procedure.setText( proc.getValueAt(0, 0)==null? "":proc.getValueAt(0, 0).toString());
-        //set recipe name
-        String title= ((BaseTableModel )MenuItemsTable.getModel()).getValueAt(rowId, MenuItemsDBTable.NAME).toString();
-        name.setText(title);
+            IngredientTable.setModel(controller.loadIngredients(menuItemId));
+            RecipeTable.setModel(controller.loadIngredientsOnRecipe(menuItemId));
+            //remove invisible columns
+            removeInvisibleColumnsOnIngredientRecipe();
+            //load procedure 
+            BaseTableModel proc= controller.loadProcedure(menuItemId);
+            Procedure.setText( proc.getValueAt(0, 0)==null? "":proc.getValueAt(0, 0).toString());
+            //set recipe name
+            String title= ((BaseTableModel )MenuItemsTable.getModel()).getValueAt(rowId, MenuItemsDBTable.NAME).toString();
+            name.setText(title);
+        }
         //set comboBox for editing purposes
-        //MenuItemsTable.getColumnModel().getColumn(MenuItemsTable.getColumnModel().getColumnIndex("Category")).setCellEditor(new ComboBoxEditor(new String[]{"Desserts","Something"}));
+        JComboBox comboBox = new JComboBox(menuCats.keySet().toArray()); // iset ang possible menuCats
+        comboBox.addItemListener( new ItemListener(){
+        public void itemStateChanged(ItemEvent e) {
+            int id;
+            Object o = e.getItem();
+            if(o != null){
+                id = menuCats.get(o.toString());
+                MenuItemsTable.getModel().setValueAt(id, MenuItemsTable.getSelectedRow(), 5);
+            }
+        }       
+        });
+        
+        MenuItemsTable.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(comboBox));
     }//GEN-LAST:event_MenuItemsTableMouseClicked
-
-    private void searchFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchFieldMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchFieldMouseClicked
-
-    private void searchFieldInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_searchFieldInputMethodTextChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchFieldInputMethodTextChanged
 
     private void searchFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusLost
         // TODO add your handling code here:
         if(searchField.getText().equalsIgnoreCase(""))
             searchField.setText("Search...");
     }//GEN-LAST:event_searchFieldFocusLost
-
-    private void searchFieldMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchFieldMouseExited
-        // TODO add your handling code here:
-      
-    }//GEN-LAST:event_searchFieldMouseExited
 
     private void saveButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButton2ActionPerformed
         // TODO add your handling code here:
@@ -752,12 +725,13 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
         sorter.setRowFilter(rf);
     }
     public void refreshData(){
+        
         MenuItemsTable.setModel(controller.refreshData());
         removeInvisibleColumns();
          if(sorter != null)
             sorter.setModel((BaseTableModel)MenuItemsTable.getModel());
         MenuItemsTable.setRowSorter(sorter);
-    }
+        }
 
     public void saveData(){
         controller.save();
@@ -782,14 +756,13 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
     }
 
     private void initValidations() {
-        //MenuItemsTable.setDefaultEditor(Integer.class, new IntegerCellEditor(true,1, Integer.MAX_VALUE));
-        //MenuItemsTable.setDefaultEditor(String.class, new StringCellEditor(1, 255));
+       
     }
 
     private void removeInvisibleColumns(){
-            MenuItemsTable.removeColumn(MenuItemsTable.getColumn(MenuItemsDBTable.ID));
+            MenuItemsTable.removeColumn(MenuItemsTable.getColumn("menu item id"));
             MenuItemsTable.removeColumn(MenuItemsTable.getColumn(MenuItemsDBTable.RECIPE_PROC));
-            MenuItemsTable.removeColumn(MenuItemsTable.getColumn(MenuCategoryDBTable.ID));
+           MenuItemsTable.removeColumn(MenuItemsTable.getColumn("category id"));
     }
     private void removeInvisibleColumnsOnIngredientRecipe(){
         IngredientTable.removeColumn(IngredientTable.getColumn(IngredientDBTable.ALIAS_ID));
@@ -816,11 +789,11 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
         List<Object> values = new ArrayList<Object>(columnNames.size());
         for(int i=0;i<columnNames.size()-1;i++ )
         values.add(null);
+        values.add(null);
         values.add(ProjectConstants.STATUS_ACTIVE);
         DataRow row = new DataRow(columnNames, values);
         model.addRow(row);
     }
- 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable IngredientTable;

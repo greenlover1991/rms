@@ -35,7 +35,7 @@ public class RoleDBTable extends DBTable{
     private static final String[] uniqueColumns = {ID};
     private static final String[] invisibleColumns = {ALIAS_ID, ALIAS_STATUS};
     private static final String[] uneditableColumns = {ID, STATUS};
-    private static final String[] nonNullableColumns = {ID, NAME, STATUS};
+    private static final String[] nonNullableColumns = {NAME, STATUS};
 
     private static RoleDBTable INSTANCE;
     private RoleDBTable(){}
