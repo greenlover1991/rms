@@ -10,19 +10,18 @@
  */
 
 package rms.views.management;
-import extras.DateCellEditor;
-import extras.IntegerCellEditor;
-import extras.StringCellEditor;
-import java.text.DateFormat;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import rms.ProjectConstants;
 import rms.controllers.management.EmployeeController;
@@ -38,15 +37,14 @@ import rms.models.management.RoleDBTable;
  */
 public class EmployeeView extends javax.swing.JInternalFrame {
     private EmployeeController controller;
-    DateFormat formatter;
     private TableRowSorter<BaseTableModel> sorter;
-
+    Map <String, Integer> roles;
     private static EmployeeView INSTANCE;
     /** Creates new form MasterFilesUI */
     private EmployeeView() {
         initComponents();
         controller = new EmployeeController(this);
-
+        roles= controller.getRoles();
         initValidations();
         refreshData();
         sorter = new TableRowSorter<BaseTableModel>((BaseTableModel)EmployeeTable.getModel());
@@ -83,11 +81,11 @@ public class EmployeeView extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        masterFileLabel = new javax.swing.JLabel();
+        EmployeeLabel = new javax.swing.JLabel();
         addButton = new javax.swing.JButton();
         loadButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
-        addButton1 = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         searchField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -102,9 +100,9 @@ public class EmployeeView extends javax.swing.JInternalFrame {
         jPanel1.setBackground(new java.awt.Color(34, 34, 34));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
 
-        masterFileLabel.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        masterFileLabel.setForeground(new java.awt.Color(255, 255, 255));
-        masterFileLabel.setText("EMPLOYEE");
+        EmployeeLabel.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        EmployeeLabel.setForeground(new java.awt.Color(255, 255, 255));
+        EmployeeLabel.setText("EMPLOYEE");
 
         addButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         addButton.setForeground(new java.awt.Color(153, 153, 153));
@@ -146,17 +144,17 @@ public class EmployeeView extends javax.swing.JInternalFrame {
             }
         });
 
-        addButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        addButton1.setForeground(new java.awt.Color(153, 153, 153));
-        addButton1.setText("Delete");
-        addButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        addButton1.setContentAreaFilled(false);
-        addButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        addButton1.setFocusPainted(false);
-        addButton1.setMargin(new java.awt.Insets(2, 0, 2, 0));
-        addButton1.addActionListener(new java.awt.event.ActionListener() {
+        deleteButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        deleteButton.setForeground(new java.awt.Color(153, 153, 153));
+        deleteButton.setText("Delete");
+        deleteButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        deleteButton.setContentAreaFilled(false);
+        deleteButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deleteButton.setFocusPainted(false);
+        deleteButton.setMargin(new java.awt.Insets(2, 0, 2, 0));
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addButton1ActionPerformed(evt);
+                deleteButtonActionPerformed(evt);
             }
         });
 
@@ -166,11 +164,11 @@ public class EmployeeView extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(masterFileLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(EmployeeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(addButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(loadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -184,8 +182,8 @@ public class EmployeeView extends javax.swing.JInternalFrame {
                 .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(masterFileLabel)))
+                    .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(EmployeeLabel)))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -195,11 +193,6 @@ public class EmployeeView extends javax.swing.JInternalFrame {
         searchField.setForeground(new java.awt.Color(102, 102, 102));
         searchField.setText("Search...");
         searchField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        searchField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchFieldActionPerformed(evt);
-            }
-        });
         searchField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 searchFieldFocusGained(evt);
@@ -252,6 +245,11 @@ public class EmployeeView extends javax.swing.JInternalFrame {
         });
         EmployeeTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         EmployeeTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        EmployeeTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                EmployeeTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(EmployeeTable);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -291,7 +289,7 @@ public class EmployeeView extends javax.swing.JInternalFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         pack();
@@ -310,20 +308,15 @@ public class EmployeeView extends javax.swing.JInternalFrame {
         refreshData();
     }//GEN-LAST:event_loadButtonActionPerformed
 
-    private void addButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButton1ActionPerformed
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
         setInactive();
-    }//GEN-LAST:event_addButton1ActionPerformed
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
         saveData();
     }//GEN-LAST:event_saveButtonActionPerformed
-
-    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_searchFieldActionPerformed
 
     private void searchFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusGained
         // TODO add your handling code here:
@@ -336,6 +329,23 @@ public class EmployeeView extends javax.swing.JInternalFrame {
         if(searchField.getText().equalsIgnoreCase(""))
             searchField.setText("Search...");
     }//GEN-LAST:event_searchFieldFocusLost
+
+    private void EmployeeTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EmployeeTableMouseClicked
+        // TODO add your handling code here:
+        //set comboBox for editing purposes
+        JComboBox comboBox = new JComboBox(roles.keySet().toArray()); // iset ang possible menuCats
+        comboBox.addItemListener( new ItemListener(){
+        public void itemStateChanged(ItemEvent e) {
+            int id;
+            Object o = e.getItem();
+            if(o != null){
+                id = roles.get(o.toString());
+                 EmployeeTable.getModel().setValueAt(id, EmployeeTable.getSelectedRow(), 10);
+            }
+        }       
+        });
+        EmployeeTable.getColumnModel().getColumn(9).setCellEditor(new DefaultCellEditor(comboBox));
+    }//GEN-LAST:event_EmployeeTableMouseClicked
 
     public void refreshData(){
         EmployeeTable.setModel(controller.refreshData());
@@ -417,14 +427,14 @@ public class EmployeeView extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel EmployeeLabel;
     private javax.swing.JTable EmployeeTable;
     private javax.swing.JButton addButton;
-    private javax.swing.JButton addButton1;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton loadButton;
-    private javax.swing.JLabel masterFileLabel;
     private javax.swing.JButton saveButton;
     private javax.swing.JTextField searchField;
     // End of variables declaration//GEN-END:variables

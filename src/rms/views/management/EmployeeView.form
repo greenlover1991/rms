@@ -44,7 +44,7 @@
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="44" max="32767" attributes="0"/>
+              <EmptySpace pref="48" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -69,11 +69,15 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
+<<<<<<< HEAD
+                  <Component id="EmployeeLabel" min="-2" pref="142" max="-2" attributes="0"/>
+=======
                   <Component id="masterFileLabel" min="-2" pref="142" max="-2" attributes="0"/>
+>>>>>>> origin/HEAD
                   <EmptySpace pref="69" max="32767" attributes="0"/>
                   <Component id="addButton" min="-2" pref="63" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="addButton1" min="-2" pref="63" max="-2" attributes="0"/>
+                  <Component id="deleteButton" min="-2" pref="63" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="loadButton" min="-2" pref="80" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -89,15 +93,20 @@
                   <Component id="saveButton" max="32767" attributes="0"/>
                   <Component id="addButton" alignment="0" min="-2" pref="44" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
+<<<<<<< HEAD
+                      <Component id="deleteButton" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
+                      <Component id="EmployeeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+=======
                       <Component id="addButton1" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                       <Component id="masterFileLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+>>>>>>> origin/HEAD
                   </Group>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="masterFileLabel">
+        <Component class="javax.swing.JLabel" name="EmployeeLabel">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="20" style="1"/>
@@ -187,7 +196,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="addButton1">
+        <Component class="javax.swing.JButton" name="deleteButton">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="12" style="1"/>
@@ -211,7 +220,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addButton1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteButtonActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -274,7 +283,6 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchFieldActionPerformed"/>
             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="searchFieldFocusGained"/>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="searchFieldFocusLost"/>
           </Events>
@@ -331,6 +339,9 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="EmployeeTableMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

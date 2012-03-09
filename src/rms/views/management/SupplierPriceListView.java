@@ -10,8 +10,6 @@
  */
 
 package rms.views.management;
-import extras.IntegerCellEditor;
-import extras.StringCellEditor;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -30,6 +28,7 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
 
     private SupplierPriceListController controller;
     private TableRowSorter<BaseTableModel> sorter;
+    private TableRowSorter<BaseTableModel> sorter2;
 
     private static SupplierPriceListView INSTANCE;
     /** Creates new form MasterFilesUI */
@@ -37,10 +36,12 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
         initComponents();
         controller = new SupplierPriceListController(this);
 
-        initValidations();
+        //initValidations();
         refreshData();
         sorter = new TableRowSorter<BaseTableModel>((BaseTableModel)SupplierTable.getModel());
+        sorter2 = new TableRowSorter<BaseTableModel>((BaseTableModel)IngredientsTable.getModel());
         SupplierTable.setRowSorter(sorter);
+        IngredientsTable.setRowSorter(sorter2);
         searchField.getDocument().addDocumentListener(
             new DocumentListener() {
                 public void changedUpdate(DocumentEvent e) {
@@ -52,6 +53,20 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
                 public void removeUpdate(DocumentEvent e)
                 {
                     newFilter();
+                }
+            }
+        );
+        searchField1.getDocument().addDocumentListener(
+            new DocumentListener() {
+                public void changedUpdate(DocumentEvent e) {
+                    newFilter2();
+                }
+                public void insertUpdate(DocumentEvent e)  {
+                    newFilter2();
+                }
+                public void removeUpdate(DocumentEvent e)
+                {
+                    newFilter2();
                 }
             }
         );
@@ -236,11 +251,6 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
         searchField1.setForeground(new java.awt.Color(102, 102, 102));
         searchField1.setText("Search...");
         searchField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        searchField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchField1ActionPerformed(evt);
-            }
-        });
         searchField1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 searchField1FocusGained(evt);
@@ -471,7 +481,7 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -481,10 +491,6 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void searchField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchField1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -568,6 +574,20 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
         }
         sorter.setRowFilter(rf);
     }
+    private void newFilter2() {
+
+        RowFilter<BaseTableModel , Object> rf = null;
+        //declare a row filter for your table model
+        try {
+            if(!searchField1.getText().equals("Search..."))
+              rf = RowFilter.regexFilter(searchField1.getText(), 0);
+            //initialize with a regular expression
+        } catch (java.util.regex.PatternSyntaxException e) {
+            return;
+        }
+        sorter2.setRowFilter(rf);
+    }
+    
     public void refreshData(){
         SupplierTable.setModel(controller.refreshData());
         removeInvisibleColumns();

@@ -7,7 +7,9 @@ package rms.controllers.management;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -69,6 +71,21 @@ public class EmployeeController {
 
         return result;
     }
+    public Map getRoles(){
+       Map<String, Integer> roles = new HashMap<String, Integer>();
+       try {
+            DataSupport dh = new DataSupport();
+            BaseTableModel res = dh.executeQuery("SELECT id, name FROM roles WHERE status = 'Active';");
 
+            for(DataRow row : res.rows){
+                Integer id = new Integer(row.get(0).toString());
+                String name = row.get(1).toString();
+                roles.put(name, id);
+            }
+       }catch(SQLException ex){
+            Logger.getLogger(MenuItemsController.class.getName()).log(Level.SEVERE, null, ex);
+       }
+       return roles;
+   }
 
 }
