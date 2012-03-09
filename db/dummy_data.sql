@@ -277,12 +277,12 @@ INSERT IGNORE INTO `rms`.`restaurant_tables`
 `table_status`,
 `status`)
 VALUES
-(1,1,'',5,'Vacant','Active'),
+(1,1,'',5,'Available','Active'),
 (2,3,'',5,'Occupied','Active'),
 (3,4,'',5,'Dirty','Active'),
 (4,5,'',5,'Reserved','Active'),
 (5,7,'',5,'Dirty','Active'),
-(6,10,'',5,'Vacant','Active');
+(6,10,'',5,'Available','Active');
 
 DELETE FROM `rms`.`employees`
 WHERE id > 0;

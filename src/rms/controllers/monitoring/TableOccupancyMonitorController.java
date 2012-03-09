@@ -56,7 +56,7 @@ public class TableOccupancyMonitorController {
 		try {
 			DataSupport dh = new DataSupport();
 			String query = "UPDATE restaurant_tables "
-					+ "SET table_status = 'Vacant' "
+					+ "SET table_status = 'Available' "
 					+ "WHERE table_number = ' " + tableNumber + " ' ";
 			dh.executeUpdate(query);
 		} catch (SQLException ex) {
@@ -66,19 +66,19 @@ public class TableOccupancyMonitorController {
 		}
 	}
 
-	// public BaseTableModel findTable(int tableNumber) {
-	// try {
-	// DataSupport dh = new DataSupport();
-	// String query = "SELECT RT.id AS ID, RT.table_status AS Status "
-	// + "FROM restaurant_tables RT WHERE RT.table_number = ' "
-	// + tableNumber + " ' ";
-	// model = dh.executeQuery(query);
-	// } catch (SQLException ex) {
-	// Logger.getLogger(BranchController.class.getName()).log(
-	// Level.SEVERE, null, ex);
-	// JOptionPane.showMessageDialog(view, ex.toString());
-	// }
-	// return model;
-	// }
+	 public BaseTableModel findTableStatus(int tableNumber) {
+	 try {
+	 DataSupport dh = new DataSupport();
+	 String query = "SELECT RT.table_status AS Status "
+	 + "FROM restaurant_tables RT WHERE RT.table_number = ' "
+	 + tableNumber + " ' ";
+	 model = dh.executeQuery(query);
+	 } catch (SQLException ex) {
+	 Logger.getLogger(BranchController.class.getName()).log(
+	 Level.SEVERE, null, ex);
+	 JOptionPane.showMessageDialog(view, ex.toString());
+	 }
+	 return model;
+	 }
 
 }

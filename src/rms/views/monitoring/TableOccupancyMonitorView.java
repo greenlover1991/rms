@@ -192,11 +192,14 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 
 	public void actionPerformed(ActionEvent ae) {
 		int tableNumber = Integer.parseInt(ae.getActionCommand().toString());
-		controller.cleanTable(tableNumber);
-		for (int i = 0; i < row; i++)
-			for (int j = 0; j < column; j++)
-				buttonOrderSlip[i][j].setBackground(determineTableColor(i, j));
-
+		System.out.println(controller.findTableStatus(tableNumber).getValueAt(0, 0).toString());
+		if (controller.findTableStatus(tableNumber).getValueAt(0, 0).toString().equals("Dirty")) {
+			controller.cleanTable(tableNumber);
+			for (int i = 0; i < row; i++)
+				for (int j = 0; j < column; j++)
+					buttonOrderSlip[i][j].setBackground(determineTableColor(i,
+							j));
+		}
 		// String ac = ae.getActionCommand();
 		// System.out.print(Character.getNumericValue(ac.charAt(1)) + " "
 		// + Character.getNumericValue(ac.charAt(2)));
@@ -224,7 +227,7 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 		case 'O':
 			color = Color.RED;
 			break;
-		case 'V':
+		case 'A':
 			color = Color.GREEN;
 			break;
 		case 'D':
