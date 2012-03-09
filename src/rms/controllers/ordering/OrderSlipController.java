@@ -22,14 +22,16 @@ import rms.models.DataRow;
 import rms.models.ordering.OrderSlipItemsDBTable;
 import rms.views.ordering.OrderSlipView;
 import supports.DataSupport;
+import supports.NotificationSupport;
 
 /**
  *
  * @author squeekyclean
  */
-public class OrderSlipController {
+public class OrderSlipController extends NotificationSupport {
     OrderSlipView view;
     public OrderSlipController(OrderSlipView view){
+        super();
         this.view = view;
         loadWaiters();
     }
@@ -395,6 +397,13 @@ public class OrderSlipController {
             dh.executeUpdate(query);
         } catch (SQLException ex) {
             Logger.getLogger(OrderSlipController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void processBroadcastMessage(BROADCAST b) {
+        if(b == BROADCAST.NOTIFY_ORDER_SLIP){
+            view.performTblOrderSlipClick();
         }
     }
 

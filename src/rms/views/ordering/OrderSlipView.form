@@ -100,8 +100,8 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane3" alignment="0" pref="204" max="32767" attributes="1"/>
-                          <Component id="jScrollPane2" alignment="0" pref="204" max="32767" attributes="1"/>
+                          <Component id="jScrollPane3" alignment="0" pref="206" max="32767" attributes="1"/>
+                          <Component id="jScrollPane2" alignment="0" pref="206" max="32767" attributes="1"/>
                       </Group>
                   </Group>
               </Group>

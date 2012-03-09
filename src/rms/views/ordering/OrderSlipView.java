@@ -18,6 +18,7 @@ import rms.models.management.MenuItemsDBTable;
 import rms.models.ordering.OrderSlipDBTable;
 import rms.models.ordering.OrderSlipItemsDBTable;
 import rms.views.MainApplicationView;
+import supports.NotificationSupport.BROADCAST;
 
 /**
  *
@@ -513,8 +514,8 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUpdateOSI, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -535,6 +536,7 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
             for(int i =0;i<rowIDs.length;i++)
                 orderItemIds[i] = Integer.parseInt(model.getValueAt(tblOrderItems.convertRowIndexToModel(rowIDs[i]), model.findColumn(OrderSlipItemsDBTable.ID)).toString());
             controller.queueOrderItems(orderItemIds, Integer.parseInt(orderSlipId));
+            controller.sendBroadcast(BROADCAST.NOTIFY_CHEF);
             loadOrderItems(Integer.parseInt(orderSlipId));
             loadOrderSlipDetails(Integer.parseInt(orderSlipId));
             loadOrderSlips();
@@ -573,6 +575,7 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
                 billOut = new BillOutView(parent, true, Integer.parseInt(orderSlipId), Double.parseDouble(grandTotal));
                 if(billOut.showDialog()){
                     JOptionPane.showMessageDialog(this, "Order has been tendered.", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+                    controller.sendBroadcast(BROADCAST.NOTIFY_TOM);
                     resetViews();
                     refreshData();
                 }
@@ -615,6 +618,7 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
         newOrder = new NewOrderView(parent, true);
         // if save succesfully, refresh
         if(newOrder.showDialog()){
+            controller.sendBroadcast(BROADCAST.NOTIFY_TOM);
             resetViews();
             refreshData();
         }
@@ -631,6 +635,7 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
     private void btnSaveOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveOSActionPerformed
         // TODO add your handling code here:
         controller.updateOrderSlipDetails();
+        controller.sendBroadcast(BROADCAST.NOTIFY_TOM);
         tblOrderSlipsMouseClicked(null);
         loadOrderSlips();
 }//GEN-LAST:event_btnSaveOSActionPerformed
@@ -658,6 +663,7 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
         else{
             if(JOptionPane.showConfirmDialog(this, ProjectConstants.MSG_CONFIRM_DELETE, "Cancelling Order", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
                 controller.cancelOrderSlip(txtOrderSlipId.getText());
+                controller.sendBroadcast(BROADCAST.NOTIFY_TOM);
                 resetViews();
                 loadOrderSlips();
             }
@@ -792,5 +798,7 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
         tblOrderItems.setModel(controller.loadOrderItems(orderSlipId));
         tblOrderItems.removeColumn(tblOrderItems.getColumn(OrderSlipItemsDBTable.ID));
     }
-    
+    public void performTblOrderSlipClick(){
+        tblOrderSlipsMouseClicked(null);
+    }
 }
