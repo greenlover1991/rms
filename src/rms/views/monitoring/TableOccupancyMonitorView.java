@@ -107,7 +107,7 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 
 					buttonClean = new JButton("Clean Table");
 					buttonClean.addActionListener((ActionListener) this);
-					buttonClean.setActionCommand("" + ((i * column) + (j + 1)));
+					buttonClean.setActionCommand(controller.refresh().getValueAt(((i * column) + j), 1).toString());
 					// buttonClean.setActionCommand("d" + i + "" + j);
 
 					panelTable[i][j] = new JPanel();

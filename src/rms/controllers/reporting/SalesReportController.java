@@ -41,6 +41,23 @@ public class SalesReportController {
 		return model;
 	}
 
+	public BaseTableModel sales(String date) {
+		try {
+			DataSupport dh = new DataSupport();
+			String query = "SELECT SUM(OSI.quantity) AS Sold "
+					+ "FROM order_slip_items OSI "
+					+ "INNER JOIN menu_items MI "
+					+ "ON OSI.menu_item_id = MI.id "
+					+ "WHERE OSI.datetime_of_serve LIKE '" + date + "%'";
+			model = dh.executeQuery(query);
+		} catch (SQLException ex) {
+			Logger.getLogger(BranchController.class.getName()).log(
+					Level.SEVERE, null, ex);
+			JOptionPane.showMessageDialog(view, ex.toString());
+		}
+		return model;
+	}
+
 	public BaseTableModel totalCashSales() {
 		BaseTableModel result = null;
 		try {
