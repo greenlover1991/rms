@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import rms.models.BaseTableModel;
 import rms.models.DataRow;
 import rms.models.management.IngredientDBTable;
+import rms.models.management.MenuCategoryDBTable;
 import rms.models.management.RecipeDBTable;
 import rms.models.management.MenuItemsDBTable;
 import rms.views.management.MenuItemsView;
@@ -36,9 +37,12 @@ public class MenuItemsController {
     }
 
     public BaseTableModel refreshData(){
+        String query = String.format("SELECT mi.id, mi.name, mi.description, mi.recipe_procedure, mi.seconds_to_cook, mi.price ,mc.id, mc.name AS 'Category'"
+                                    + "FROM menu_items mi "
+                                    + "inner join menu_categories mc "
+                                    + "on mi.menu_category_id=mc.id ");
         try {
             MenuItemsDBTable db = MenuItemsDBTable.getInstance();
-            String query = db.generateSelectAllWithDefaultAliasesSql();
             DataSupport dh = new DataSupport();
             model = dh.executeQuery(query);
         } catch (SQLException ex) {
@@ -188,6 +192,4 @@ public class MenuItemsController {
         }
         return result;
     }
-
-
 }

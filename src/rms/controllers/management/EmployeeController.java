@@ -32,9 +32,14 @@ public class EmployeeController {
     }
 
     public BaseTableModel refreshData(){
+       String query = String.format("SELECT e.id, e.first_name AS 'First Name',  e.last_name AS 'Last Name', e.middle_name AS 'Middle Name', "
+                                    + "e.birthdate AS Birthdate, e.landline_number AS 'Landline Number', e.mobile_number AS 'Mobile Number',  "
+                                    + "e.address AS Address, e.login AS Login, e.password AS Password, e.role_id, r.id, r.name AS Role "
+                                    + "FROM employees e "
+                                    + "inner join roles r "
+                                    + "on r.id=e.role_id ");
         try {
             EmployeeDBTable db = EmployeeDBTable.getInstance();
-            String query = db.generateSelectAllWithDefaultAliasesSql();
             DataSupport dh = new DataSupport();
             model = dh.executeQuery(query);
         } catch (SQLException ex) {

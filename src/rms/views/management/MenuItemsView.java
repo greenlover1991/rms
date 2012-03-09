@@ -11,11 +11,14 @@
 
 package rms.views.management;
 
+import extras.ComboBoxEditor;
 import extras.IntegerCellEditor;
 import extras.StringCellEditor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -25,6 +28,7 @@ import rms.controllers.management.MenuItemsController;
 import rms.models.BaseTableModel;
 import rms.models.DataRow;
 import rms.models.management.IngredientDBTable;
+import rms.models.management.MenuCategoryDBTable;
 import rms.models.management.RecipeDBTable;
 import rms.models.management.MenuItemsDBTable;
 
@@ -254,35 +258,35 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
         MenuItemsTable.setAutoCreateRowSorter(true);
         MenuItemsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Name", "Description", "Time To Cook", "Price"
+                "Name", "Description", "Time To Cook", "Category", "Price"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -675,16 +679,22 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
 
     private void MenuItemsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuItemsTableMouseClicked
         // TODO add your handling code here:
+        //get Menu_Item_ID and Ingredient_id
         int rowId = MenuItemsTable.getSelectedRow();
         int menuItemId = Integer.parseInt(((BaseTableModel)MenuItemsTable.getModel()).getValueAt(rowId, MenuItemsDBTable.ID).toString());
+        //load items to table
         IngredientTable.setModel(controller.loadIngredients(menuItemId));
         RecipeTable.setModel(controller.loadIngredientsOnRecipe(menuItemId));
+        //remove invisible columns
         removeInvisibleColumnsOnIngredientRecipe();
+        //load procedure 
         BaseTableModel proc= controller.loadProcedure(menuItemId);
-        Procedure.setText( proc.getValueAt(0, 0).toString());
+        Procedure.setText( proc.getValueAt(0, 0)==null? "":proc.getValueAt(0, 0).toString());
+        //set recipe name
         String title= ((BaseTableModel )MenuItemsTable.getModel()).getValueAt(rowId, MenuItemsDBTable.NAME).toString();
         name.setText(title);
-
+        //set comboBox for editing purposes
+        MenuItemsTable.getColumnModel().getColumn(MenuItemsTable.getColumnModel().getColumnIndex("Category")).setCellEditor(new ComboBoxEditor(new String[]{"Desserts","Something"}));
     }//GEN-LAST:event_MenuItemsTableMouseClicked
 
     private void searchFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchFieldMouseClicked
@@ -782,9 +792,9 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
     }
 
     private void removeInvisibleColumns(){
-        for(String inviColumn : MenuItemsDBTable.getInstance().getInvisibleColumns()){
-            MenuItemsTable.removeColumn(MenuItemsTable.getColumn(inviColumn));
-        }
+            MenuItemsTable.removeColumn(MenuItemsTable.getColumn(MenuItemsDBTable.ID));
+            MenuItemsTable.removeColumn(MenuItemsTable.getColumn(MenuItemsDBTable.RECIPE_PROC));
+            MenuItemsTable.removeColumn(MenuItemsTable.getColumn(MenuCategoryDBTable.ID));
     }
     private void removeInvisibleColumnsOnIngredientRecipe(){
         IngredientTable.removeColumn(IngredientTable.getColumn(IngredientDBTable.ALIAS_ID));
