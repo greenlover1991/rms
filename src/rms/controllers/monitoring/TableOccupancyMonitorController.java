@@ -70,8 +70,8 @@ public class TableOccupancyMonitorController {
 	 try {
 	 DataSupport dh = new DataSupport();
 	 String query = "SELECT RT.table_status AS Status "
-	 + "FROM restaurant_tables RT WHERE RT.table_number = ' "
-	 + tableNumber + " ' ";
+	 + "FROM restaurant_tables RT WHERE RT.table_number = '"
+	 + tableNumber + "' ";
 	 model = dh.executeQuery(query);
 	 } catch (SQLException ex) {
 	 Logger.getLogger(BranchController.class.getName()).log(
@@ -80,5 +80,20 @@ public class TableOccupancyMonitorController {
 	 }
 	 return model;
 	 }
+	 
+	 public BaseTableModel findTableOrderSlip(int tableNumber) {
+		 try {
+		 DataSupport dh = new DataSupport();
+		 String query = "SELECT RT.order_slip_id  "
+		 + "FROM restaurant_tables RT WHERE RT.table_number = '"
+		 + tableNumber + "' ";
+		 model = dh.executeQuery(query);
+		 } catch (SQLException ex) {
+		 Logger.getLogger(BranchController.class.getName()).log(
+		 Level.SEVERE, null, ex);
+		 JOptionPane.showMessageDialog(view, ex.toString());
+		 }
+		 return model;
+		 }
 
 }

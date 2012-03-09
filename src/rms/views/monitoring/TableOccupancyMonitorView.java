@@ -100,7 +100,7 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 								private BaseTableModel orderItems;
 
 								@Override
-								public void actionPerformed(ActionEvent e) {
+								public void actionPerformed(ActionEvent evt) {
 									// System.out.println("I Came I Saw I Conquered");
 									// Object[][] data =
 									// {{"foo","baz"},{"bar","qux"}};
@@ -108,9 +108,11 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 									// {"foobar","bazbar"};
 									// JTable table = new
 									// JTable(data,columnNames);
-									refreshOrderSlip();
+									refreshOrderSlip(evt);
 								}
 							});
+					buttonOrderSlip[i][j].setActionCommand(controller.refresh()
+							.getValueAt(((i * column) + j), 1).toString());
 
 					buttonClean = new JButton("Clean Table");
 					buttonClean.addActionListener((ActionListener) this);
@@ -175,9 +177,11 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 
 	}
 
-	public void refreshOrderSlip() {
-		OrderSlipController controller = new OrderSlipController();
-		tableOrderSlip.setModel(controller.loadOrderItemsMinimal(1));
+	public void refreshOrderSlip(ActionEvent evt) {
+		int tableNumber = Integer.parseInt(evt.getActionCommand().toString());
+		System.out.println(controller.findTableOrderSlip(tableNumber).getValueAt(0, 0).toString());
+		OrderSlipController controllerOrderSlip = new OrderSlipController();
+		tableOrderSlip.setModel(controllerOrderSlip.loadOrderItemsMinimal(Integer.parseInt(controller.findTableOrderSlip(tableNumber).getValueAt(0, 0).toString())));
 	}
 
 	// public void actionPerformed(ActionEvent ae) {

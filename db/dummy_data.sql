@@ -146,20 +146,13 @@ INSERT INTO `rms`.`order_slips`
 `is_takeout`,
 `status`)
 VALUES
-(
-1,
-'',
-'',
-0,
-0,
-0,
-1,
-1,
-1,
-'',
-0,
-''
-);
+(1,'','',0,0,0,1,1,1,'',0,''),
+(2,'','',0,0,0,1,1,1,'',0,''),
+(3,'','',0,0,0,1,1,1,'',0,''),
+(4,'','',0,0,0,1,1,1,'',0,''),
+(5,'','',0,0,0,1,1,1,'',0,''),
+(6,'','',0,0,0,1,1,1,'',0,''),
+(7,'','',0,0,0,1,1,1,'',0,'');
 
 
 
@@ -268,21 +261,22 @@ VALUES
 DELETE FROM `rms`.`restaurant_tables`
 WHERE id > 0;
 
-
 INSERT IGNORE INTO `rms`.`restaurant_tables`
 (`id`,
 `table_number`,
 `description`,
 `capacity`,
 `table_status`,
-`status`)
+`status`,
+`order_slip_id`)
 VALUES
-(1,1,'',5,'Available','Active'),
-(2,3,'',5,'Occupied','Active'),
-(3,4,'',5,'Dirty','Active'),
-(4,5,'',5,'Reserved','Active'),
-(5,7,'',5,'Dirty','Active'),
-(6,10,'',5,'Available','Active');
+(1,1,'',5,'Available','Active',1),
+(2,3,'',5,'Occupied','Active',2),
+(3,4,'',5,'Dirty','Active',3),
+(4,5,'',5,'Reserved','Active',4),
+(5,7,'',5,'Dirty','Active',5),
+(6,10,'',5,'Available','Active',6);
+
 
 DELETE FROM `rms`.`employees`
 WHERE id > 0;
