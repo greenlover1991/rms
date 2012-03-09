@@ -15,8 +15,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import rms.models.BaseTableModel;
 import rms.models.DataRow;
-import rms.models.management.IngredientDBTable;
-import rms.models.management.MenuCategoryDBTable;
 import rms.models.management.RecipeDBTable;
 import rms.models.management.MenuItemsDBTable;
 import rms.views.management.MenuItemsView;
@@ -37,20 +35,38 @@ public class MenuItemsController {
     }
 
     public BaseTableModel refreshData(){
-        String query = String.format("SELECT mi.id, mi.name, mi.description, mi.recipe_procedure, mi.seconds_to_cook, mi.price ,mc.id, mc.name AS 'Category'"
+        String query = String.format("SELECT mi.id AS 'menu item id', mi.name, mi.description, mi.recipe_procedure, mi.seconds_to_cook AS 'time to cook', mi.price ,mc.id AS 'category id', mc.name AS 'category' "
+
                                     + "FROM menu_items mi "
                                     + "inner join menu_categories mc "
                                     + "on mi.menu_category_id=mc.id ");
         try {
-            MenuItemsDBTable db = MenuItemsDBTable.getInstance();
+
             DataSupport dh = new DataSupport();
-            model = dh.executeQuery(query);
+            model = dh.executeQueryUsingAlias(query);
         } catch (SQLException ex) {
             Logger.getLogger(MenuItemsController.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(view, ex.toString());
         }
         return model;
     }
+    
+   public Map getCategories(){
+       Map<String, Integer> menuCats = new HashMap<String, Integer>();
+       try {
+            DataSupport dh = new DataSupport();
+            BaseTableModel res = dh.executeQuery("SELECT id, name FROM menu_categories WHERE status = 'Active';");
+
+            for(DataRow row : res.rows){
+                Integer id = new Integer(row.get(0).toString());
+                String name = row.get(1).toString();
+                menuCats.put(name, id);
+            }
+       }catch(SQLException ex){
+            Logger.getLogger(MenuItemsController.class.getName()).log(Level.SEVERE, null, ex);
+       }
+       return menuCats;
+   }
 
     public boolean save(){
         boolean result = false;
