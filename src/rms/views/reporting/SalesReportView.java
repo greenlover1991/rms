@@ -47,7 +47,7 @@ public class SalesReportView extends JInternalFrame {
 	JLabel labelDateFrom, labelDateTo, labelDate, labelExpenses,
 			labelTotalCashOnHand, labelCashSales, labelCardSales;
 	DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM),
-			dateSqlFormat = new SimpleDateFormat("yyyy-MM-dd");;
+			dateSqlFormat = new SimpleDateFormat("yyyy-MM-dd");
 	BaseTableModel model;
 	SalesReportController controller = new SalesReportController(this);
 	int buttonNum = 0;
@@ -270,18 +270,18 @@ public class SalesReportView extends JInternalFrame {
 		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
 
 		tableSalesReport = new JTable() {
-//			public Component prepareRenderer(TableCellRenderer renderer,
-//					int Index_row, int Index_col) {
-//				Component comp = super.prepareRenderer(renderer, Index_row,
-//						Index_col);
-//				// even index, selected or not selected
-//				if (Index_row % 2 == 0 && !isCellSelected(Index_row, Index_col)) {
-//					comp.setBackground(Color.GREEN);
-//				} else {
-//					comp.setBackground(Color.LIGHT_GRAY);
-//				}
-//				return comp;
-//			}
+			public Component prepareRenderer(TableCellRenderer renderer,
+					int Index_row, int Index_col) {
+				Component comp = super.prepareRenderer(renderer, Index_row,
+						Index_col);
+				// even index, selected or not selected
+				if (Index_row % 2 == 0 && !isCellSelected(Index_row, Index_col)) {
+					comp.setBackground(Color.WHITE);
+				} else {
+					comp.setBackground(Color.GREEN);
+				}
+				return comp;
+			}
 
 			@Override
 			public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -291,7 +291,6 @@ public class SalesReportView extends JInternalFrame {
 		};
 
 		tableSalesReport.setRowSelectionAllowed(true);
-		tableSalesReport.setSelectionBackground(Color.GREEN);
 
 		refreshReportDate(calendar.getTime());
 
@@ -348,12 +347,14 @@ public class SalesReportView extends JInternalFrame {
 
 	public void setDate(Date date) {
 		String dateString = "";
+		
 		refreshReportDate(date);
 
 		if (date != null)
 			dateString = dateFormat.format(date);
 		textDate.setText(dateString);
 		buttonDate.setTargetDate(date);
+		
 		TableColumn column = null;
 		column = tableSalesReport.getColumnModel().getColumn(0);
 		column.setCellRenderer(dtcr);

@@ -25,13 +25,16 @@ public class InventoryReportController {
 		this.model = new BaseTableModel();
 	}
 
-	public BaseTableModel refresh() {
+	public BaseTableModel refresh(String date) {
 		try {
 			DataSupport dh = new DataSupport();
 			String query = "SELECT I.name AS Ingredient, IL.beginning_inventory AS Initial, IL.in_inventory AS 'In', IL.out_inventory AS 'Out', IL.end_inventory AS End  "
 					+ "FROM inventory_logs IL "
 					+ "INNER JOIN ingredients I "
-					+ "ON IL.ingredient_id = I.id";
+					+ "ON IL.ingredient_id = I.id " +
+					"WHERE IL.date_of_inventory LIKE '%"
+					+ date 
+					+ "%'";
 			model = dh.executeQuery(query);
 		} catch (SQLException ex) {
 			Logger.getLogger(BranchController.class.getName()).log(

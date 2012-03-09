@@ -30,7 +30,7 @@ public class SalesReportController {
 					+ "ON OSI.menu_item_id = MI.id "
 					+ "WHERE OSI.datetime_of_serve LIKE '"
 					+ date
-					+ "%' "
+					+ "%'"
 					+ "GROUP BY MI.name";
 			model = dh.executeQuery(query);
 		} catch (SQLException ex) {

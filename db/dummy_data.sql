@@ -36,6 +36,9 @@ VALUES
 ''
 );
 
+DELETE FROM `rms`.`ingredients`
+WHERE id > 0;
+
 INSERT IGNORE INTO `rms`.`ingredients`
 (`id`,
 `name`,
@@ -45,15 +48,12 @@ INSERT IGNORE INTO `rms`.`ingredients`
 `quantity`,
 `status`)
 VALUES
-(
-1,
-'Sugar',
-'Sweet',
-'Kilograms',
-'5',
-'10',
-''
-);
+(1,'Sugar','Sweet','Kilograms','5','10',''),
+(2,'Patty','Bikini Bottom','Pieces','5','10','');
+
+DELETE FROM `rms`.`inventory_logs`
+WHERE id > 0;
+
 
 INSERT IGNORE INTO `rms`.`inventory_logs`
 (`id`,
@@ -68,7 +68,7 @@ VALUES
 (
 1,
 1,
-'2012-03-01',
+'2012-03-09',
 15,
 5,
 10,
@@ -210,6 +210,9 @@ VALUES
 ''
 );
 
+DELETE FROM `rms`.`spoilage_reports`
+WHERE id > 0;
+
 
 INSERT IGNORE INTO `rms`.`spoilage_reports`
 (`id`,
@@ -218,9 +221,13 @@ INSERT IGNORE INTO `rms`.`spoilage_reports`
 VALUES
 (
 1,
-'2012-03-01',
+'2012-03-09',
 ''
 );
+
+DELETE FROM `rms`.`spoilage_report_items`
+WHERE id > 0;
+
 
 INSERT IGNORE INTO `rms`.`spoilage_report_items`
 (`id`,
@@ -231,15 +238,8 @@ INSERT IGNORE INTO `rms`.`spoilage_report_items`
 `employee_id`,
 `status`)
 VALUES
-(
-1,
-1,
-9,
-1,
-'',
-1,
-''
-);
+(1,1,10,1,'',1,''),
+(2,1,5,2,'',1,'');
 
 DELETE FROM `rms`.`restaurant_tables`
 WHERE id > 0;
