@@ -89,7 +89,6 @@ public class SalesReportView extends JInternalFrame {
 
 		setVisible(true);
 
-
 	}
 
 	protected void refreshChart() {
@@ -163,11 +162,19 @@ public class SalesReportView extends JInternalFrame {
 
 		while (daysBetween > 0) {
 
-			series.getData().add(
-					new XYChart.Data("" + dateFormat.format(dateFrom), Integer
-							.parseInt(controller
-									.sales(dateSqlFormat.format(dateFrom))
-									.getValueAt(0, 0).toString())));
+//			if (controller.sales(dateSqlFormat.format(dateFrom))
+//					.getValueAt(0, 0).toString()!=null) {
+			try {
+				series.getData().add(
+						new XYChart.Data("" + dateFormat.format(dateFrom),
+								Integer.parseInt(controller
+										.sales(dateSqlFormat.format(dateFrom))
+										.getValueAt(0, 0).toString())));
+			} catch (Exception e) {
+				series.getData().add(
+						new XYChart.Data("" + dateFormat.format(dateFrom),
+								0));
+			}
 
 			calendar.add(Calendar.DATE, 1);
 			dateFrom = calendar.getTime();
@@ -429,9 +436,8 @@ public class SalesReportView extends JInternalFrame {
 		// column.setCellRenderer(dtcr);
 
 		scrollPaneSalesReport = new JScrollPane(tableSalesReport);
-		
-		refreshChart();
 
+		refreshChart();
 
 	}
 
