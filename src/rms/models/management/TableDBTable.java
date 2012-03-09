@@ -39,7 +39,7 @@ public class TableDBTable extends DBTable{
     private static final String[] uniqueColumns = {ID};
     private static final String[] invisibleColumns = {ALIAS_ID, ALIAS_TABLE_STATUS, ALIAS_STATUS};
     private static final String[] uneditableColumns = {ID, STATUS};
-    private static final String[] nonNullableColumns = {ID, TABLE_NUMBER, CAPACITY, TABLE_STATUS, STATUS};
+    private static final String[] nonNullableColumns = {TABLE_NUMBER, CAPACITY, TABLE_STATUS, STATUS};
 
     private static TableDBTable INSTANCE;
     private TableDBTable(){}
