@@ -11,7 +11,10 @@ import java.awt.event.FocusEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -43,7 +46,8 @@ public class SalesReportView extends JInternalFrame {
 			textTotalCashOnHand, textCashSales, textCardSales;
 	JLabel labelDateFrom, labelDateTo, labelDate, labelExpenses,
 			labelTotalCashOnHand, labelCashSales, labelCardSales;
-	DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
+	DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM),
+			dateSqlFormat = new SimpleDateFormat("yyyy-MM-dd");;
 	BaseTableModel model;
 	SalesReportController controller = new SalesReportController(this);
 	int buttonNum = 0;
@@ -60,8 +64,6 @@ public class SalesReportView extends JInternalFrame {
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setSize((int) (screenSize.width * .5), (int) (screenSize.height * .9));
-
-		model = controller.refresh();
 
 		initComponents();
 
@@ -143,6 +145,10 @@ public class SalesReportView extends JInternalFrame {
 	// }
 
 	private void initComponents() {
+
+		Calendar calendar = GregorianCalendar.getInstance();
+		String currentDate = dateFormat.format(calendar.getTime());
+
 		buttonDate = new JCalendarButton();
 		textDate = new JTextField();
 		labelDate = new JLabel("Date:");
@@ -161,6 +167,8 @@ public class SalesReportView extends JInternalFrame {
 		labelCardSales = new JLabel("Total Card Sales");
 		labelExpenses = new JLabel("Total Expenses");
 		labelTotalCashOnHand = new JLabel("Total Cash on Hand");
+
+		textDate.setText(currentDate);
 
 		textDate.setHorizontalAlignment(JTextField.CENTER);
 		textDateFrom.setHorizontalAlignment(JTextField.CENTER);
@@ -261,28 +269,36 @@ public class SalesReportView extends JInternalFrame {
 
 		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
 
-		tableSalesReport = new JTable(model) {
-			public Component prepareRenderer(TableCellRenderer renderer,
-					int Index_row, int Index_col) {
-				Component comp = super.prepareRenderer(renderer, Index_row,
-						Index_col);
-				// even index, selected or not selected
-				if (Index_row % 2 == 0 && !isCellSelected(Index_row, Index_col)) {
-					comp.setBackground(Color.GREEN);
-				} else {
-					comp.setBackground(Color.WHITE);
-				}
-				return comp;
+		tableSalesReport = new JTable() {
+//			public Component prepareRenderer(TableCellRenderer renderer,
+//					int Index_row, int Index_col) {
+//				Component comp = super.prepareRenderer(renderer, Index_row,
+//						Index_col);
+//				// even index, selected or not selected
+//				if (Index_row % 2 == 0 && !isCellSelected(Index_row, Index_col)) {
+//					comp.setBackground(Color.GREEN);
+//				} else {
+//					comp.setBackground(Color.LIGHT_GRAY);
+//				}
+//				return comp;
+//			}
+
+			@Override
+			public boolean isCellEditable(int rowIndex, int columnIndex) {
+				return false;
 			}
+
 		};
+
+		tableSalesReport.setRowSelectionAllowed(true);
+		tableSalesReport.setSelectionBackground(Color.GREEN);
+
+		refreshReportDate(calendar.getTime());
+
 		TableColumn column = null;
 		column = tableSalesReport.getColumnModel().getColumn(0);
-		// column.setMinWidth(135);
 		column.setCellRenderer(dtcr);
 		column = tableSalesReport.getColumnModel().getColumn(1);
-		// column.setPreferredWidth(85);
-		// column.setMinWidth(85);
-		// column.setMaxWidth(85);
 		column.setCellRenderer(dtcr);
 		// column = DTR.getColumnModel().getColumn(2);
 		// column.setPreferredWidth(55);
@@ -332,10 +348,17 @@ public class SalesReportView extends JInternalFrame {
 
 	public void setDate(Date date) {
 		String dateString = "";
+		refreshReportDate(date);
+
 		if (date != null)
 			dateString = dateFormat.format(date);
 		textDate.setText(dateString);
 		buttonDate.setTargetDate(date);
+		TableColumn column = null;
+		column = tableSalesReport.getColumnModel().getColumn(0);
+		column.setCellRenderer(dtcr);
+		column = tableSalesReport.getColumnModel().getColumn(1);
+		column.setCellRenderer(dtcr);
 		// if (buttonNum == 0) {
 		// textDateFrom.setText(dateString);
 		// buttonDateFrom.setTargetDate(date);
@@ -343,6 +366,11 @@ public class SalesReportView extends JInternalFrame {
 		// textDateTo.setText(dateString);
 		// buttonDateTo.setTargetDate(date);
 		// }
+	}
+
+	public void refreshReportDate(Date date) {
+		String currentDate = dateSqlFormat.format(date);
+		tableSalesReport.setModel(controller.refresh(currentDate));
 	}
 
 	// for (int i = 0, rows = model.getRowCount(); i < rows; i++)

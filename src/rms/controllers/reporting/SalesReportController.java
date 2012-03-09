@@ -21,13 +21,17 @@ public class SalesReportController {
 		this.model = new BaseTableModel();
 	}
 
-	public BaseTableModel refresh() {
+	public BaseTableModel refresh(String date) {
 		try {
 			DataSupport dh = new DataSupport();
-			String query = "SELECT MI.name AS Particular, OSI.quantity AS Sold " +
-					"FROM order_slip_items OSI " +
-					"INNER JOIN menu_items MI " +
-					"ON OSI.menu_item_id = MI.id";
+			String query = "SELECT MI.name AS Particular, SUM(OSI.quantity) AS Sold "
+					+ "FROM order_slip_items OSI "
+					+ "INNER JOIN menu_items MI "
+					+ "ON OSI.menu_item_id = MI.id "
+					+ "WHERE OSI.datetime_of_serve LIKE '"
+					+ date
+					+ "%' "
+					+ "GROUP BY MI.name";
 			model = dh.executeQuery(query);
 		} catch (SQLException ex) {
 			Logger.getLogger(BranchController.class.getName()).log(
