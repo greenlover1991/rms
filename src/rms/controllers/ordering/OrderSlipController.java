@@ -33,6 +33,9 @@ public class OrderSlipController {
         this.view = view;
         loadWaiters();
     }
+    public OrderSlipController() {
+    	
+    }
 
     public BaseTableModel loadMenuItems(){
         BaseTableModel result = null;
@@ -193,6 +196,40 @@ public class OrderSlipController {
         try {
 
             String query = String.format("SELECT osi.id, osi.quantity AS Quantity, mi.name AS Name, osi.description AS 'Notes', osi.unit_cost AS 'Price', osi.amount AS 'Amount', osi.discounted_items AS 'Disc. items', osi.discount_rate AS 'Disc. rate', osi.discount_fixed_amount AS 'Fixed Disc. Amount', osi.net_amount AS 'Net Amount', osi.order_status AS 'Status' " +
+                    "FROM order_slip_items osi " +
+                    "INNER JOIN menu_items mi ON mi.id = osi.menu_item_id " +
+                    "WHERE osi.order_slip_id = %d;", orderSlipId);
+            DataSupport dh = new DataSupport();
+            BaseTableModel temp = dh.executeQuery(query);
+            result = new BaseTableModel(temp.columnNames, temp.columnAliases, temp.columnClasses) {
+
+                @Override
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    // if status pending, quantity can be edited
+                    // if discounted item, discounted fix, rate = all editable
+                    if(columnIndex >= 6 && columnIndex <= 8){
+                        return true;
+                    }
+                    else if((columnIndex == 1 || columnIndex == 3) && ProjectConstants.ORDER_ITEM_STATUS_PENDING.equals(getValueAt(rowIndex, 10).toString())){
+                        return true;
+                    }
+                    else
+                        return false;
+                }
+            };
+            result.rows = temp.rows;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderSlipController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+    
+    public BaseTableModel loadOrderItemsMinimal(int orderSlipId){
+        BaseTableModel result = null;
+        try {
+
+            String query = String.format("SELECT mi.name AS Name, osi.quantity AS Quantity, osi.unit_cost AS 'Price', osi.amount AS 'Amount', osi.order_status AS 'Status' " +
                     "FROM order_slip_items osi " +
                     "INNER JOIN menu_items mi ON mi.id = osi.menu_item_id " +
                     "WHERE osi.order_slip_id = %d;", orderSlipId);

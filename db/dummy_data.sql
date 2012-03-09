@@ -125,8 +125,42 @@ VALUES
 ''
 );
 
+DELETE FROM `rms`.`order_slips`
+WHERE id > 0;
+
+
 DELETE FROM `rms`.`order_slip_items`
 WHERE id > 0;
+
+INSERT INTO `rms`.`order_slips`
+(`id`,
+`datetime_of_order`,
+`datetime_of_tender`,
+`total_amount`,
+`total_discount_amount`,
+`grand_total`,
+`waited_by`,
+`tendered_by`,
+`number_of_customers`,
+`order_status`,
+`is_takeout`,
+`status`)
+VALUES
+(
+1,
+'',
+'',
+0,
+0,
+0,
+1,
+1,
+1,
+'',
+0,
+''
+);
+
 
 
 INSERT IGNORE INTO `rms`.`order_slip_items`

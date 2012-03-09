@@ -22,7 +22,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import rms.controllers.monitoring.TableOccupancyMonitorController;
+import rms.controllers.ordering.OrderSlipController;
 import rms.models.BaseTableModel;
+import rms.views.ordering.OrderSlipView;
 
 //implements TableModelListener
 public class TableOccupancyMonitorView extends JInternalFrame implements
@@ -31,10 +33,11 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 	JPanel panelOrderSlipView = new JPanel();
 	JPanel panelTables = new JPanel();
 	JPanel[][] panelTable;
-	JScrollPane scrollPaneTables;
+	JScrollPane scrollPaneTables, scrollPaneOrderSlip;
 	JButton[][] buttonOrderSlip;
 	JButton buttonClean;
 	BaseTableModel model = new BaseTableModel();
+	JTable tableOrderSlip;
 	TableOccupancyMonitorController controller = new TableOccupancyMonitorController(
 			this);
 
@@ -53,7 +56,7 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 		model = controller.refresh();
 
 		initComponents();
-		
+
 	}
 
 	private void initComponents() {
@@ -71,8 +74,8 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 
 		panelOrderSlipView.setBorder(BorderFactory.createMatteBorder(1, 3, 1,
 				1, Color.gray));
-		panelOrderSlipView.setPreferredSize(new Dimension(400, 0));
-		
+		panelOrderSlipView.setPreferredSize(new Dimension(600, 0));
+
 		buttonOrderSlip = new JButton[row][column];
 
 		panelTable = new JPanel[row][column];
@@ -85,29 +88,34 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 				if (((i * column) + (j + 1)) <= tableCount) {
 					System.out.println("column: " + j);
 					// button name is table number.
-					buttonOrderSlip[i][j] = new JButton(controller.refresh().getValueAt(((i * column) + j), 1).toString());
+					buttonOrderSlip[i][j] = new JButton(controller.refresh()
+							.getValueAt(((i * column) + j), 1).toString());
 					// set table color.
 					buttonOrderSlip[i][j].setBackground(determineTableColor(i,
 							j));
-					
-					buttonOrderSlip[i][j].addActionListener(new ActionListener() {
-						
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							System.out.println("I Came I Saw I Conquered");
-							Object[][] data = {{"foo","baz"},{"bar","qux"}};
-							String[] columnNames = {"foobar","bazbar"};
-							JTable table = new JTable(data,columnNames);
-							panelOrderSlipView.removeAll();
-							panelOrderSlipView.add(table);
-							panelOrderSlipView.revalidate();
-							panelOrderSlipView.repaint();
-						}
-					});
+
+					buttonOrderSlip[i][j]
+							.addActionListener(new ActionListener() {
+
+								private BaseTableModel orderItems;
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									// System.out.println("I Came I Saw I Conquered");
+									// Object[][] data =
+									// {{"foo","baz"},{"bar","qux"}};
+									// String[] columnNames =
+									// {"foobar","bazbar"};
+									// JTable table = new
+									// JTable(data,columnNames);
+									refreshOrderSlip();
+								}
+							});
 
 					buttonClean = new JButton("Clean Table");
 					buttonClean.addActionListener((ActionListener) this);
-					buttonClean.setActionCommand(controller.refresh().getValueAt(((i * column) + j), 1).toString());
+					buttonClean.setActionCommand(controller.refresh()
+							.getValueAt(((i * column) + j), 1).toString());
 					// buttonClean.setActionCommand("d" + i + "" + j);
 
 					panelTable[i][j] = new JPanel();
@@ -149,8 +157,14 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 		// }
 		// }
 
+		tableOrderSlip = new JTable();
+		tableOrderSlip.setFillsViewportHeight(true);
+
+		scrollPaneOrderSlip = new JScrollPane(tableOrderSlip);
 		scrollPaneTables = new JScrollPane(panelTables);
-		
+
+		panelOrderSlipView.add(scrollPaneOrderSlip);
+
 		setLayout(new BorderLayout());
 
 		add(scrollPaneTables, BorderLayout.CENTER);
@@ -159,6 +173,11 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 		setResizable(false);
 		setVisible(true);
 
+	}
+
+	public void refreshOrderSlip() {
+		OrderSlipController controller = new OrderSlipController();
+		tableOrderSlip.setModel(controller.loadOrderItemsMinimal(1));
 	}
 
 	// public void actionPerformed(ActionEvent ae) {
@@ -195,31 +214,35 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 				+ ((row * this.column) + (column + 1)));
 		// display table status in console.
 		System.out.println("table status is: "
-				+ controller.refresh().getValueAt(((row * this.column) + column), 2).toString());
+				+ controller.refresh()
+						.getValueAt(((row * this.column) + column), 2)
+						.toString());
 
-		switch (controller.refresh().getValueAt(((row * this.column) + column), 2).toString()) {
-		case "Occupied":
+		switch (controller.refresh()
+				.getValueAt(((row * this.column) + column), 2).toString()
+				.charAt(0)) {
+		case 'O':
 			color = Color.RED;
 			break;
-		case "Vacant":
+		case 'V':
 			color = Color.GREEN;
 			break;
-		case "Dirty":
+		case 'D':
 			color = Color.ORANGE;
 			break;
-		case "Reserved":
+		case 'R':
 			color = Color.BLUE;
 			break;
-		case "Inactive":
+		case 'I':
 			color = Color.GRAY;
 			break;
 		}
 		return color;
 
 	}
-	
+
 	public void updateChefView() {
-		//update table colors.
+		// update table colors.
 		for (int i = 0; i < row; i++)
 			for (int j = 0; j < column; j++)
 				buttonOrderSlip[i][j].setBackground(determineTableColor(i, j));
