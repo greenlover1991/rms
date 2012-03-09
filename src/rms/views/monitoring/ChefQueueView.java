@@ -128,7 +128,7 @@ public class ChefQueueView extends JInternalFrame {
 				controller.setStatusTo(
 						Integer.parseInt(chefQueued.getModel()
 								.getValueAt(chefQueued.getSelectedRow(), 0)
-								.toString()), "Processing");
+								.toString()), ProjectConstants.ORDER_ITEM_STATUS_PROCESSING);
 				chefProcessing.setModel(controller.refreshProcessing());
 				chefQueued.setModel(controller.refreshQueue());
 				TableColumn column = null;
@@ -152,11 +152,13 @@ public class ChefQueueView extends JInternalFrame {
 				controller.setStatusTo(
 						Integer.parseInt(chefProcessing.getModel()
 								.getValueAt(chefProcessing.getSelectedRow(), 0)
-								.toString()), ProjectConstants.ORDER_ITEM_STATUS_SERVED);
+								.toString()), ProjectConstants.ORDER_ITEM_STATUS_PROCESSED);
 				chefProcessing.setModel(controller.refreshProcessing());
 				TableColumn column = null;
 				column = chefProcessing.getColumnModel().getColumn(0);
 				chefProcessing.removeColumn(column);
+				column = chefProcessing.getColumnModel().getColumn(0);
+				column.setCellRenderer(dtcr);
 			}
 		});
 

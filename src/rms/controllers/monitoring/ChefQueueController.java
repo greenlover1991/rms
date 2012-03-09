@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
+import rms.ProjectConstants;
 import rms.controllers.management.BranchController;
 import rms.models.BaseTableModel;
 import rms.views.monitoring.ChefQueueView;
@@ -32,7 +33,7 @@ public class ChefQueueController {
 					+ "FROM order_slip_items OSI "
 					+ "INNER JOIN menu_items MI "
 					+ "ON OSI.menu_item_id = MI.id "
-					+ "WHERE OSI.order_status = 'Queued' "
+					+ "WHERE OSI.order_status = '" + ProjectConstants.ORDER_ITEM_STATUS_QUEUED + "' "
 					+ "ORDER BY OSI.datetime_of_order";
 			model = dh.executeQuery(query);
 		} catch (SQLException ex) {
@@ -50,7 +51,7 @@ public class ChefQueueController {
 					+ "FROM order_slip_items OSI "
 					+ "INNER JOIN menu_items MI "
 					+ "ON OSI.menu_item_id = MI.id "
-					+ "WHERE OSI.order_status = 'Processing' "
+					+ "WHERE OSI.order_status = '" + ProjectConstants.ORDER_ITEM_STATUS_PROCESSING + "' "
 					+ "ORDER BY OSI.datetime_of_order";
 			model = dh.executeQuery(query);
 		} catch (SQLException ex) {

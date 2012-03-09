@@ -20,6 +20,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
 
 import rms.controllers.monitoring.TableOccupancyMonitorController;
 import rms.controllers.ordering.OrderSlipController;
@@ -38,6 +41,8 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 	JButton buttonClean;
 	BaseTableModel model = new BaseTableModel();
 	JTable tableOrderSlip;
+	DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+	
 	TableOccupancyMonitorController controller = new TableOccupancyMonitorController(
 			this);
 
@@ -60,6 +65,8 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 	}
 
 	private void initComponents() {
+		
+		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
 
 		int tableCount = Integer.parseInt(controller.countTables()
 				.getValueAt(0, 0).toString());
@@ -74,7 +81,7 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 
 		panelOrderSlipView.setBorder(BorderFactory.createMatteBorder(1, 3, 1,
 				1, Color.gray));
-		panelOrderSlipView.setPreferredSize(new Dimension(600, 0));
+//		panelOrderSlipView.setPreferredSize(new Dimension(600, 0));
 
 		buttonOrderSlip = new JButton[row][column];
 
@@ -182,6 +189,17 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 		System.out.println(controller.findTableOrderSlip(tableNumber).getValueAt(0, 0).toString());
 		OrderSlipController controllerOrderSlip = new OrderSlipController();
 		tableOrderSlip.setModel(controllerOrderSlip.loadOrderItemsMinimal(Integer.parseInt(controller.findTableOrderSlip(tableNumber).getValueAt(0, 0).toString())));
+		TableColumn column = null;
+		column = tableOrderSlip.getColumnModel().getColumn(0);
+		column.setCellRenderer(dtcr);
+		column = tableOrderSlip.getColumnModel().getColumn(1);
+		column.setCellRenderer(dtcr);
+		column = tableOrderSlip.getColumnModel().getColumn(2);
+		column.setCellRenderer(dtcr);
+		column = tableOrderSlip.getColumnModel().getColumn(3);
+		column.setCellRenderer(dtcr);
+		column = tableOrderSlip.getColumnModel().getColumn(4);
+		column.setCellRenderer(dtcr);
 	}
 
 	// public void actionPerformed(ActionEvent ae) {
