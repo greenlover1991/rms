@@ -11,14 +11,9 @@
 
 package rms.views.management;
 
-import extras.ComboBoxEditor;
-import extras.IntegerCellEditor;
-import extras.StringCellEditor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JComboBox;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -694,7 +689,7 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
         String title= ((BaseTableModel )MenuItemsTable.getModel()).getValueAt(rowId, MenuItemsDBTable.NAME).toString();
         name.setText(title);
         //set comboBox for editing purposes
-        MenuItemsTable.getColumnModel().getColumn(MenuItemsTable.getColumnModel().getColumnIndex("Category")).setCellEditor(new ComboBoxEditor(new String[]{"Desserts","Something"}));
+        //MenuItemsTable.getColumnModel().getColumn(MenuItemsTable.getColumnModel().getColumnIndex("Category")).setCellEditor(new ComboBoxEditor(new String[]{"Desserts","Something"}));
     }//GEN-LAST:event_MenuItemsTableMouseClicked
 
     private void searchFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchFieldMouseClicked

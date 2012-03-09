@@ -5,7 +5,20 @@
 package rms.views.ordering;
 
 import java.awt.Frame;
-import java.awt.Window;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import rms.ProjectConstants;
+import rms.models.BaseTableModel;
+import rms.models.ordering.CashPaymentDBTable;
+import rms.models.ordering.CreditCardPaymentDBTable;
+import supports.DataSupport;
 
 /**
  *
@@ -13,16 +26,42 @@ import java.awt.Window;
  */
 public class BillOutView extends javax.swing.JDialog {
 
-    public BillOutView(Frame owner, boolean modal) {
+    boolean result = false;
+    int orderSlipId;
+    double totalAmount;
+    int[] ids;
+
+    public BillOutView(Frame owner, boolean modal, int orderSlipId, double totalAmount) {
         super(owner, modal);
         initComponents();
+        setLocationRelativeTo(owner);
+        this.orderSlipId = orderSlipId;
+        this.totalAmount = totalAmount;
+
+        txtOrderSlipId.setText(orderSlipId + "");
+        txtTotalAmount.setText(totalAmount + "");
+
+        chkCreditCardPayment.addItemListener(new ItemListener() {
+
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange() == ItemEvent.SELECTED){
+                    txtBank.setEditable(true);
+                    txtHolder.setEditable(true);
+                }
+                else{
+                    txtBank.setEditable(false);
+                    txtHolder.setEditable(false);
+                }
+            }
+        });
+
+        loadWaiters();
     }
-    
-    
 
-
-    
-
+    public boolean showDialog(){
+        setVisible(true);
+        return result;
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,48 +72,47 @@ public class BillOutView extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        totalAmount = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        btnDone = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        osNo = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        tableNo = new javax.swing.JLabel();
+        btnPay = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        ccBank = new javax.swing.JTextField();
-        ccPayment = new java.awt.Checkbox();
+        txtBank = new javax.swing.JTextField();
+        chkCreditCardPayment = new java.awt.Checkbox();
         jLabel8 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        ccHolder = new javax.swing.JTextField();
-        ccNo = new javax.swing.JTextField();
+        txtHolder = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
+        btnCancel = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        txtOrderSlipId = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtORNo = new javax.swing.JTextField();
+        txtTotalAmount = new javax.swing.JLabel();
+        cmbWaiter = new javax.swing.JComboBox();
+        jLabel4 = new javax.swing.JLabel();
 
         setTitle("Bill Out");
         setAlwaysOnTop(true);
         setModal(true);
+        setResizable(false);
 
-        totalAmount.setEditable(false);
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("Total Amount:");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14));
-        jLabel1.setText("Total Amount");
-
-        btnDone.setText("Done");
-
-        jLabel3.setText("Order Slip No.");
-
-        osNo.setText("123");
-
-        jLabel6.setText("Table ");
-
-        tableNo.setText("1");
+        btnPay.setText("Pay");
+        btnPay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPayActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        ccPayment.setLabel("Credit Card Payment");
+        txtBank.setEditable(false);
+
+        chkCreditCardPayment.setLabel("Credit Card");
 
         jLabel8.setText("Card Holder");
 
-        jLabel2.setText("Card No.");
+        txtHolder.setEditable(false);
 
         jLabel9.setText("Bank");
 
@@ -85,119 +123,224 @@ public class BillOutView extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel8))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(41, 41, 41)
-                                .addComponent(jLabel9)
-                                .addGap(7, 7, 7)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(ccBank, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
-                            .addComponent(ccNo, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
-                            .addComponent(ccHolder)))
+                        .addContainerGap()
+                        .addComponent(chkCreditCardPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(ccPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtBank, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtHolder, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE))))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(ccPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(chkCreditCardPayment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ccNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ccHolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtHolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ccBank, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(txtBank, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setText("Order Slip:");
+
+        txtOrderSlipId.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtOrderSlipId.setText("Order Slip:");
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel5.setText("OR No. :");
+
+        txtTotalAmount.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtTotalAmount.setText("Order Slip:");
+
+        cmbWaiter.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel4.setText("Waiter:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(129, 129, 129)
-                .addComponent(btnDone, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(31, 31, 31)
-                            .addComponent(jLabel1)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(totalAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel1))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtORNo, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addGap(131, 131, 131)
+                                    .addComponent(txtOrderSlipId)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(osNo))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tableNo)))
-                        .addGap(199, 199, 199)))
-                .addContainerGap(34, Short.MAX_VALUE))
+                                .addComponent(txtTotalAmount))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(cmbWaiter, 0, 190, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(13, 13, 13)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(osNo))
+                    .addComponent(txtOrderSlipId)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(tableNo))
-                .addGap(43, 43, 43)
+                    .addComponent(txtORNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(totalAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(txtTotalAmount))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(cmbWaiter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(btnDone, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPay, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+        result = false;
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
+        // TODO add your handling code here:
+        savePayment();
+        result = true;
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_btnPayActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDone;
-    private javax.swing.JTextField ccBank;
-    private javax.swing.JTextField ccHolder;
-    private javax.swing.JTextField ccNo;
-    private java.awt.Checkbox ccPayment;
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnPay;
+    private java.awt.Checkbox chkCreditCardPayment;
+    private javax.swing.JComboBox cmbWaiter;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel osNo;
-    private javax.swing.JLabel tableNo;
-    private javax.swing.JTextField totalAmount;
+    private javax.swing.JTextField txtBank;
+    private javax.swing.JTextField txtHolder;
+    private javax.swing.JTextField txtORNo;
+    private javax.swing.JLabel txtOrderSlipId;
+    private javax.swing.JLabel txtTotalAmount;
     // End of variables declaration//GEN-END:variables
+
+    private void savePayment() {
+        String query = null;
+        String orNumber = txtORNo.getText() == null ? "" : txtORNo.getText();
+        int employeeId = ids[cmbWaiter.getSelectedIndex()];
+        Map<String, String> insertList = new HashMap<String, String>();
+        insertList.put(CreditCardPaymentDBTable.ORDER_SLIP_ID, orderSlipId + "");
+        insertList.put(CreditCardPaymentDBTable.EMPLOYEE_ID, employeeId + "");
+        insertList.put(CreditCardPaymentDBTable.AMOUNT, totalAmount + "");
+        insertList.put(CreditCardPaymentDBTable.OR_NUMBER, orNumber);
+        insertList.put(CreditCardPaymentDBTable.STATUS, "Active");
+
+        if(chkCreditCardPayment.getState()){
+            CreditCardPaymentDBTable db = CreditCardPaymentDBTable.getInstance();
+            String bankName = txtBank.getText() == null ? "" : txtBank.getText();
+            String cardHolder = txtHolder.getText() == null ? "" : txtHolder.getText();
+            insertList.put(CreditCardPaymentDBTable.CREDIT_CARD_BANK_NAME, bankName);
+            insertList.put(CreditCardPaymentDBTable.CREDIT_CARD_HOLDER, cardHolder);
+            query = db.generateInsertSql(insertList);
+        }else{
+            CashPaymentDBTable db = CashPaymentDBTable.getInstance();
+            query = db.generateInsertSql(insertList);
+        }
+
+
+        try {
+            DataSupport dh = new DataSupport();
+            dh.executeUpdate(query);
+            tenderOrderSlip();
+        } catch (SQLException ex) {
+            Logger.getLogger(BillOutView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }
+
+    private void tenderOrderSlip() {
+        try {
+            String query1 = String.format("UPDATE order_slips SET order_status = '%s' WHERE id = %d;", ProjectConstants.ORDER_STATUS_TENDERED, orderSlipId);
+            String query2 = String.format("UPDATE restaurant_tables SET table_status = '%s' WHERE order_slip_id = %d;", ProjectConstants.TABLE_STATUS_DIRTY, orderSlipId);
+            DataSupport dh = new DataSupport();
+            dh.executeBatchUpdate(Arrays.asList(new String[]{query1, query2}));
+        } catch (SQLException ex) {
+            Logger.getLogger(BillOutView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void loadWaiters() {
+        try {
+            DataSupport dh = new DataSupport();
+            String query = "SELECT id, login FROM employees WHERE status = 'Active';";
+            BaseTableModel model = dh.executeQuery(query);
+            Object[] waiters = new Object[model.rows.size()];
+            ids = new int[model.rows.size()];
+            for (int i = 0; i < model.rows.size(); i++) {
+                waiters[i] = model.getValueAt(i, 1).toString();
+                ids[i] = Integer.parseInt(model.getValueAt(i, 0).toString());
+            }
+            cmbWaiter.setModel(new DefaultComboBoxModel(waiters));
+        } catch (SQLException ex) {
+            Logger.getLogger(NewOrderView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }

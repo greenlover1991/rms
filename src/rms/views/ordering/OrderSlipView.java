@@ -13,6 +13,7 @@ import javax.swing.table.TableRowSorter;
 import rms.ProjectConstants;
 import rms.controllers.ordering.OrderSlipController;
 import rms.models.BaseTableModel;
+import rms.models.DataRow;
 import rms.models.management.MenuItemsDBTable;
 import rms.models.ordering.OrderSlipDBTable;
 import rms.models.ordering.OrderSlipItemsDBTable;
@@ -556,9 +557,34 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnUpdateOSIActionPerformed
 
     private void btnBillOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBillOutActionPerformed
-         // TODO add your handling code here:
-        billOut = new BillOutView(parent, true);
-        billOut.setVisible(true);
+        // TODO add your handling code here:
+        String orderSlipId = txtOrderSlipId.getText();
+        String grandTotal = txtGrandTotal.getText();
+        if(!orderSlipId.trim().isEmpty() && !grandTotal.trim().isEmpty() && Double.parseDouble(grandTotal) > 0){
+            boolean isValid = true;
+            BaseTableModel model = (BaseTableModel) tblOrderItems.getModel();
+            for(int i =0;i< model.rows.size() && isValid;i++){
+                DataRow row = model.rows.get(i);
+                String status = row.get(OrderSlipItemsDBTable.ORDER_STATUS).toString();
+                if(ProjectConstants.ORDER_ITEM_STATUS_QUEUED.equals(status) || ProjectConstants.ORDER_ITEM_STATUS_PROCESSING.equals(status) || ProjectConstants.ORDER_ITEM_STATUS_PROCESSED.equals(status))
+                    isValid = false;
+            }
+            if(isValid && model.rows.size() > 0){
+                billOut = new BillOutView(parent, true, Integer.parseInt(orderSlipId), Double.parseDouble(grandTotal));
+                if(billOut.showDialog()){
+                    JOptionPane.showMessageDialog(this, "Order has been tendered.", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+                    resetViews();
+                    refreshData();
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Still have queued orders. Cannot bill out.", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "No orders placed. Cannot bill out.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        
         
     }//GEN-LAST:event_btnBillOutActionPerformed
 
