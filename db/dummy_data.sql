@@ -36,6 +36,9 @@ VALUES
 ''
 );
 
+DELETE FROM `rms`.`ingredients`
+WHERE id > 0;
+
 INSERT IGNORE INTO `rms`.`ingredients`
 (`id`,
 `name`,
@@ -45,15 +48,12 @@ INSERT IGNORE INTO `rms`.`ingredients`
 `quantity`,
 `status`)
 VALUES
-(
-1,
-'Sugar',
-'Sweet',
-'Kilograms',
-'5',
-'10',
-''
-);
+(1,'Sugar','Sweet','Kilograms','5','10',''),
+(2,'Patty','Bikini Bottom','Pieces','5','10','');
+
+DELETE FROM `rms`.`inventory_logs`
+WHERE id > 0;
+
 
 INSERT IGNORE INTO `rms`.`inventory_logs`
 (`id`,
@@ -68,7 +68,7 @@ VALUES
 (
 1,
 1,
-'2012-03-01',
+'2012-03-09',
 15,
 5,
 10,
@@ -147,24 +147,13 @@ INSERT IGNORE INTO `rms`.`order_slip_items`
 `datetime_of_serve`,
 `status`)
 VALUES
-(
-1,
-1,
-1,
-1,
-35,
-35,
-'No milk please.',
-'',
-35,
-0,
-'',
-35,
-'2012-03-01 10:25:00',
-'2012-03-01 10:27:00',
-'2012-03-01 10:30:00',
-'Queued'
-);
+(1,1,3,1,35,35,'No milk please.     ','Queued',35,0,'',35,'2012-03-09 10:24:00','2012-03-09 10:27:00','2012-03-09 10:30:00',''),
+(2,2,1,1,35,35,'Do not shake please.','Queued',35,0,'',35,'2012-03-09 10:24:00','2012-03-09 10:27:00','2012-03-09 10:30:00',''),
+(3,3,4,1,35,35,'Do not shake please.','Queued',35,0,'',35,'2012-03-07 10:24:00','2012-03-07 10:27:00','2012-03-07 10:30:00',''),
+(4,4,2,1,35,35,'Do not shake please.','Queued',35,0,'',35,'2012-03-06 10:24:00','2012-03-06 10:27:00','2012-03-06 10:30:00',''),
+(5,5,1,1,35,35,'Do not shake please.','Queued',35,0,'',35,'2012-03-05 10:24:00','2012-03-05 10:27:00','2012-03-05 10:30:00',''),
+(6,6,4,1,35,35,'Do not shake please.','Queued',35,0,'',35,'2012-03-04 10:24:00','2012-03-04 10:27:00','2012-03-04 10:30:00',''),
+(7,7,3,1,35,35,'Do not shake please.','Queued',35,0,'',35,'2012-03-03 10:24:00','2012-03-03 10:27:00','2012-03-03 10:30:00','');
 
 INSERT IGNORE INTO `rms`.`order_slip_items`
 (`id`,
@@ -184,24 +173,9 @@ INSERT IGNORE INTO `rms`.`order_slip_items`
 `datetime_of_serve`,
 `status`)
 VALUES
-(
-2,
-2,
-1,
-2,
-100,
-100,
-'Extra sesame seeds please.',
-'',
-100,
-0,
-'',
-100,
-'2012-03-01 10:25:00',
-'2012-03-01 10:27:00',
-'2012-03-01 10:30:00',
-'Processing'
-);
+(99,1,1,2,100,100,'Extra sesame seeds.','Processing',100,0,'',100,'2012-03-09 10:25:00','2012-03-09 10:27:00','2012-03-09 10:30:00',''),
+(98,2,3,2,100,100,'Do not shake please.','Queued',35,0,'',35,'2012-03-08 10:24:00','2012-03-08 10:27:00','2012-03-08 10:30:00',''),
+(97,3,2,2,100,100,'Do not shake please.','Queued',35,0,'',35,'2012-03-04 10:24:00','2012-03-04 10:27:00','2012-03-04 10:30:00','');
 
 INSERT IGNORE INTO `rms`.`requisition_slips`
 (`id`,
@@ -226,6 +200,9 @@ VALUES
 ''
 );
 
+DELETE FROM `rms`.`spoilage_reports`
+WHERE id > 0;
+
 
 INSERT IGNORE INTO `rms`.`spoilage_reports`
 (`id`,
@@ -234,9 +211,13 @@ INSERT IGNORE INTO `rms`.`spoilage_reports`
 VALUES
 (
 1,
-'2012-03-01',
+'2012-03-09',
 ''
 );
+
+DELETE FROM `rms`.`spoilage_report_items`
+WHERE id > 0;
+
 
 INSERT IGNORE INTO `rms`.`spoilage_report_items`
 (`id`,
@@ -247,15 +228,8 @@ INSERT IGNORE INTO `rms`.`spoilage_report_items`
 `employee_id`,
 `status`)
 VALUES
-(
-1,
-1,
-9,
-1,
-'',
-1,
-''
-);
+(1,1,10,1,'',1,''),
+(2,1,5,2,'',1,'');
 
 DELETE FROM `rms`.`restaurant_tables`
 WHERE id > 0;
@@ -269,7 +243,12 @@ INSERT IGNORE INTO `rms`.`restaurant_tables`
 `table_status`,
 `status`)
 VALUES
-(1,1,'',5,'Vacant','Active'),(2,2,'',5,'Occupied','Active'),(3,3,'',5,'Dirty','Active'),(4,4,'',5,'Reserved','Active'),(5,5,'',5,'Dirty','Active'),(6,6,'',5,'Vacant','Active');
+(1,1,'',5,'Vacant','Active'),
+(2,3,'',5,'Occupied','Active'),
+(3,4,'',5,'Dirty','Active'),
+(4,5,'',5,'Reserved','Active'),
+(5,7,'',5,'Dirty','Active'),
+(6,10,'',5,'Vacant','Active');
 
 DELETE FROM `rms`.`employees`
 WHERE id > 0;

@@ -10,7 +10,10 @@ import java.awt.event.FocusEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -38,9 +41,10 @@ public class SpoilageReportView extends JInternalFrame {
 	JPanel panelDateButtons = new JPanel();
 	JScrollPane scrollPaneSpoilageReport;
 	JCalendarButton buttonDate;
-	JTextField textFieldDate;
+	JTextField textDate;
 	JLabel labelDate;
-	DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
+	DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM),
+			dateSqlFormat = new SimpleDateFormat("yyyy-MM-dd");
 	BaseTableModel model = new BaseTableModel();
 	SpoilageReportController controller = new SpoilageReportController(this);
 	int buttonNo = 0;
@@ -56,8 +60,6 @@ public class SpoilageReportView extends JInternalFrame {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setSize((int) (screenSize.width * .85), (int) (screenSize.height * .9));
 
-		model = controller.refresh();
-
 		initComponents();
 
 		add(scrollPaneSpoilageReport, BorderLayout.CENTER);
@@ -67,11 +69,17 @@ public class SpoilageReportView extends JInternalFrame {
 	}
 
 	private void initComponents() {
+		
+		Calendar calendar = GregorianCalendar.getInstance();
+		String currentDate = dateFormat.format(calendar.getTime());
+		
 		buttonDate = new JCalendarButton();
-		textFieldDate = new JTextField(10);
+		textDate = new JTextField(10);
 		labelDate = new JLabel("Date:");
+		
+		textDate.setText(currentDate);
 
-		textFieldDate.setHorizontalAlignment(JTextField.CENTER);
+		textDate.setHorizontalAlignment(JTextField.CENTER);
 
 		buttonDate.setActionCommand("setFromDate");
 
@@ -80,10 +88,10 @@ public class SpoilageReportView extends JInternalFrame {
 		panelDateButtons.setPreferredSize(new Dimension(250, 25));
 
 		panelDateButtons.add(labelDate);
-		panelDateButtons.add(textFieldDate);
+		panelDateButtons.add(textDate);
 		panelDateButtons.add(buttonDate);
 
-		textFieldDate.addFocusListener(new FocusAdapter() {
+		textDate.addFocusListener(new FocusAdapter() {
 			public void focusLost(FocusEvent evt) {
 				dateFocusLost(evt);
 			}
@@ -100,7 +108,7 @@ public class SpoilageReportView extends JInternalFrame {
 
 		dtcr.setHorizontalAlignment(SwingConstants.CENTER);
 
-		tableSpoilageReport = new JTable(model) {
+		tableSpoilageReport = new JTable() {
 			public Component prepareRenderer(TableCellRenderer renderer,
 					int Index_row, int Index_col) {
 				Component comp = super.prepareRenderer(renderer, Index_row,
@@ -113,7 +121,16 @@ public class SpoilageReportView extends JInternalFrame {
 				}
 				return comp;
 			}
+			
+			@Override
+			public boolean isCellEditable(int rowIndex, int columnIndex) {
+				return false;
+			}
 		};
+		
+		tableSpoilageReport.setRowSelectionAllowed(true);
+
+		refreshReportDate(calendar.getTime());
 		
 		TableColumn column = null;
 		column = tableSpoilageReport.getColumnModel().getColumn(0);
@@ -126,7 +143,7 @@ public class SpoilageReportView extends JInternalFrame {
 	}
 
 	private void dateFocusLost(FocusEvent evt) {
-		String date = textFieldDate.getText();
+		String date = textDate.getText();
 		setDate(date);
 	}
 
@@ -148,11 +165,24 @@ public class SpoilageReportView extends JInternalFrame {
 
 	public void setDate(Date date) {
 		String dateString = "";
+		
+		refreshReportDate(date);
+		
 		if (date != null)
 			dateString = dateFormat.format(date);
-		textFieldDate.setText(dateString);
+		textDate.setText(dateString);
 		buttonDate.setTargetDate(date);
-
+		
+		TableColumn column = null;
+		column = tableSpoilageReport.getColumnModel().getColumn(0);
+		column.setCellRenderer(dtcr);
+		column = tableSpoilageReport.getColumnModel().getColumn(1);
+		column.setCellRenderer(dtcr);
+	}
+	
+	public void refreshReportDate(Date date) {
+		String currentDate = dateSqlFormat.format(date);
+		tableSpoilageReport.setModel(controller.refresh(currentDate));
 	}
 
 	public static SpoilageReportView getInstance() {

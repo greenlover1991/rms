@@ -19,6 +19,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 import rms.controllers.monitoring.TableOccupancyMonitorController;
 import rms.models.BaseTableModel;
@@ -52,14 +53,7 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 		model = controller.refresh();
 
 		initComponents();
-
-		setLayout(new BorderLayout());
-
-		add(scrollPaneTables, BorderLayout.CENTER);
-		add(panelOrderSlipView, BorderLayout.EAST);
-
-		setResizable(false);
-		setVisible(true);
+		
 	}
 
 	private void initComponents() {
@@ -78,7 +72,7 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 		panelOrderSlipView.setBorder(BorderFactory.createMatteBorder(1, 3, 1,
 				1, Color.gray));
 		panelOrderSlipView.setPreferredSize(new Dimension(400, 0));
-
+		
 		buttonOrderSlip = new JButton[row][column];
 
 		panelTable = new JPanel[row][column];
@@ -91,15 +85,29 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 				if (((i * column) + (j + 1)) <= tableCount) {
 					System.out.println("column: " + j);
 					// button name is table number.
-					buttonOrderSlip[i][j] = new JButton(""
-							+ ((i * column) + (j + 1)));
+					buttonOrderSlip[i][j] = new JButton(controller.refresh().getValueAt(((i * column) + j), 1).toString());
 					// set table color.
 					buttonOrderSlip[i][j].setBackground(determineTableColor(i,
 							j));
+					
+					buttonOrderSlip[i][j].addActionListener(new ActionListener() {
+						
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							System.out.println("I Came I Saw I Conquered");
+							Object[][] data = {{"foo","baz"},{"bar","qux"}};
+							String[] columnNames = {"foobar","bazbar"};
+							JTable table = new JTable(data,columnNames);
+							panelOrderSlipView.removeAll();
+							panelOrderSlipView.add(table);
+							panelOrderSlipView.revalidate();
+							panelOrderSlipView.repaint();
+						}
+					});
 
 					buttonClean = new JButton("Clean Table");
 					buttonClean.addActionListener((ActionListener) this);
-					buttonClean.setActionCommand("" + ((i * column) + (j + 1)));
+					buttonClean.setActionCommand(controller.refresh().getValueAt(((i * column) + j), 1).toString());
 					// buttonClean.setActionCommand("d" + i + "" + j);
 
 					panelTable[i][j] = new JPanel();
@@ -142,6 +150,14 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 		// }
 
 		scrollPaneTables = new JScrollPane(panelTables);
+		
+		setLayout(new BorderLayout());
+
+		add(scrollPaneTables, BorderLayout.CENTER);
+		add(panelOrderSlipView, BorderLayout.EAST);
+
+		setResizable(false);
+		setVisible(true);
 
 	}
 
@@ -157,7 +173,6 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 
 	public void actionPerformed(ActionEvent ae) {
 		int tableNumber = Integer.parseInt(ae.getActionCommand().toString());
-
 		controller.cleanTable(tableNumber);
 		for (int i = 0; i < row; i++)
 			for (int j = 0; j < column; j++)
@@ -180,28 +195,34 @@ public class TableOccupancyMonitorView extends JInternalFrame implements
 				+ ((row * this.column) + (column + 1)));
 		// display table status in console.
 		System.out.println("table status is: "
-				+ controller.findTable(((row * this.column) + (column + 1)))
-						.getValueAt(0, 1).toString());
+				+ controller.refresh().getValueAt(((row * this.column) + column), 2).toString());
 
-//		switch (controller.findTable(((row * this.column) + (column + 1))).getValueAt(0, 1).toString()) {
-//		case "Occupied":
-//			color = Color.RED;
-//			break;
-//		case "Vacant":
-//			color = Color.GREEN;
-//			break;
-//		case "Dirty":
-//			color = Color.ORANGE;
-//			break;
-//		case "Reserved":
-//			color = Color.BLUE;
-//			break;
-//		case "Inactive":
-//			color = Color.GRAY;
-//			break;
-//		}
+		switch (controller.refresh().getValueAt(((row * this.column) + column), 2).toString()) {
+		case "Occupied":
+			color = Color.RED;
+			break;
+		case "Vacant":
+			color = Color.GREEN;
+			break;
+		case "Dirty":
+			color = Color.ORANGE;
+			break;
+		case "Reserved":
+			color = Color.BLUE;
+			break;
+		case "Inactive":
+			color = Color.GRAY;
+			break;
+		}
 		return color;
 
+	}
+	
+	public void updateChefView() {
+		//update table colors.
+		for (int i = 0; i < row; i++)
+			for (int j = 0; j < column; j++)
+				buttonOrderSlip[i][j].setBackground(determineTableColor(i, j));
 	}
 
 	public static TableOccupancyMonitorView getInstance() {
