@@ -13,15 +13,15 @@ INSERT INTO employees (id,first_name,last_name,middle_name,login,password,role_i
 INSERT INTO employees (id,first_name,last_name,middle_name,login,password,role_id,status) VALUES(null,'default','default','default','cashier','cashier',3,'Active');
 INSERT INTO employees (id,first_name,last_name,middle_name,login,password,role_id,status) VALUES(null,'default','default','default','waiter','waiter',4,'Active');
 
-INSERT INTO restaurant_tables VALUES (null, 1, 'Table 1', 2, 'Available', 'Active');
-INSERT INTO restaurant_tables VALUES (null, 2, 'Table 2', 2, 'Available', 'Active');
-INSERT INTO restaurant_tables VALUES (null, 3, 'Table 3', 4, 'Available', 'Active');
-INSERT INTO restaurant_tables VALUES (null, 4, 'Table 4', 6, 'Available', 'Active');
-INSERT INTO restaurant_tables VALUES (null, 5, 'Table 5', 8, 'Available', 'Active');
-INSERT INTO restaurant_tables VALUES (null, 6, 'Table 6', 2, 'Available', 'Active');
-INSERT INTO restaurant_tables VALUES (null, 7, 'Table 7', 4, 'Available', 'Active');
-INSERT INTO restaurant_tables VALUES (null, 8, 'Table 8', 6, 'Available', 'Active');
-INSERT INTO restaurant_tables VALUES (null, 9, 'Table 9', 4, 'Available', 'Active');
+INSERT INTO restaurant_tables VALUES (null, 1, 'Table 1', 2, 'Available', 'Active', null);
+INSERT INTO restaurant_tables VALUES (null, 2, 'Table 2', 2, 'Available', 'Active', null);
+INSERT INTO restaurant_tables VALUES (null, 3, 'Table 3', 4, 'Available', 'Active', null);
+INSERT INTO restaurant_tables VALUES (null, 4, 'Table 4', 6, 'Available', 'Active', null);
+INSERT INTO restaurant_tables VALUES (null, 5, 'Table 5', 8, 'Available', 'Active', null);
+INSERT INTO restaurant_tables VALUES (null, 6, 'Table 6', 2, 'Available', 'Active', null);
+INSERT INTO restaurant_tables VALUES (null, 7, 'Table 7', 4, 'Available', 'Active', null);
+INSERT INTO restaurant_tables VALUES (null, 8, 'Table 8', 6, 'Available', 'Active', null);
+INSERT INTO restaurant_tables VALUES (null, 9, 'Table 9', 4, 'Available', 'Active', null);
 
 INSERT INTO `rms`.`ingredients` (`id`, `name`, `description`, `unit_of_measure`, `minimum_quantity`, `quantity`, `status`) VALUES (NULL, 'Dough', NULL, 'pcs', '15', '100', 'Active');
 INSERT INTO `rms`.`ingredients` (`id`, `name`, `description`, `unit_of_measure`, `minimum_quantity`, `quantity`, `status`) VALUES (NULL, 'Patty', NULL, 'pcs', '15', '100', 'Active');

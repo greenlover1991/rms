@@ -232,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `menu_price_list_logs` (
 CREATE TABLE IF NOT EXISTS `order_slips` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `datetime_of_order` datetime NOT NULL,
-  `datetime_of_tender` datetime NOT NULL,
+  `datetime_of_tender` datetime DEFAULT NULL,
   `total_amount` decimal(10,2) NOT NULL,
   `total_discount_amount` decimal(10,2) DEFAULT NULL,
   `grand_total` decimal(10,2) NOT NULL,
