@@ -18,6 +18,8 @@ import javax.swing.JOptionPane;
 import rms.ProjectConstants;
 import rms.controllers.management.SupplierPriceListController;
 import rms.models.BaseTableModel;
+import rms.models.DataRow;
+import rms.models.ordering.OrderSlipItemsDBTable;
 import rms.views.ordering.OrderSlipView;
 import supports.DataSupport;
 
@@ -225,26 +227,138 @@ public class OrderSlipController {
        boolean isValid = false;
        do{
            try{
-              quantity = Integer.parseInt(JOptionPane.showInputDialog(view, "INPUT Quantity:"));
+              String option = JOptionPane.showInputDialog(view, "INPUT Quantity:");
+              quantity = Integer.parseInt(option);
               isValid=true;
            }catch(NumberFormatException e){}
        }while(!isValid);
 
         boolean result = false;
-         try{
-            
+        if(quantity > 0){
+            try{
 
-            String query = String.format("INSERT INTO order_slip_items (order_slip_id, quantity, menu_item_id, unit_cost, amount, order_status, net_amount, datetime_of_order, status) " +
-                    "VALUES(%d, %d, %d, (SELECT price FROM menu_items WHERE id = %d), quantity*unit_cost, '%s', quantity*unit_cost, NOW(), '%s');",
+
+                String query = String.format("INSERT INTO order_slip_items (order_slip_id, quantity, menu_item_id, unit_cost, amount, order_status, net_amount, datetime_of_order, status, discounted_items, discount_fixed_amount, discount_rate) " +
+                    "VALUES(%d, %d, %d, (SELECT price FROM menu_items WHERE id = %d), quantity*unit_cost, '%s', quantity*unit_cost, NOW(), '%s', 0,0,0);",
                     orderSlipId, quantity, menuItemId, menuItemId, ProjectConstants.ORDER_ITEM_STATUS_PENDING, ProjectConstants.STATUS_ACTIVE);
-            DataSupport dh = new DataSupport();
-            dh.executeUpdate(query);
-            result = true;
+                DataSupport dh = new DataSupport();
+                dh.executeUpdate(query);
+                result = true;
+            }
+                catch(SQLException ex){
+                Logger.getLogger(SupplierPriceListController.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(view, ex.toString());
+            }
         }
-         catch(SQLException ex){
-             Logger.getLogger(SupplierPriceListController.class.getName()).log(Level.SEVERE, null, ex);
-             JOptionPane.showMessageDialog(view, ex.toString());
-         }
         return result;
     }
+
+    public void removeOrderItem(int orderItemId) {
+        try {
+            String query = String.format("UPDATE order_slip_items SET order_status = 'Cancelled' WHERE id = %d", orderItemId);
+            DataSupport dh = new DataSupport();
+            dh.executeUpdate(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderSlipController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void updateOrderSlip(int orderSlipId){
+        String query = String.format("UPDATE order_slips, (SELECT SUM(amount) AS t_amount, " +
+                            "SUM((discounted_items*unit_cost*discount_rate) + discount_fixed_amount) AS t_d_amount, " +
+                            "SUM(net_amount) AS g_amount " +
+                            "FROM order_slip_items " +
+                            "WHERE order_slip_id = %d " +
+                            "AND order_status != 'Pending' AND order_status != 'Cancelled') AS osi " +
+                        "SET total_amount = t_amount, " +
+                        "total_discount_amount = t_d_amount, " +
+                        "grand_total = g_amount " +
+                        "WHERE id = %d;", orderSlipId, orderSlipId);
+        
+        try {
+            DataSupport dh;
+            dh = new DataSupport();
+            dh.executeUpdate(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderSlipController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void updateOSI(BaseTableModel osi, int orderSlipId) {
+        List<String> sqls = new ArrayList<String>();
+        for(DataRow row : osi.rows){
+            int osiId = Integer.parseInt(row.get(OrderSlipItemsDBTable.ID).toString());
+            int quantity = Integer.parseInt(row.get(OrderSlipItemsDBTable.QUANTITY).toString());
+            Object desc = row.get(OrderSlipItemsDBTable.DESCRIPTION);
+            String notes = (desc == null ? "" : desc.toString());
+            int discItems = Integer.parseInt(row.get(OrderSlipItemsDBTable.DISCOUNTED_ITEMS).toString());
+            double discRate = Double.parseDouble(row.get(OrderSlipItemsDBTable.DISCOUNT_RATE).toString());
+            double discFixed = Double.parseDouble(row.get(OrderSlipItemsDBTable.DISCOUNT_FIXED_AMOUNT).toString());
+            String query = String.format("UPDATE order_slip_items SET quantity = %d, description = '%s', " +
+                    "discounted_items = %d, discount_rate = %f, discount_fixed_amount = %f, amount = quantity * unit_cost, " +
+                    "net_amount = amount-(discounted_items*unit_cost*discount_rate)-discount_fixed_amount " +
+                    "WHERE id = %d;", quantity, notes, discItems, discRate, discFixed, osiId);
+            sqls.add(query);
+
+        }
+       
+        try {
+            DataSupport dh = new DataSupport();
+            dh.executeBatchUpdate(sqls);
+            updateOrderSlip(orderSlipId);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderSlipController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }
+
+    public void queueOrderItems(int[] orderItemIds, int orderSlipId) {
+        try {
+            StringBuilder osiIds = new StringBuilder();
+            for (int i : orderItemIds) {
+                osiIds.append(i + ",");
+            }
+            osiIds.deleteCharAt(osiIds.length() - 1);
+            String query = String.format("UPDATE order_slip_items " +
+                    "SET order_status = 'Queued', " +
+                    "datetime_of_order = NOW() " +
+                    "WHERE id IN (%s) " +
+                    "AND (order_status = 'Pending' OR order_status = 'Cancelled');", osiIds.toString());
+            DataSupport dh = new DataSupport();
+            dh.executeUpdate(query);
+            updateIngredientInventory(orderItemIds);
+            updateOrderSlip(orderSlipId);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderSlipController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void updateIngredientInventory(int[] orderItemIds) {
+        StringBuilder osiIds = new StringBuilder();
+        for (int i : orderItemIds) {
+            osiIds.append(i + ",");
+        }
+        osiIds.deleteCharAt(osiIds.length() - 1);
+
+        String query = String.format("UPDATE ingredients i, (SELECT i.id AS 'ingredient_id', r.quantity * osi.quantity AS  'used' " +
+                                                "FROM order_slip_items osi " +
+                                                "INNER JOIN menu_items mi ON mi.id = osi.menu_item_id " +
+                                                "INNER JOIN recipes r ON r.menu_item_id = osi.menu_item_id " +
+                                                "INNER JOIN ingredients i ON i.id = r.ingredient_id " +
+                                                "WHERE osi.id " +
+                                                "IN ( %s ) ) osi " +
+                        "SET quantity = quantity - osi.used " +
+                        "WHERE i.id = osi.ingredient_id", osiIds);
+
+        try {
+            DataSupport dh = new DataSupport();
+            dh.executeUpdate(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderSlipController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

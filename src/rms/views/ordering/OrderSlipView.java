@@ -139,6 +139,7 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
                 "Quantity", "Particulars", "Unit Price", "Discount Rate", "No. of Discounted Items", "Total", "Status"
             }
         ));
+        tblOrderItems.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tblOrderItems.setGridColor(new java.awt.Color(204, 204, 204));
         tblOrderItems.setInheritsPopupMenu(true);
         jScrollPane2.setViewportView(tblOrderItems);
@@ -190,6 +191,7 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblMenuItems.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tblMenuItems.setGridColor(new java.awt.Color(204, 204, 204));
         tblMenuItems.setInheritsPopupMenu(true);
         tblMenuItems.getTableHeader().setReorderingAllowed(false);
@@ -265,6 +267,11 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
         });
 
         btnRemoveItem.setText("<<");
+        btnRemoveItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveItemActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -519,10 +526,33 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
 
     private void btnQueueOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQueueOSActionPerformed
         // TODO add your handling code here:
+        String orderSlipId = txtOrderSlipId.getText();
+        int[] rowIDs = tblOrderItems.getSelectedRows();
+        if(!orderSlipId.trim().isEmpty() && rowIDs.length > 0){
+            BaseTableModel model = (BaseTableModel)tblOrderItems.getModel();
+            int[] orderItemIds = new int[rowIDs.length];
+            for(int i =0;i<rowIDs.length;i++)
+                orderItemIds[i] = Integer.parseInt(model.getValueAt(tblOrderItems.convertRowIndexToModel(rowIDs[i]), model.findColumn(OrderSlipItemsDBTable.ID)).toString());
+            controller.queueOrderItems(orderItemIds, Integer.parseInt(orderSlipId));
+            loadOrderItems(Integer.parseInt(orderSlipId));
+            loadOrderSlipDetails(Integer.parseInt(orderSlipId));
+            loadOrderSlips();
+            loadMenuItems();
+
+        }
     }//GEN-LAST:event_btnQueueOSActionPerformed
 
     private void btnUpdateOSIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateOSIActionPerformed
         // TODO add your handling code here:
+        BaseTableModel osi = (BaseTableModel) tblOrderItems.getModel();
+        String orderSlipId = txtOrderSlipId.getText();
+
+        if(!orderSlipId.trim().isEmpty() && osi.rows.size() > 0){
+            controller.updateOSI(osi, Integer.parseInt(orderSlipId));
+            loadOrderItems(Integer.parseInt(orderSlipId));
+            loadOrderSlips();
+            loadOrderSlipDetails(Integer.parseInt(orderSlipId));
+        }
     }//GEN-LAST:event_btnUpdateOSIActionPerformed
 
     private void btnBillOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBillOutActionPerformed
@@ -615,9 +645,37 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
         if(!orderSlipId.trim().isEmpty() && rowId >= 0){
             BaseTableModel model = (BaseTableModel)tblMenuItems.getModel();
             int menuItemId = Integer.parseInt(model.getValueAt(tblMenuItems.convertRowIndexToModel(rowId), model.findColumn(MenuItemsDBTable.ID)).toString());
-            addMenuItemId(menuItemId, Integer.parseInt(orderSlipId));
+            int stocks = Integer.parseInt(model.getValueAt(tblMenuItems.convertRowIndexToModel(rowId), model.findColumn("Stocks")).toString());
+            if(stocks > 0){
+                if(addMenuItemId(menuItemId, Integer.parseInt(orderSlipId)))
+                    loadOrderItems(Integer.parseInt(orderSlipId));
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Out of Stock. Order something else.", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Please select an order slip first.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnAddItemActionPerformed
+
+    private void btnRemoveItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveItemActionPerformed
+        // TODO add your handling code here:
+        int rowId = tblOrderItems.getSelectedRow();
+        String orderSlipId = txtOrderSlipId.getText();
+        if(!orderSlipId.trim().isEmpty() && rowId >= 0){
+            BaseTableModel model = (BaseTableModel)tblOrderItems.getModel();
+            int orderItemId = Integer.parseInt(model.getValueAt(tblOrderItems.convertRowIndexToModel(rowId), model.findColumn(OrderSlipItemsDBTable.ID)).toString());
+            String status = model.getValueAt(tblOrderItems.convertRowIndexToModel(rowId), model.findColumn(OrderSlipItemsDBTable.ORDER_STATUS)).toString();
+            if(ProjectConstants.ORDER_ITEM_STATUS_PENDING.equals(status)){
+                controller.removeOrderItem(orderItemId);
+                loadOrderItems(Integer.parseInt(orderSlipId));
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Can't remove an item that is already ordered.", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnRemoveItemActionPerformed
 
      private void newFilter() {
 
@@ -700,8 +758,8 @@ public class OrderSlipView extends javax.swing.JInternalFrame {
         tblOrderItems.setModel(new DefaultTableModel());
     }
 
-    private void addMenuItemId(int menuItemId, int orderItemId) {
-        controller.addMenuItemId(menuItemId, orderItemId);
+    private boolean addMenuItemId(int menuItemId, int orderItemId) {
+        return controller.addMenuItemId(menuItemId, orderItemId);
     }
 
     private void loadOrderItems(int orderSlipId) {
