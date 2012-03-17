@@ -5,18 +5,21 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.TableModel;
 
 import rms.controllers.management.BranchController;
+import rms.controllers.ordering.OrderSlipController;
 import rms.models.BaseTableModel;
 import rms.views.monitoring.ChefQueueView;
 import rms.views.monitoring.TableOccupancyMonitorView;
 import supports.DataSupport;
+import supports.NotificationSupport;
 
 /*
  * @author Yu
  *
  */
-public class TableOccupancyMonitorController {
+public class TableOccupancyMonitorController extends NotificationSupport{
 	private TableOccupancyMonitorView view;
 	private BaseTableModel model;
 
@@ -95,5 +98,20 @@ public class TableOccupancyMonitorController {
 		 }
 		 return model;
 		 }
+
+    public void setStatusTo(int parseInt, String ORDER_ITEM_STATUS_SERVED) {
+        ChefQueueController controller = new ChefQueueController(null);
+        controller.setStatusTo(parseInt, ORDER_ITEM_STATUS_SERVED);
+    }
+
+    public TableModel refreshProcessing(int orderSlipId) {
+        OrderSlipController controller = new OrderSlipController();
+        return controller.loadOrderItemsMinimal(orderSlipId);
+    }
+
+    @Override
+    public void processBroadcastMessage(BROADCAST b) {
+        view.refreshTOM();
+    }
 
 }

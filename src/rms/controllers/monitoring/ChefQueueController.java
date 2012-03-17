@@ -12,12 +12,13 @@ import rms.models.BaseTableModel;
 import rms.views.monitoring.ChefQueueView;
 import rms.views.reporting.SalesReportView;
 import supports.DataSupport;
+import supports.NotificationSupport;
 
 /*
  * @author Yu
  *
  */
-public class ChefQueueController {
+public class ChefQueueController extends NotificationSupport{
 	private ChefQueueView view;
 	private BaseTableModel model;
 
@@ -74,5 +75,10 @@ public class ChefQueueController {
 			JOptionPane.showMessageDialog(view, ex.toString());
 		}
 	}
+
+    @Override
+    public void processBroadcastMessage(BROADCAST b) {
+        view.refreshChefQueue();
+    }
 
 }

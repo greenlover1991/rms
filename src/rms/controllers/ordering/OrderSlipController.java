@@ -231,7 +231,7 @@ public class OrderSlipController extends NotificationSupport {
         BaseTableModel result = null;
         try {
 
-            String query = String.format("SELECT mi.name AS Name, osi.quantity AS Quantity, osi.unit_cost AS 'Price', osi.amount AS 'Amount', osi.order_status AS 'Status' " +
+            String query = String.format("SELECT osi.id, mi.name AS Name, osi.quantity AS Quantity, osi.unit_cost AS 'Price', osi.amount AS 'Amount', osi.order_status AS 'Status' " +
                     "FROM order_slip_items osi " +
                     "INNER JOIN menu_items mi ON mi.id = osi.menu_item_id " +
                     "WHERE osi.order_slip_id = %d;", orderSlipId);
@@ -402,9 +402,8 @@ public class OrderSlipController extends NotificationSupport {
 
     @Override
     public void processBroadcastMessage(BROADCAST b) {
-        if(b == BROADCAST.NOTIFY_ORDER_SLIP){
+        
             view.performTblOrderSlipClick();
-        }
     }
 
 }

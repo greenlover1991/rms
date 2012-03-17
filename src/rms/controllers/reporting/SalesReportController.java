@@ -28,7 +28,7 @@ public class SalesReportController {
 					+ "FROM order_slip_items OSI "
 					+ "INNER JOIN menu_items MI "
 					+ "ON OSI.menu_item_id = MI.id "
-					+ "WHERE OSI.datetime_of_serve LIKE '"
+					+ "WHERE OSI.datetime_of_order LIKE '"
 					+ date
 					+ "%'"
 					+ "GROUP BY MI.name";
@@ -48,7 +48,7 @@ public class SalesReportController {
 					+ "FROM order_slip_items OSI "
 					+ "INNER JOIN menu_items MI "
 					+ "ON OSI.menu_item_id = MI.id "
-					+ "WHERE OSI.datetime_of_serve LIKE '" + date + "%'";
+					+ "WHERE OSI.datetime_of_order LIKE '" + date + "%'";
 			model = dh.executeQuery(query);
 		} catch (SQLException ex) {
 			Logger.getLogger(BranchController.class.getName()).log(

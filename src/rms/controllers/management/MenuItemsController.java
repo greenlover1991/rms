@@ -74,7 +74,12 @@ public class MenuItemsController {
         MenuItemsDBTable db = MenuItemsDBTable.getInstance();
 
         for(DataRow row : model.rows){
-            Map<String, String> upsert= row.getRowAsStrings();
+            Map<String, String> upsert= new HashMap<String, String>();
+            if(!(row.get("menu item id") == null))
+                upsert.put("id", row.get("menu item id").toString());
+            upsert.put("name", row.get("name").toString());
+            upsert.put("price", row.get("price").toString());
+            upsert.put("menu_category_id", row.get("category id").toString());
             upsert.put(MenuItemsDBTable.RECIPE_PROC, view.Procedure.getText());
             sqls.add(db.generateCreateUpdateSql(upsert));
         }

@@ -28,7 +28,7 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
 
     private SupplierPriceListController controller;
     private TableRowSorter<BaseTableModel> sorter;
-    private TableRowSorter<BaseTableModel> sorter2;
+    //private TableRowSorter<BaseTableModel> sorter2;
 
     private static SupplierPriceListView INSTANCE;
     /** Creates new form MasterFilesUI */
@@ -39,9 +39,9 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
         //initValidations();
         refreshData();
         sorter = new TableRowSorter<BaseTableModel>((BaseTableModel)SupplierTable.getModel());
-        sorter2 = new TableRowSorter<BaseTableModel>((BaseTableModel)IngredientsTable.getModel());
+        //sorter2 = new TableRowSorter<BaseTableModel>((BaseTableModel)IngredientsTable.getModel());
         SupplierTable.setRowSorter(sorter);
-        IngredientsTable.setRowSorter(sorter2);
+//        IngredientsTable.setRowSorter(sorter2);
         searchField.getDocument().addDocumentListener(
             new DocumentListener() {
                 public void changedUpdate(DocumentEvent e) {
@@ -56,7 +56,7 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
                 }
             }
         );
-        searchField1.getDocument().addDocumentListener(
+      /*  searchField1.getDocument().addDocumentListener(
             new DocumentListener() {
                 public void changedUpdate(DocumentEvent e) {
                     newFilter2();
@@ -69,7 +69,7 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
                     newFilter2();
                 }
             }
-        );
+        );*/
        }
 
     public static SupplierPriceListView getInstance(){
@@ -585,7 +585,7 @@ public class SupplierPriceListView extends javax.swing.JInternalFrame {
         } catch (java.util.regex.PatternSyntaxException e) {
             return;
         }
-        sorter2.setRowFilter(rf);
+//        sorter2.setRowFilter(rf);
     }
     
     public void refreshData(){

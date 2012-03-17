@@ -26,6 +26,7 @@ import javax.swing.table.TableColumn;
 import rms.ProjectConstants;
 import rms.controllers.monitoring.ChefQueueController;
 import rms.models.BaseTableModel;
+import supports.NotificationSupport;
 
 public class ChefQueueView extends JInternalFrame {
 	String[] columnNames = { "Status", "Particular", "Service" };
@@ -131,7 +132,10 @@ public class ChefQueueView extends JInternalFrame {
 								.toString()), ProjectConstants.ORDER_ITEM_STATUS_PROCESSING);
 				chefProcessing.setModel(controller.refreshProcessing());
 				chefQueued.setModel(controller.refreshQueue());
-				TableColumn column = null;
+				
+                                controller.sendBroadcast(NotificationSupport.BROADCAST.NOTIFY_ORDER_SLIP);
+                                
+                                TableColumn column = null;
 				column = chefQueued.getColumnModel().getColumn(0);
 				chefQueued.removeColumn(column);
 				column = chefProcessing.getColumnModel().getColumn(0);
@@ -159,6 +163,7 @@ public class ChefQueueView extends JInternalFrame {
 				chefProcessing.removeColumn(column);
 				column = chefProcessing.getColumnModel().getColumn(0);
 				column.setCellRenderer(dtcr);
+                                controller.sendBroadcast(NotificationSupport.BROADCAST.NOTIFY_ORDER_SLIP);
 			}
 		});
 
@@ -199,6 +204,19 @@ public class ChefQueueView extends JInternalFrame {
 
 	public void refreshChefQueue() {
 		chefQueued.setModel(controller.refreshQueue());
+                chefProcessing.setModel(controller.refreshProcessing());
+                TableColumn column = null;
+				column = chefQueued.getColumnModel().getColumn(0);
+				chefQueued.removeColumn(column);
+				column = chefProcessing.getColumnModel().getColumn(0);
+				chefProcessing.removeColumn(column);
+				column = chefQueued.getColumnModel().getColumn(0);
+				column.setCellRenderer(dtcr);
+				column = chefQueued.getColumnModel().getColumn(1);
+				column.setCellRenderer(dtcr);
+				column = chefProcessing.getColumnModel().getColumn(0);
+				column.setCellRenderer(dtcr);
+                                
 	}
 
 	public static ChefQueueView getInstance() {

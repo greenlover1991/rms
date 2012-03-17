@@ -287,18 +287,11 @@ public class SalesReportView extends JInternalFrame {
 		textTotalCashOnHand.setHorizontalAlignment(JTextField.CENTER);
 		textTotalCashOnHand.setEditable(false);
 
-		textCashSales.setText(controller.totalCashSales().getValueAt(0, 0)
-				.toString());
-		textCardSales.setText(controller.totalCardSales().getValueAt(0, 0)
-				.toString());
-		textExpenses.setText(controller.totalExpenses().getValueAt(0, 0)
-				.toString());
+		textCashSales.setText("");
+		textCardSales.setText("");
+		textExpenses.setText("");
 
-		double totalCashOnHand = Double.parseDouble(controller.totalCashSales()
-				.getValueAt(0, 0).toString())
-				- Double.parseDouble(controller.totalExpenses()
-						.getValueAt(0, 0).toString());
-		textTotalCashOnHand.setText(Double.toString(totalCashOnHand));
+		textTotalCashOnHand.setText("");
 
 		buttonDateFrom.setActionCommand("setFromDate");
 		buttonDateTo.setActionCommand("setToDate");

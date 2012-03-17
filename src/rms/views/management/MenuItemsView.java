@@ -619,7 +619,7 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         int rowId = MenuItemsTable.getSelectedRow();
         int row2Id = IngredientTable.getSelectedRow();
-        int menuItemId = Integer.parseInt(((BaseTableModel)MenuItemsTable.getModel()).getValueAt(rowId, MenuItemsDBTable.ID).toString());
+        int menuItemId = Integer.parseInt(((BaseTableModel)MenuItemsTable.getModel()).getValueAt(rowId, "menu item id").toString());
         int IngId = Integer.parseInt(((BaseTableModel)IngredientTable.getModel()).getValueAt(row2Id, IngredientDBTable.ID).toString());
         if(controller.addIngredientToRecipe(menuItemId,IngId))
         {
@@ -670,12 +670,12 @@ public class MenuItemsView extends javax.swing.JInternalFrame {
             Object o = e.getItem();
             if(o != null){
                 id = menuCats.get(o.toString());
-                MenuItemsTable.getModel().setValueAt(id, MenuItemsTable.getSelectedRow(), 5);
+                MenuItemsTable.getModel().setValueAt(id, MenuItemsTable.getSelectedRow(), 6);
             }
         }       
         });
         
-        MenuItemsTable.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(comboBox));
+        MenuItemsTable.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(comboBox));
     }//GEN-LAST:event_MenuItemsTableMouseClicked
 
     private void searchFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchFieldFocusLost

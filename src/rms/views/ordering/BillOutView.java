@@ -317,7 +317,7 @@ public class BillOutView extends javax.swing.JDialog {
     private void tenderOrderSlip() {
         try {
             String query1 = String.format("UPDATE order_slips SET order_status = '%s' WHERE id = %d;", ProjectConstants.ORDER_STATUS_TENDERED, orderSlipId);
-            String query2 = String.format("UPDATE restaurant_tables SET table_status = '%s' WHERE order_slip_id = %d;", ProjectConstants.TABLE_STATUS_DIRTY, orderSlipId);
+            String query2 = String.format("UPDATE restaurant_tables SET table_status = '%s', order_slip_id = null WHERE order_slip_id = %d;", ProjectConstants.TABLE_STATUS_DIRTY, orderSlipId);
             DataSupport dh = new DataSupport();
             dh.executeBatchUpdate(Arrays.asList(new String[]{query1, query2}));
         } catch (SQLException ex) {
